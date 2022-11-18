@@ -26,9 +26,7 @@ export default {
             var currentWidth = 0;
 
             for (let entry of json.features) {
-              console.log(entry);
-
-              if (entry.hasOwnProperty('text') && entry.text.contains('<--IMG-->')) {
+              if (entry.hasOwnProperty('text') && entry.text.includes('<--IMG-->')) {
                 entry.image = entry.text.replaceAll('<--IMG-->', '');
                 entry.text = undefined;
               }

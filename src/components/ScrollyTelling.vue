@@ -24,6 +24,7 @@
       <FullTextBlock
         v-else-if="item[0].width === 4 && item[0].text"
         :key="index"
+        :text="item[0].text"
       />
       <StickyRight
         v-else-if="item[0].width === 1"
@@ -31,6 +32,7 @@
         :item="item"
         :index="index"
         :progress="progress[index]"
+        :text="item[0].text"
       />
       <StickyLeft
         v-else-if="item[0].width === 3"
@@ -38,6 +40,7 @@
         :item="item"
         :index="index"
         :progress="progress[index]"
+        :text="item[1].text"
       />
       <VideoScrubbingFullWidth
         v-else-if="item[0].scrub"

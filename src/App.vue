@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <ScrollyTelling :items="scrollyItems" />
+    <ScrollyTelling :items="items" />
   </v-app>
 </template>
 
@@ -11,8 +11,49 @@ export default {
   components: {
     ScrollyTelling,
   },
+  async mounted () {
+    const urlParams = new URLSearchParams(window.location.search);
+    this.dashboardId = urlParams.get('id');
+
+
+    console.log(this.dashboardId);
+
+    fetch(`https://dev-eodash-dashboard-api.f77a4d8a-acde-4ddd-b1cd-b2b6afe83d7a.hub.eox.at/get?id=${this.dashboardId}`)
+      .then((response) => {
+        response.json()
+          .then(json => {
+            var accumulator = [];
+            var currentWidth = 0;
+
+            for (let entry of json.features) {
+              console.log(entry);
+
+              if (entry.hasOwnProperty('text') && entry.text.contains('<--IMG-->')) {
+                entry.image = entry.text.replaceAll('<--IMG-->', '');
+                entry.text = undefined;
+              }
+
+              if (currentWidth < 4) {
+                currentWidth += entry.width;
+                accumulator.push(entry);
+              } else {
+                this.items.push([...accumulator]);
+                accumulator = [];
+                currentWidth = 0;
+              }
+            }
+            console.log(this.items);
+          })
+          .catch(e => console.error(`Error decoding JSON: ${e}`));
+      })
+      .catch((e) => {
+        console.error(`Error fetching dashboard: ${e}`)
+      })
+  },
   data() {
     return {
+      dashboardId: '',
+      items: [],
       scrollyItems: [
         [
           {

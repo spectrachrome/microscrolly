@@ -15,7 +15,7 @@
     </v-col>
     <v-col cols="6">
       <article>
-        <p v-for="placeholder in textPlaceholders" v-html="placeholder"></p>
+        <p v-html="text"></p>
       </article>
     </v-col>
   </v-row>
@@ -27,6 +27,7 @@ export default {
     item: Array,
     index: Number,
     progress: Number,
+    text: String,
   },
   data: () => ({
     textPlaceholders: [

@@ -1,13 +1,19 @@
 <template>
   <v-col>
     <article class="mx-10">
-      <p v-for="placeholder in textPlaceholders" v-html="placeholder"></p>
+      <p v-html="text"></p>
     </article>
   </v-col>
 </template>
 
 <script>
 export default {
+  props: {
+    text: {
+      type: String,
+      required: true,
+    }
+  },
   data: () => ({
     textPlaceholders: [
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam gravida maximus elit a venenatis. Mauris felis ipsum, placerat sit amet accumsan non, commodo ac arcu. Phasellus lorem urna, consectetur non ornare et, pharetra id risus.",

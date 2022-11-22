@@ -25,21 +25,27 @@ export default {
             var accumulator = [];
             var currentWidth = 0;
 
-            for (let entry of json.features) {
+            console.log(json.features);
+            var i = 0;
+
+            while (i < json.features.length) {
+              let entry = json.features[i];
+
               if (entry.hasOwnProperty('text') && entry.text.includes('<--IMG-->')) {
                 entry.image = entry.text.replaceAll('<--IMG-->', '');
                 entry.text = undefined;
               }
 
-              if (currentWidth < 4) {
-                currentWidth += entry.width;
-                accumulator.push(entry);
-              } else {
-                this.items.push([...accumulator]);
-                accumulator = [];
-                currentWidth = 0;
+              if (entry.width === 1 && json.features[i + 1].width === 3) {
+                accumulator.push([entry, json.features[i + 1]]);
+                i += 2;
+              } else if (entry.width === 4) {
+                accumulator.push([entry]);
+                i += 1;
               }
             }
+
+            this.items = accumulator;
             console.log(this.items);
           })
           .catch(e => console.error(`Error decoding JSON: ${e}`));

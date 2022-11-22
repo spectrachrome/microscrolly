@@ -34,8 +34,8 @@ export default {
                 if (current.width === 1 && next.width === 3) {
                   accumulator.push(this.buildStickyRight(current, next, i));
                   i += 2;
-                } else if (entry.width === 4) {
-                  accumulator.push([entry]);
+                } else if (current.width === 4) {
+                  accumulator.push([current]);
                   i += 1;
                 }
               } else {

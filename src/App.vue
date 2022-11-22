@@ -34,6 +34,9 @@ export default {
                 if (current.width === 1 && next.width === 3) {
                   accumulator.push(this.buildStickyRight(current, next, i));
                   i += 2;
+                } else if (current.width === 3 && next.width === 1) {
+                  accumulator.push(this.buildStickyLeft(current, next, i));
+                  i += 2;
                 } else if (current.width === 4) {
                   accumulator.push([current]);
                   i += 1;
@@ -56,6 +59,14 @@ export default {
     buildStickyRight (current, next) {
       if (next.text && next.text.includes('<--IMG-->')) {
         next.image = next.text.replaceAll('<--IMG-->', '');
+      }
+
+      return [current, next];
+    },
+
+    buildStickyLeft (current, next) {
+      if (current.text && current.text.includes('<--IMG-->')) {
+        current.image = current.text.replaceAll('<--IMG-->', '');
       }
 
       return [current, next];

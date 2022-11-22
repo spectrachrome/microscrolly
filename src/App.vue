@@ -13,7 +13,7 @@ export default {
   },
   async mounted () {
     const urlParams = new URLSearchParams(window.location.search);
-    this.dashboardId = urlParams.get('id');
+    this.dashboardId = urlParams.get('id') || '0be65aaa716af1b2';
 
 
     console.log(this.dashboardId);

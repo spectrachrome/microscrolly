@@ -31,13 +31,14 @@ export default {
             while (i < json.features.length) {
               let entry = json.features[i];
 
-              if (entry.hasOwnProperty('text') && entry.text.includes('<--IMG-->')) {
-                entry.image = entry.text.replaceAll('<--IMG-->', '');
-                entry.text = undefined;
-              }
-
               if (entry.width === 1 && json.features[i + 1].width === 3) {
-                accumulator.push([entry, json.features[i + 1]]);
+                let entry2 = json.features[i + 1];
+                if (entry2.text && entry2.text.includes('<--IMG-->')) {
+                  console.log('image');
+                  entry2.image = entry2.text.replaceAll('<--IMG-->', '');
+                  entry2.text = undefined;
+                }
+                accumulator.push([entry, entry2]);
                 i += 2;
               } else if (entry.width === 4) {
                 accumulator.push([entry]);

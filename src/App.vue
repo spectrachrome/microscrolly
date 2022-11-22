@@ -23,26 +23,23 @@ export default {
         response.json()
           .then(json => {
             var accumulator = [];
-            var currentWidth = 0;
-
-            console.log(json.features);
             var i = 0;
 
             while (i < json.features.length) {
-              let entry = json.features[i];
+              let current = json.features[i];
+              let next = json.features[i + 1];
 
-              if (entry.width === 1 && json.features[i + 1].width === 3) {
-                let entry2 = json.features[i + 1];
-                if (entry2.text && entry2.text.includes('<--IMG-->')) {
-                  console.log('image');
-                  entry2.image = entry2.text.replaceAll('<--IMG-->', '');
-                  entry2.text = undefined;
+              // We need to check for undefined here since the sequence may have an odd number of steps.
+              if (next !== undefined) {
+                if (current.width === 1 && next.width === 3) {
+                  accumulator.push(this.buildStickyRight(current, next, i));
+                  i += 2;
+                } else if (entry.width === 4) {
+                  accumulator.push([entry]);
+                  i += 1;
                 }
-                accumulator.push([entry, entry2]);
-                i += 2;
-              } else if (entry.width === 4) {
-                accumulator.push([entry]);
-                i += 1;
+              } else {
+                break
               }
             }
 
@@ -54,6 +51,15 @@ export default {
       .catch((e) => {
         console.error(`Error fetching dashboard: ${e}`)
       })
+  },
+  methods: {
+    buildStickyRight (current, next) {
+      if (next.text && next.text.includes('<--IMG-->')) {
+        next.image = next.text.replaceAll('<--IMG-->', '');
+      }
+
+      return [current, next];
+    },
   },
   data() {
     return {

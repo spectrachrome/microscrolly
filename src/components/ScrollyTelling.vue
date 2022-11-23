@@ -22,7 +22,7 @@
         :progress="progress[index] || 0"
       />
       <FullTextBlock
-        v-else-if="item[0].width === 4 && item[0].text"
+        v-else-if="item[0].width === 4 && item[0].text && item[0].scrub === undefined"
         :key="index"
         :text="item[0].text"
       />
@@ -46,6 +46,7 @@
         v-else-if="item[0].scrub"
         :key="index"
         :progress="progress[index]"
+        :base-url="item[0].scrub"
       />
     </template>
   </v-container>

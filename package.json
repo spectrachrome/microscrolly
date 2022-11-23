@@ -13,6 +13,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "marked": "^4.2.3",
     "vue": "^2.5.2",
     "vuetify": "2.6.12"
   },

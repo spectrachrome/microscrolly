@@ -38,7 +38,12 @@ export default {
                   accumulator.push(this.buildStickyLeft(current, next, i));
                   i += 2;
                 } else if (current.width === 4) {
-                  accumulator.push([current]);
+                  if (current.text.includes('<--SCRUB-->')) {
+                    accumulator.push(this.buildVideoScrub(current));
+                  } else {
+                    accumulator.push([current]);
+                  }
+
                   i += 1;
                 }
               } else {
@@ -70,6 +75,14 @@ export default {
       }
 
       return [current, next];
+    },
+
+    buildVideoScrub (current) {
+      if (current.text && current.text.includes('<--SCRUB-->')) {
+        current.scrub = current.text.replaceAll('<--SCRUB-->', '');
+      }
+
+      return [current];
     },
   },
   data() {

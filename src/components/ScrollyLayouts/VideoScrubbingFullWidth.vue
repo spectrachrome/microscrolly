@@ -33,31 +33,21 @@
         </v-img>-->
       </div>
     </v-fade-transition>
-    <v-container>
+    <v-container v-if="scrubConfig">
       <v-col cols="6">
         <article
           class="black--text"
           style="height: 1000px; padding: 400px 50px 300px 50px"
-        >
-          <h1 class="text-h1 mb-8">Space Exploration</h1>
-          <p>Lorem Ipsum sit dolor amet.</p>
-          <p>
-            Mauris felis ipsum, placerat sit amet accumsan non, commodo ac arcu.
-            Phasellus lorem urna, consectetur non ornare et, pharetra id risus.
-          </p>
-          <br /><br />
-          <p>
-            Proin sit amet commodo velit. Ut vitae quam elit. Donec nulla dui,
-            ullamcorper ac dui nec, pretium feugiat lectus. Nam vestibulum odio
-            arcu, eu efficitur tellus maximus ac.
-          </p>
-        </article>
+          v-html="parseMarkdown(scrubConfig.content)"
+        />
       </v-col>
     </v-container>
   </div>
 </template>
 
 <script>
+import marked from 'marked';
+
 export default {
   props: {
     progress: Number,
@@ -69,8 +59,16 @@ export default {
       "https://codesandbox-scrollytelling-demo.s3.eu-central-1.amazonaws.com",
     img: null,
     context: null,
+    scrubConfig: null,
   }),
   mounted() {
+    fetch(`${this.baseUrl}/scrub.json`)
+      .then((response) => {
+        response.json()
+          .then(json => {
+            this.scrubConfig = json;
+          })
+      })
     const canvas = this.$refs.hero;
     this.context = canvas.getContext("2d");
 
@@ -93,6 +91,9 @@ export default {
         const img = new Image();
         img.src = this.currentFrame(i);
       }
+    },
+    parseMarkdown(input) {
+      return marked.parse(input).replace('<a', '<a target="_blank" ');
     },
   },
   watch: {

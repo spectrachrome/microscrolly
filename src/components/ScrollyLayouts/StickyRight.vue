@@ -2,7 +2,7 @@
   <v-row justify="center" class="mx-0">
     <v-col cols="6">
       <article>
-        <p v-html="text"></p>
+        <p v-html="item[0].text"></p>
       </article>
     </v-col>
     <v-col cols="6">
@@ -27,7 +27,6 @@ export default {
     item: Array,
     index: Number,
     progress: Number,
-    text: String,
   },
   data: () => ({
     textPlaceholders: [

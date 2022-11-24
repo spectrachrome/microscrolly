@@ -32,7 +32,6 @@
         :item="item"
         :index="index"
         :progress="progress[index]"
-        :text="item[0].text"
       />
       <StickyLeft
         v-else-if="item[0].width === 3"
@@ -40,7 +39,6 @@
         :item="item"
         :index="index"
         :progress="progress[index]"
-        :text="item[1].text"
       />
       <VideoScrubbingFullWidth
         v-else-if="item[0].scrub"

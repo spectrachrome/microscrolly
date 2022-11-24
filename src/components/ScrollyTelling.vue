@@ -9,6 +9,7 @@
       bottom: 0;
       left: 0;
       right: 0;
+      padding: 0;
     "
     class="overflow-y-auto mx-0"
     v-scroll.self="onScroll"

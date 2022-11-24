@@ -1,18 +1,25 @@
 <template>
   <v-col>
     <article class="mx-10">
-      <p v-html="text"></p>
+      <p v-html="parseMarkdown(text)"></p>
     </article>
   </v-col>
 </template>
 
 <script>
+import marked from 'marked';
+
 export default {
   props: {
     text: {
       type: String,
       required: true,
     }
+  },
+  methods: {
+    parseMarkdown(input) {
+      return marked.parse(input).replace('<a', '<a target="_blank" ');
+    },
   },
   data: () => ({
     textPlaceholders: [

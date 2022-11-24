@@ -17,7 +17,7 @@
         <div class="white--text text-center pa-16" style="position: relative">
           <h1 class="text-h1 mb-8">Hello World.</h1>
           <h4 class="text-h4 mb-8">Scroll to get started</h4>
-          <p v-html="text"></p>
+          <p v-html="parseMarkdown(text)"></p>
         </div>
       </article>
     </v-col>
@@ -25,6 +25,8 @@
 </template>
 
 <script>
+import marked from 'marked';
+
 export default {
   name: "ImageWithTextOverlay",
   props: {
@@ -32,6 +34,11 @@ export default {
     index: Number,
     progress: Number,
     text: String,
+  },
+  methods: {
+    parseMarkdown(input) {
+      return marked.parse(input).replace('<a', '<a target="_blank" ');
+    },
   },
   data: () => ({
     textPlaceholders: [

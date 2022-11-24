@@ -15,18 +15,25 @@
     </v-col>
     <v-col cols="6">
       <article>
-        <p v-html="item[1].text"></p>
+        <p v-html="parseMarkdown(item[1].text)"></p>
       </article>
     </v-col>
   </v-row>
 </template>
 
 <script>
+import marked from 'marked';
+
 export default {
   props: {
     item: Array,
     index: Number,
     progress: Number,
+  },
+  methods: {
+    parseMarkdown(input) {
+      return marked.parse(input).replace('<a', '<a target="_blank" ');
+    },
   },
   data: () => ({
     textPlaceholders: [

@@ -1,9 +1,7 @@
 <template>
-  <v-col>
-    <article class="mx-10">
+  <article class="">
       <p v-html="parseMarkdown(text)"></p>
-    </article>
-  </v-col>
+  </article>
 </template>
 
 <script>
@@ -34,6 +32,15 @@ export default {
 
 <style scoped>
 article {
-  padding: 100px 50px 200px 50px;
+  /* padding: 100px 50px 200px 50px; */
+  margin: -12px;
+}
+
+p {
+  max-width: 100%;
+}
+
+:deep(img) {
+  width: 100%;
 }
 </style>

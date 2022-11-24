@@ -8,7 +8,16 @@
     <v-col cols="6">
       <v-fade-transition>
         <figure v-show="progress >= 0 && progress <= 100">
+          <video
+            v-if="item[1].scrub"
+            id="scrubVideo"
+            :src="item[1].scrub"
+            ref="scrubVideo"
+            width="100%"
+            muted
+          />
           <img
+            v-else
             :src="item[1].image"
             :style="`filter: saturate(${(progress || 0) / 100});`"
           />
@@ -34,6 +43,15 @@ export default {
     parseMarkdown(input) {
       return marked.parse(input).replace('<a', '<a target="_blank" ');
     },
+  },
+  mounted () {
+    if (this.item[1].scrub !== undefined) {
+      document.getElementById('scroll-target').addEventListener('scroll' , e => {
+        let video = this.$refs.scrubVideo;
+        console.log(`scroll!  duration: ${video.duration} . ----- total: ${video.duration * (this.progress / 100)}`);
+        video.currentTime = video.duration * (this.progress / 100);
+      });
+    }
   },
   data: () => ({
     textPlaceholders: [

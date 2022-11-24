@@ -52,7 +52,20 @@ export default {
             }
 
             this.items = accumulator;
-            console.log(this.items);
+
+            window.setTimeout(() => {
+              var imgs = document.getElementsByTagName("img");
+
+              for (var i = 0; i < imgs.length; i++) {
+                // Replace all relative links with absolute ones pointing to local GTIF eodash for now.
+                var newSrc = imgs[i].src.replaceAll(
+                  location.protocol + '//' + location.hostname + (location.port ? ":" + location.port : ""),
+                  'http://gtif.eox.world:8812'
+                );
+                imgs[i].src = newSrc;
+              }
+
+            }, 1000);
           })
           .catch(e => console.error(`Error decoding JSON: ${e}`));
       })

@@ -77,6 +77,8 @@ export default {
     buildStickyRight (current, next) {
       if (next.text && next.text.includes('<--IMG-->')) {
         next.image = next.text.replaceAll('<--IMG-->', '');
+      } else if (next.text && next.text.includes('<--SCRUB-->')) {
+        next.scrub = next.text.replaceAll('<--SCRUB-->', '');
       }
 
       return [current, next];
@@ -85,6 +87,8 @@ export default {
     buildStickyLeft (current, next) {
       if (current.text && current.text.includes('<--IMG-->')) {
         current.image = current.text.replaceAll('<--IMG-->', '');
+      } else if (current.text && current.text.includes('<--SCRUB-->')) {
+        current.scrub = current.text.replaceAll('<--SCRUB-->', '');
       }
 
       return [current, next];

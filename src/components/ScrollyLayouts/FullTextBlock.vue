@@ -47,7 +47,7 @@ p {
 }
 
 @media screen and (min-width: 800px) {
-  article.full-text-block {
+  article.full-text-block > p > p {
     max-width: 70vw;
     margin-left: calc((100% - 70%) / 2);
     margin-right: calc((100% - 70%) / 2);

@@ -8,22 +8,20 @@
     <v-col cols="6">
       <v-fade-transition>
         <figure v-show="progress >= 0 && progress <= 100">
-          <video
+          <VideoScrubber
             v-if="item[1].scrub"
-            id="scrubVideo"
-            :src="item[1].scrub"
-            ref="scrubVideo"
-            width="100%"
-            muted
+            :progress="progress"
+            :base-url="item[1].scrub"
+            small
           />
           <img
             v-else
             :src="item[1].image"
             :style="`filter: saturate(${(progress || 0) / 100});`"
           />
-          <span class="white--text pa-2" style="position: absolute; left: 0"
-            >{{ Math.round(progress) || 0 }}%</span
-          >
+          <span class="white--text pa-2" style="position: absolute; left: 0">
+            {{ Math.round(progress) || 0 }}%
+          </span>
         </figure>
       </v-fade-transition>
     </v-col>
@@ -32,6 +30,7 @@
 
 <script>
 import marked from 'marked';
+import VideoScrubber from './VideoScrubber';
 
 export default {
   props: {
@@ -39,19 +38,22 @@ export default {
     index: Number,
     progress: Number,
   },
+  components: {
+    VideoScrubber,
+  },
   methods: {
     parseMarkdown(input) {
       return marked.parse(input).replace('<a', '<a target="_blank" ');
     },
   },
-  mounted () {
-    if (this.item[1].scrub !== undefined) {
-      document.getElementById('scroll-target').addEventListener('scroll' , e => {
-        let video = this.$refs.scrubVideo;
-        console.log(`scroll!  duration: ${video.duration} . ----- total: ${video.duration * (this.progress / 100)}`);
-        video.currentTime = video.duration * (this.progress / 100);
-      });
+  computed: {
+    content () {
+      if (item[0].text.includes('<--EXPAND-SMALL-->')) {
+        return item[0].text.split('<--EXPAND-SMALL-->');
+      }
     }
+  },
+  mounted () {
   },
   data: () => ({
     textPlaceholders: [

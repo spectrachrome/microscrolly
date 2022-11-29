@@ -1,7 +1,9 @@
 <template>
-  <article class="">
+  <v-col>
+    <article class="full-text-block">
       <p v-html="parseMarkdown(text)"></p>
-  </article>
+    </article>
+  </v-col>
 </template>
 
 <script>
@@ -42,5 +44,13 @@ p {
 
 :deep(img) {
   width: 100%;
+}
+
+@media screen and (min-width: 800px) {
+  article.full-text-block {
+    max-width: 70vw;
+    margin-left: calc((100% - 70%) / 2);
+    margin-right: calc((100% - 70%) / 2);
+  }
 }
 </style>

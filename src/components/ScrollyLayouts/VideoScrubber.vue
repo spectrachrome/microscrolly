@@ -6,7 +6,6 @@
           v-if="baseUrl.includes('.mp4')"
           ref="scrubVideo"
           width="100%"
-          controls
           muted
         >
           <source :src="baseUrl" type="video/mp4">

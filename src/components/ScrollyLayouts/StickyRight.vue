@@ -14,6 +14,12 @@
             :base-url="item[1].scrub"
             small
           />
+          <video
+            v-if="item[1].video"
+            :src="item[1].video"
+            width="100%"
+            controls
+          />
           <img
             v-else
             :src="item[1].image"

@@ -79,6 +79,8 @@ export default {
         next.image = next.text.replaceAll('<--IMG-->', '');
       } else if (next.text && next.text.includes('<--SCRUB-->')) {
         next.scrub = next.text.replaceAll('<--SCRUB-->', '');
+      } else if (next.text && next.text.includes('<--VID-->')) {
+        next.video = next.text.replaceAll('<--VID-->', '');
       }
 
       return [current, next];
@@ -89,6 +91,8 @@ export default {
         current.image = current.text.replaceAll('<--IMG-->', '');
       } else if (current.text && current.text.includes('<--SCRUB-->')) {
         current.scrub = current.text.replaceAll('<--SCRUB-->', '');
+      } else if (current.text && current.text.includes('<--VID-->')) {
+        current.video = current.text.replaceAll('<--VID-->', '');
       }
 
       return [current, next];

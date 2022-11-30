@@ -5,10 +5,12 @@
         <video
           v-if="baseUrl.includes('.mp4')"
           ref="scrubVideo"
-          :src="baseUrl"
           width="100%"
+          controls
           muted
-        />
+        >
+          <source :src="baseUrl" type="video/mp4">
+        </video>
         
         <canvas
           v-else
@@ -84,7 +86,8 @@ export default {
     },
     setupVideoRendering() {
       document.getElementById('scroll-target').addEventListener('scroll' , e => {
-        
+        this.$refs.scrubVideo.currentTime =
+          this.$refs.scrubVideo.duration * this.progress / 100;
       });
     },
     setupCanvasRendering() {

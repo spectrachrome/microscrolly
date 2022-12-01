@@ -36,6 +36,7 @@ export default {
 article {
   /* padding: 100px 50px 200px 50px; */
   margin: -12px;
+  position: relative;
 }
 
 p {

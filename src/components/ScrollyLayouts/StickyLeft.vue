@@ -3,7 +3,15 @@
     <v-col cols="6">
       <v-fade-transition>
         <figure v-show="progress >= 0 && progress <= 100">
+          <video
+            v-if="item[0].scrub"
+            id="scrubVideo"
+            :src="item[0].scrub"
+            width="100%"
+            muted
+          />
           <img
+            v-else
             :src="item[0].image"
             :style="`filter: saturate(${(progress || 0) / 100});`"
           />

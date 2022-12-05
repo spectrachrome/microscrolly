@@ -1,13 +1,13 @@
 <template>
   <v-col>
-    <article class="full-text-block">
-      <p v-html="parseMarkdown(text)"></p>
+    <article class="full-text-block d-flex px-16">
+      <ExpansibleTextSection :text="text" />
     </article>
   </v-col>
 </template>
 
 <script>
-import marked from 'marked';
+import ExpansibleTextSection from '@/components/ExpansibleTextSection.vue';
 
 export default {
   props: {
@@ -16,27 +16,22 @@ export default {
       required: true,
     }
   },
-  methods: {
-    parseMarkdown(input) {
-      return marked.parse(input).replace('<a', '<a target="_blank" ');
-    },
+  components: {
+    ExpansibleTextSection,
   },
   data: () => ({
-    textPlaceholders: [
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam gravida maximus elit a venenatis. Mauris felis ipsum, placerat sit amet accumsan non, commodo ac arcu. Phasellus lorem urna, consectetur non ornare et, pharetra id risus.",
-      "Proin sit amet commodo velit. Ut vitae quam elit. Donec nulla dui, ullamcorper ac dui nec, pretium feugiat lectus. Nam vestibulum odio arcu, eu efficitur tellus maximus ac.",
-      "Ut vitae quam elit. Donec nulla dui, ullamcorper ac dui nec, pretium feugiat lectus. Nam vestibulum odio arcu, eu efficitur tellus maximus ac.",
-      "Mauris felis ipsum, placerat sit amet accumsan non, commodo ac arcu. Phasellus lorem urna, consectetur non ornare et, pharetra id risus.",
-    ],
+    isExpanded: false,
   }),
 };
 </script>
 
 <style scoped>
 article {
-  /* padding: 100px 50px 200px 50px; */
+  padding: 100px 50px 200px 50px;
   margin: -12px;
   position: relative;
+  flex-direction: column;
+  align-items: center;
 }
 
 p {
@@ -48,6 +43,9 @@ p {
 }
 
 @media screen and (min-width: 800px) {
+  article.full-width-block {
+    max-width: 50vw;
+  }
   article.full-text-block > p > p {
     max-width: 70vw;
     margin-left: calc((100% - 70%) / 2);

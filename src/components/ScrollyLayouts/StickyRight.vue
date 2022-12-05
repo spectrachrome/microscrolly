@@ -1,8 +1,8 @@
 <template>
   <v-row justify="center" class="mx-0">
     <v-col cols="6">
-      <article>
-        <p v-html="parseMarkdown(item[0].text)"></p>
+      <article style="min-height: 800px">
+        <ExpansibleTextSection :text="item[0].text" />
       </article>
     </v-col>
     <v-col cols="6">
@@ -36,8 +36,8 @@
 </template>
 
 <script>
-import marked from 'marked';
 import VideoScrubber from './VideoScrubber';
+import ExpansibleTextSection from '@/components/ExpansibleTextSection';
 
 export default {
   props: {
@@ -46,30 +46,9 @@ export default {
     progress: Number,
   },
   components: {
+    ExpansibleTextSection,
     VideoScrubber,
   },
-  methods: {
-    parseMarkdown(input) {
-      return marked.parse(input).replace('<a', '<a target="_blank" ');
-    },
-  },
-  computed: {
-    content () {
-      if (item[0].text.includes('<--EXPAND-SMALL-->')) {
-        return item[0].text.split('<--EXPAND-SMALL-->');
-      }
-    }
-  },
-  mounted () {
-  },
-  data: () => ({
-    textPlaceholders: [
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam gravida maximus elit a venenatis. Mauris felis ipsum, placerat sit amet accumsan non, commodo ac arcu. Phasellus lorem urna, consectetur non ornare et, pharetra id risus.",
-      "Proin sit amet commodo velit. Ut vitae quam elit. Donec nulla dui, ullamcorper ac dui nec, pretium feugiat lectus. Nam vestibulum odio arcu, eu efficitur tellus maximus ac.",
-      "Ut vitae quam elit. Donec nulla dui, ullamcorper ac dui nec, pretium feugiat lectus. Nam vestibulum odio arcu, eu efficitur tellus maximus ac.",
-      "Mauris felis ipsum, placerat sit amet accumsan non, commodo ac arcu. Phasellus lorem urna, consectetur non ornare et, pharetra id risus.",
-    ],
-  }),
 };
 </script>
 

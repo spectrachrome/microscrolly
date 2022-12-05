@@ -85,8 +85,10 @@ export default {
     },
     setupVideoRendering() {
       document.getElementById('scroll-target').addEventListener('scroll' , e => {
-        this.$refs.scrubVideo.currentTime =
-          this.$refs.scrubVideo.duration * this.progress / 100;
+        if (this.progress > 0.0 && this.progress < 100.0) {
+          this.$refs.scrubVideo.currentTime =
+            this.$refs.scrubVideo.duration * this.progress / 100;
+        }
       });
     },
     setupCanvasRendering() {

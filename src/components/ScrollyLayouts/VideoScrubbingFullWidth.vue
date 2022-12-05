@@ -2,7 +2,16 @@
   <div>
     <v-fade-transition>
       <div v-show="progress >= 0 && progress <= 100">
+        <video
+          v-if="baseUrl.includes('.mp4')"
+          id="scrubVideo"
+          :src="baseUrl"
+          width="100%"
+          muted
+        />
+
         <canvas
+          v-else
           ref="hero"
           style="
             position: fixed;

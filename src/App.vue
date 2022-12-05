@@ -40,6 +40,8 @@ export default {
                 } else if (current.width === 4) {
                   if (current.text.includes('<--SCRUB-->')) {
                     accumulator.push(this.buildVideoScrub(current));
+                  } else if (current.text.includes('<--VID-->')) {
+                    accumulator.push(this.buildVideoPlayer(current));
                   } else {
                     accumulator.push([current]);
                   }
@@ -101,6 +103,14 @@ export default {
     buildVideoScrub (current) {
       if (current.text && current.text.includes('<--SCRUB-->')) {
         current.scrub = current.text.replaceAll('<--SCRUB-->', '');
+      }
+
+      return [current];
+    },
+
+    buildVideoPlayer (current) {
+      if (current.text && current.text.includes('<--VID-->')) {
+        current.video = current.text.replaceAll('<--VID-->', '');
       }
 
       return [current];

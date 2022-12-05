@@ -23,9 +23,15 @@
         :progress="progress[index] || 0"
       />
       <FullTextBlock
-        v-else-if="item[0].width === 4 && item[0].text && item[0].scrub === undefined"
+        v-else-if="item[0].width === 4 && item[0].text && !item[0].scrub && !item[0].video"
         :key="index"
         :text="item[0].text"
+      />
+      <video
+        v-else-if="item[0].video !== undefined"
+        :key="index"
+        src="item[0].video"
+        controls
       />
       <StickyRight
         v-else-if="item[0].width === 1"

@@ -3,16 +3,22 @@
     <v-col cols="6">
       <v-fade-transition>
         <figure v-show="progress >= 0 && progress <= 100">
-          <video
-            v-if="item[0].scrub"
-            id="scrubVideo"
-            :src="item[0].scrub"
-            width="100%"
-            muted
+          <VideoScrubber
+            v-if="item[1].scrub"
+            :progress="progress"
+            :base-url="item[1].scrub"
+            small
           />
+          <video
+            v-if="item[1].video"
+            width="100%"
+            controls
+          >
+            <source :src="item[1].video" type="video/mp4">
+          </video>
           <img
             v-else
-            :src="item[0].image"
+            :src="item[1].image"
             :style="`filter: saturate(${(progress || 0) / 100});`"
           />
           <span class="white--text pa-2" style="position: absolute; right: 0"
@@ -31,12 +37,16 @@
 
 <script>
 import marked from 'marked';
+import VideoScrubber from './VideoScrubber';
 
 export default {
   props: {
     item: Array,
     index: Number,
     progress: Number,
+  },
+  components: {
+    VideoScrubber,
   },
   methods: {
     parseMarkdown(input) {

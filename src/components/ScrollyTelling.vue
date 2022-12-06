@@ -32,6 +32,7 @@
         :key="index"
         src="item[0].video"
         controls
+        width="100%"
       />
       <StickyRight
         v-else-if="item[0].width === 1"

@@ -25,9 +25,11 @@ export default {
             var accumulator = [];
             var i = 0;
 
-            while (i < json.features.length) {
+            while (i <= json.features.length) {
               let current = json.features[i];
               let next = json.features[i + 1];
+
+              console.log(current);
 
               // We need to check for undefined here since the sequence may have an odd number of steps.
               if (next !== undefined) {
@@ -37,7 +39,9 @@ export default {
                 } else if (current.width === 3 && next.width === 1) {
                   accumulator.push(this.buildStickyLeft(current, next, i));
                   i += 2;
-                } else if (current.width === 4) {
+                }
+              } else {
+                if (current.width === 4) {
                   if (current.text.includes('<--SCRUB-->')) {
                     accumulator.push(this.buildVideoScrub(current));
                   } else if (current.text.includes('<--VID-->')) {
@@ -48,7 +52,7 @@ export default {
 
                   i += 1;
                 }
-              } else {
+                
                 break
               }
             }

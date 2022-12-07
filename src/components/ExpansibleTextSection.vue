@@ -3,24 +3,13 @@
     <template v-if="hasExpansibleSection">
       <p v-html="parseMarkdown(sections[0])"></p>
 
-      <v-btn
-        elevation="2"
-        icon
-        small
-        class="grey darken-1"
-        color="white"
-        style="font-size: 20px"
+      <img
+        src="data/gtif/images/circle-plus-solid.svg"
+        data-section="4"
+        class="expandBtn"
+        width="20"
         @click="isExpanded = !isExpanded"
       >
-        <span v-if="isExpanded">
-          <!-- Long Minus Sign -->
-          &#x2212;
-        </span>
-        <span v-else>
-          <!-- Plus Sign -->
-          &#x002B;
-        </span>
-      </v-btn>
 
       <v-fade-transition>
         <p

@@ -3,7 +3,7 @@
     <article class="full-text-block d-flex px-16">
       <video
         v-if="item.video"
-        src="item[0].video"
+        :src="item.video"
         controls
         muted
         autoplay

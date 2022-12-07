@@ -22,7 +22,7 @@
         :index="index"
         :progress="progress[index] || 0"
       />
-      <FullTextBlock
+      <FullWidthBlock
         v-else-if="item[0].width === 4 
           && item[0].text 
           || item[0].video"
@@ -55,7 +55,7 @@
 
 <script>
 import ImageWithTextOverlay from "./ScrollyLayouts/ImageWithTextOverlay";
-import FullTextBlock from "./ScrollyLayouts/FullTextBlock";
+import FullWidthBlock from "./ScrollyLayouts/FullWidthBlock";
 import StickyRight from "./ScrollyLayouts/StickyRight";
 import StickyLeft from "./ScrollyLayouts/StickyLeft";
 import VideoScrubbingFullWidth from "./ScrollyLayouts/VideoScrubbingFullWidth";
@@ -63,7 +63,7 @@ import VideoScrubbingFullWidth from "./ScrollyLayouts/VideoScrubbingFullWidth";
 export default {
   components: {
     ImageWithTextOverlay,
-    FullTextBlock,
+    FullWidthBlock,
     StickyRight,
     StickyLeft,
     VideoScrubbingFullWidth,

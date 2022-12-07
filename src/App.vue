@@ -1,176 +1,99 @@
 <template>
-  <v-app>
-    <ScrollyTelling :items="items" />
-  </v-app>
+  <v-container
+    id="scroll-target"
+    style="
+      height: 100vh;
+      max-width: 100%;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 0;
+    "
+    class="overflow-y-auto mx-0"
+    v-scroll.self="onScroll"
+  >
+    <template v-for="(item, index) in items">
+      <ImageWithTextOverlay
+        v-if="item[0].width === 4 && item[0].image"
+        :key="index"
+        :item="item"
+        :index="index"
+        :progress="progress[index] || 0"
+      />
+      <FullWidthBlock
+        v-else-if="item[0].width === 4
+          && item[0].text
+          || item[0].video"
+        :key="index"
+        :item="item[0]"
+      />
+      <StickyRight
+        v-else-if="item[0].width === 1"
+        :key="index"
+        :item="item"
+        :index="index"
+        :progress="progress[index]"
+      />
+      <StickyLeft
+        v-else-if="item[0].width === 3"
+        :key="index"
+        :item="item"
+        :index="index"
+        :progress="progress[index]"
+      />
+      <VideoScrubbingFullWidth
+        v-else-if="item[0].scrub"
+        :key="index"
+        :progress="progress[index]"
+        :base-url="item[0].scrub"
+      />
+    </template>
+  </v-container>
 </template>
 
 <script>
-import ScrollyTelling from "./components/ScrollyTelling";
+import ImageWithTextOverlay from "./components/ScrollyLayouts/ImageWithTextOverlay";
+import FullWidthBlock from "./components/ScrollyLayouts/FullWidthBlock";
+import StickyRight from "./components/ScrollyLayouts/StickyRight";
+import StickyLeft from "./components/ScrollyLayouts/StickyLeft";
+import VideoScrubbingFullWidth from "./components/ScrollyLayouts/VideoScrubbingFullWidth";
 
 export default {
   components: {
-    ScrollyTelling,
+    ImageWithTextOverlay,
+    FullWidthBlock,
+    StickyRight,
+    StickyLeft,
+    VideoScrubbingFullWidth,
   },
-  async mounted () {
-    const urlParams = new URLSearchParams(window.location.search);
-    this.dashboardId = urlParams.get('id') || '0be65aaa716af1b2';
-
-
-    console.log(this.dashboardId);
-
-    fetch(`https://dev-eodash-dashboard-api.f77a4d8a-acde-4ddd-b1cd-b2b6afe83d7a.hub.eox.at/get?id=${this.dashboardId}`)
-      .then((response) => {
-        response.json()
-          .then(json => {
-            var accumulator = [];
-            var i = 0;
-
-            while (i <= json.features.length) {
-              let current = json.features[i];
-              let next = json.features[i + 1];
-
-              console.log(current);
-
-              // We need to check for undefined here since the sequence may have an odd number of steps.
-              if (next !== undefined) {
-                if (current.width === 1 && next.width === 3) {
-                  accumulator.push(this.buildStickyRight(current, next, i));
-                  i += 2;
-                } else if (current.width === 3 && next.width === 1) {
-                  accumulator.push(this.buildStickyLeft(current, next, i));
-                  i += 2;
-                }
-              } else {
-                if (current.width === 4) {
-                  if (current.text.includes('<--SCRUB-->')) {
-                    accumulator.push(this.buildVideoScrub(current));
-                  } else if (current.text.includes('<--VID-->')) {
-                    accumulator.push(this.buildVideoPlayer(current));
-                  } else {
-                    accumulator.push([current]);
-                  }
-
-                  i += 1;
-                }
-                
-                break
-              }
-            }
-
-            this.items = accumulator;
-
-            window.setTimeout(() => {
-              var imgs = document.getElementsByTagName("img");
-
-              for (var i = 0; i < imgs.length; i++) {
-                // Replace all relative links with absolute ones pointing to local GTIF eodash for now.
-                var newSrc = imgs[i].src.replaceAll(
-                  location.protocol + '//' + location.hostname + (location.port ? ":" + location.port : ""),
-                  'http://gtif.eox.world:8812'
-                );
-                imgs[i].src = newSrc;
-              }
-
-            }, 1000);
-          })
-          .catch(e => console.error(`Error decoding JSON: ${e}`));
-      })
-      .catch((e) => {
-        console.error(`Error fetching dashboard: ${e}`)
-      })
+  created () {
+    window.addEventListener('message', (message) => {
+      if (message && typeof message.data === 'object') {
+          this.items = message.data;
+      }
+    });
   },
+  data: () => ({
+    progress: {},
+    items: [],
+  }),
   methods: {
-    buildStickyRight (current, next) {
-      if (next.text && next.text.includes('<--IMG-->')) {
-        next.image = next.text.replaceAll('<--IMG-->', '');
-      } else if (next.text && next.text.includes('<--SCRUB-->')) {
-        next.scrub = next.text.replaceAll('<--SCRUB-->', '');
-      } else if (next.text && next.text.includes('<--VID-->')) {
-        next.video = next.text.replaceAll('<--VID-->', '');
-      }
-
-      return [current, next];
+    onScroll() {
+      const windowHeight = window.innerHeight;
+      const articles = [...document.querySelectorAll("article")];
+      articles.forEach((currentElement, index) => {
+        const elementHeight = currentElement.clientHeight;
+        const elementTop = currentElement.getBoundingClientRect().top;
+        this.$set(
+          this.progress,
+          index,
+          ((windowHeight - elementTop - elementHeight * 0.33) / elementHeight) *
+            100
+        );
+      });
     },
-
-    buildStickyLeft (current, next) {
-      if (current.text && current.text.includes('<--IMG-->')) {
-        current.image = current.text.replaceAll('<--IMG-->', '');
-      } else if (current.text && current.text.includes('<--SCRUB-->')) {
-        current.scrub = current.text.replaceAll('<--SCRUB-->', '');
-      } else if (current.text && current.text.includes('<--VID-->')) {
-        current.video = current.text.replaceAll('<--VID-->', '');
-      }
-
-      return [current, next];
-    },
-
-    buildVideoScrub (current) {
-      if (current.text && current.text.includes('<--SCRUB-->')) {
-        current.scrub = current.text.replaceAll('<--SCRUB-->', '');
-      }
-
-      return [current];
-    },
-
-    buildVideoPlayer (current) {
-      if (current.text && current.text.includes('<--VID-->')) {
-        current.video = current.text.replaceAll('<--VID-->', '');
-      }
-
-      return [current];
-    },
-  },
-  data() {
-    return {
-      dashboardId: '',
-      items: [],
-      scrollyItems: [
-        [
-          {
-            width: 4,
-            image: "https://picsum.photos/id/1022/2000/1000",
-          },
-        ],
-        [
-          {
-            width: 4,
-            scrub: true,
-          },
-        ],
-        [
-          {
-            width: 4,
-            text: true,
-          },
-        ],
-        [
-          {
-            width: 1,
-            text: true,
-          },
-          {
-            width: 3,
-            image: "https://picsum.photos/id/10/800/600",
-          },
-        ],
-        [
-          {
-            width: 3,
-            image: "https://picsum.photos/id/1015/800/600",
-          },
-          {
-            width: 1,
-            text: true,
-          },
-        ],
-        [
-          {
-            width: 4,
-            text: true,
-          },
-        ],
-      ],
-    };
   },
 };
 </script>

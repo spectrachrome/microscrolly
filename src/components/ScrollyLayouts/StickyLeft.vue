@@ -3,7 +3,7 @@
     <v-col cols="6">
       <v-fade-transition>
         <figure v-show="progress >= 0 && progress <= 100">
-          <VideoScrubber
+          <VideoScrubbingWindow
             v-if="item[1].scrub"
             :progress="progress"
             :base-url="item[1].scrub"
@@ -37,7 +37,7 @@
 
 <script>
 import marked from 'marked';
-import VideoScrubber from './VideoScrubber';
+import VideoScrubbingWindow from './VideoScrubbingWindow';
 
 export default {
   props: {
@@ -46,7 +46,7 @@ export default {
     progress: Number,
   },
   components: {
-    VideoScrubber,
+    VideoScrubbingWindow,
   },
   methods: {
     parseMarkdown(input) {

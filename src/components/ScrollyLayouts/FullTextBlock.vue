@@ -1,7 +1,18 @@
 <template>
   <v-col>
     <article class="full-text-block d-flex px-16">
-      <ExpansibleTextSection :text="text" />
+      <video
+        v-if="item.video"
+        src="item[0].video"
+        controls
+        muted
+        autoplay
+        width="100%"
+      />
+      <ExpansibleTextSection
+        v-else-if="item.text"
+        :text="item.text"
+      />
     </article>
   </v-col>
 </template>
@@ -11,8 +22,8 @@ import ExpansibleTextSection from '@/components/ExpansibleTextSection.vue';
 
 export default {
   props: {
-    text: {
-      type: String,
+    item: {
+      type: Object,
       required: true,
     }
   },

@@ -1,5 +1,5 @@
 <template>
-  <div class="expansible-text-section">
+  <div class="expansible-text-section px-16">
     <template v-if="hasExpansibleSection">
       <p v-html="parseMarkdown(sections[0])"></p>
 
@@ -64,6 +64,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 }
 .expansible {
   max-width: 500px;

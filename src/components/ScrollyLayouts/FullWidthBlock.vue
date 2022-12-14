@@ -1,6 +1,6 @@
 <template>
   <v-col>
-    <article class="full-text-block d-flex px-16">
+    <article class="full-text-block d-flex">
       <video
         v-if="item.video"
         :src="item.video"

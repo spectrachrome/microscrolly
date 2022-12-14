@@ -50,6 +50,8 @@
         :base-url="item[0].scrub"
       />
     </template>
+    <div id="scrolly-bottom-nav" />
+    <div id="scrolly-footer" />
   </v-container>
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="expansible-text-section px-16">
+  <div class="expansible-text-section">
     <template v-if="hasExpansibleSection">
       <p v-html="parseMarkdown(sections[0])"></p>
 

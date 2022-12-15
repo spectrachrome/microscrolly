@@ -12,7 +12,7 @@
         right: 0;
         padding: 0;
       "
-      class="overflow-y-auto mx-0"
+      class="overflow-y-auto overflow-x-hidden mx-0"
       v-scroll.self="onScroll"
     >
       <template v-for="(item, index) in items">

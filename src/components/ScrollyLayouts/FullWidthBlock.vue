@@ -1,20 +1,22 @@
 <template>
-  <v-col>
-    <article class="full-text-block d-flex">
-      <video
-        v-if="item.video"
-        :src="item.video"
-        controls
-        muted
-        autoplay
-        width="100%"
-      />
-      <ExpansibleTextSection
-        v-else-if="item.text"
-        :text="item.text"
-      />
-    </article>
-  </v-col>
+  <v-row>
+    <v-col>
+      <article class="full-text-block d-flex">
+        <video
+          v-if="item.video"
+          :src="item.video"
+          controls
+          muted
+          autoplay
+          width="100%"
+        />
+        <ExpansibleTextSection
+          v-else-if="item.text"
+          :text="item.text"
+        />
+      </article>
+    </v-col>
+  </v-row>
 </template>
 
 <script>

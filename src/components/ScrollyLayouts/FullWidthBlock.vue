@@ -20,14 +20,14 @@
 </template>
 
 <script>
-import ExpansibleTextSection from '@/components/ExpansibleTextSection.vue';
+import ExpansibleTextSection from '@/components/ExpansibleTextSection';
 
 export default {
   props: {
     item: {
       type: Object,
       required: true,
-    }
+    },
   },
   components: {
     ExpansibleTextSection,

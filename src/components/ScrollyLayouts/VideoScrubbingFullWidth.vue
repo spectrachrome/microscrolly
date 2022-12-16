@@ -65,7 +65,7 @@ export default {
   data: () => ({
     frameCount: 134,
     imageBase:
-      "https://codesandbox-scrollytelling-demo.s3.eu-central-1.amazonaws.com",
+      'https://codesandbox-scrollytelling-demo.s3.eu-central-1.amazonaws.com',
     img: null,
     context: null,
     scrubConfig: null,
@@ -74,12 +74,12 @@ export default {
     fetch(`${this.baseUrl}/scrub.json`)
       .then((response) => {
         response.json()
-          .then(json => {
+          .then((json) => {
             this.scrubConfig = json;
-          })
-      })
+          });
+      });
     const canvas = this.$refs.hero;
-    this.context = canvas.getContext("2d");
+    this.context = canvas.getContext('2d');
 
     this.img = new Image();
     this.img.src = this.currentFrame(1);
@@ -93,10 +93,10 @@ export default {
   },
   methods: {
     currentFrame(index) {
-      return `${this.baseUrl}/${index.toString().padStart(4, "0")}.jpg`;
+      return `${this.baseUrl}/${index.toString().padStart(4, '0')}.jpg`;
     },
     preloadImages() {
-      for (let i = 1; i < this.frameCount; i++) {
+      for (let i = 1; i < this.frameCount; i += 1) {
         const img = new Image();
         img.src = this.currentFrame(i);
       }

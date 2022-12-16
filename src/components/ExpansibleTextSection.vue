@@ -33,7 +33,7 @@ export default {
     text: {
       type: String,
       required: true,
-    }
+    },
   },
   computed: {
     hasExpansibleSection() {
@@ -46,7 +46,7 @@ export default {
       return this.isExpansibleSectionLarge
         ? this.text.split('<--EXPAND-->')
         : this.text.split('<--EXPAND-SMALL-->');
-    }
+    },
   },
   methods: {
     parseMarkdown(input) {

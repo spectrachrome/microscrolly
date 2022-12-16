@@ -36,8 +36,8 @@
 </template>
 
 <script>
-import VideoScrubbingWindow from './VideoScrubbingWindow';
 import ExpansibleTextSection from '@/components/ExpansibleTextSection';
+import VideoScrubbingWindow from './VideoScrubbingWindow';
 
 export default {
   props: {

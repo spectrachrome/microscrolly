@@ -58,11 +58,11 @@
 </template>
 
 <script>
-import ImageWithTextOverlay from "./components/ScrollyLayouts/ImageWithTextOverlay";
-import FullWidthBlock from "./components/ScrollyLayouts/FullWidthBlock";
-import StickyRight from "./components/ScrollyLayouts/StickyRight";
-import StickyLeft from "./components/ScrollyLayouts/StickyLeft";
-import VideoScrubbingFullWidth from "./components/ScrollyLayouts/VideoScrubbingFullWidth";
+import ImageWithTextOverlay from './components/ScrollyLayouts/ImageWithTextOverlay';
+import FullWidthBlock from './components/ScrollyLayouts/FullWidthBlock';
+import StickyRight from './components/ScrollyLayouts/StickyRight';
+import StickyLeft from './components/ScrollyLayouts/StickyLeft';
+import VideoScrubbingFullWidth from './components/ScrollyLayouts/VideoScrubbingFullWidth';
 
 export default {
   components: {
@@ -72,10 +72,10 @@ export default {
     StickyLeft,
     VideoScrubbingFullWidth,
   },
-  created () {
+  created() {
     window.addEventListener('message', (message) => {
       if (message && typeof message.data === 'object') {
-          this.items = message.data;
+        this.items = message.data;
       }
     });
   },
@@ -86,15 +86,15 @@ export default {
   methods: {
     onScroll() {
       const windowHeight = window.innerHeight;
-      const articles = [...document.querySelectorAll("article")];
+      const articles = [...document.querySelectorAll('article')];
       articles.forEach((currentElement, index) => {
         const elementHeight = currentElement.clientHeight;
         const elementTop = currentElement.getBoundingClientRect().top;
         this.$set(
           this.progress,
           index,
-          ((windowHeight - elementTop - elementHeight * 0.33) / elementHeight) *
-            100
+          ((windowHeight - elementTop - (elementHeight * 0.33)) / elementHeight) *
+            100,
         );
       });
     },

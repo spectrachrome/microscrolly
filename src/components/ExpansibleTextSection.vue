@@ -4,7 +4,7 @@
       <p v-html="parseMarkdown(sections[0])"></p>
 
       <img
-        src="data/gtif/images/circle-plus-solid.svg"
+        src="../data/gtif/images/circle-plus-solid.svg"
         data-section="4"
         class="expandBtn"
         width="20"

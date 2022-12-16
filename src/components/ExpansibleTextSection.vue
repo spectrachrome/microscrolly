@@ -76,10 +76,4 @@ export default {
 .expansible.large {
   max-width: 100% !important;
 }
-
-@media screen and (min-width: 700px) {
-  .expansible-text-section {
-    max-width: 66%;
-  }
-}
 </style>

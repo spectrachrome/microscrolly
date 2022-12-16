@@ -101,3 +101,11 @@ export default {
   },
 };
 </script>
+
+<style>
+@media screen and (min-width: 700px) {
+  h1, h2, h3, h4, h5, h6, p {
+    max-width: 66vw;
+  }
+}
+</style>

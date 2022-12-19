@@ -6,8 +6,7 @@
       <img
         src="../../static/img/circle-plus-solid.svg"
         data-section="4"
-        class="expandBtn"
-        width="20"
+        class="expand-button"
         @click="isExpanded = !isExpanded"
       />
 
@@ -79,5 +78,11 @@ export default {
 
 .expansible.large {
   max-width: 100% !important;
+}
+
+.expand-button {
+  width: 20px;
+  height: 20px;
+  margin-top: 16px;
 }
 </style>

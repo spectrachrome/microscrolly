@@ -1,7 +1,7 @@
 <template>
   <div class="expansible-text-section">
     <template v-if="hasExpansibleSection">
-      <p v-html="parseMarkdown(sections[0])"></p>
+      <p v-html="parseMarkdown(sections[0])" />
 
       <img
         src="../../static/img/circle-plus-solid.svg"
@@ -9,7 +9,7 @@
         class="expandBtn"
         width="20"
         @click="isExpanded = !isExpanded"
-      >
+      />
 
       <v-fade-transition>
         <p
@@ -21,7 +21,11 @@
       </v-fade-transition>
     </template>
 
-    <div v-else v-html="parseMarkdown(text)"></div>
+    <div
+      v-else
+      v-html="parseMarkdown(text)"
+      class="fill-width"
+    />
   </div>
 </template>
 

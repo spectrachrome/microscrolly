@@ -23,7 +23,6 @@
     <div
       v-else
       v-html="parseMarkdown(text)"
-      class="fill-width"
     />
   </div>
 </template>

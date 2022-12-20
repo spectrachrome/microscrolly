@@ -67,6 +67,8 @@ export default {
   flex-direction: column;
   align-items: center;
   width: 100%;
+  padding-top: 80px;
+  padding-bottom: 80px;
 }
 .expansible {
   max-width: 500px;

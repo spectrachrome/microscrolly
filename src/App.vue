@@ -53,6 +53,7 @@
       </template>
       <div id="scrolly-bottom-nav" />
       <div id="scrolly-footer" />
+      <component v-if="footer" :is="FooterComponent" />
     </v-container>
   </v-app>
 </template>
@@ -74,13 +75,28 @@ export default {
   },
   created() {
     window.addEventListener('message', (message) => {
-      if (message && typeof message.data === 'object') {
-        this.items = message.data;
+      if (message) {
+        console.info(`✉️ MESSAGE [${message.data.type}]`);
+        
+        switch (message.data.type) { 
+          case 'items':
+            this.items = message.data.data;
+            break
+          
+          case 'footer':
+            // Extract Vue component out of JSON string
+            this.FooterComponent = JSON.parse(message.data.data);
+            break
+          
+          default:
+            break
+        }
       }
     });
   },
   data: () => ({
     progress: {},
+    FooterComponent: null,
     items: [],
   }),
   methods: {

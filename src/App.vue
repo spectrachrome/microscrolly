@@ -51,19 +51,21 @@
           :base-url="item[0].scrub"
         />
       </template>
-      <div id="scrolly-bottom-nav" />
-      <div id="scrolly-footer" />
-      <component v-if="FooterComponent" :is="FooterComponent" />
+      <component v-if="footer" :is="'ScrollyFooter'"></component>
     </v-container>
   </v-app>
 </template>
 
 <script>
+import Vue from 'vue';
+
 import ImageWithTextOverlay from './components/ScrollyLayouts/ImageWithTextOverlay';
 import FullWidthBlock from './components/ScrollyLayouts/FullWidthBlock';
 import StickyRight from './components/ScrollyLayouts/StickyRight';
 import StickyLeft from './components/ScrollyLayouts/StickyLeft';
 import VideoScrubbingFullWidth from './components/ScrollyLayouts/VideoScrubbingFullWidth';
+
+import deserialize from '@/util/deserializeComponent';
 
 export default {
   components: {
@@ -85,8 +87,8 @@ export default {
           
           case 'footer':
             // Extract Vue component out of JSON string
-            this.FooterComponent = JSON.parse(message.data.data);
-            console.log(this.FooterComponent);
+            this.footer = Vue.component('ScrollyFooter', deserialize(message.data.data));
+            console.log(this.footer);
             break
           
           default:
@@ -97,7 +99,7 @@ export default {
   },
   data: () => ({
     progress: {},
-    FooterComponent: null,
+    footer: null,
     items: [],
   }),
   methods: {

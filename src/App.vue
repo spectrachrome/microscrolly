@@ -53,7 +53,7 @@
       </template>
       <div id="scrolly-bottom-nav" />
       <div id="scrolly-footer" />
-      <component v-if="footer" :is="FooterComponent" />
+      <component v-if="FooterComponent" :is="FooterComponent" />
     </v-container>
   </v-app>
 </template>
@@ -86,6 +86,7 @@ export default {
           case 'footer':
             // Extract Vue component out of JSON string
             this.FooterComponent = JSON.parse(message.data.data);
+            console.log(this.FooterComponent);
             break
           
           default:

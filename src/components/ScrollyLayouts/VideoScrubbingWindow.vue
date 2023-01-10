@@ -8,7 +8,7 @@
           width="100%"
           muted
         >
-          <source :src="baseUrl" type="video/mp4">
+          <source :src="baseUrl" type="video/mp4" />
         </video>
 
         <canvas
@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import marked from 'marked';
+import marked from "marked";
 
 export default {
   props: {
@@ -47,21 +47,21 @@ export default {
     baseUrl: String,
     small: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   data: () => ({
     frameCount: 134,
     imageBase:
-      'https://codesandbox-scrollytelling-demo.s3.eu-central-1.amazonaws.com',
+      "https://codesandbox-scrollytelling-demo.s3.eu-central-1.amazonaws.com",
     img: null,
     context: null,
-    scrubConfig: null,
+    scrubConfig: null
   }),
   computed: {
     shouldRenderToCanvas() {
-      return !this.baseUrl.includes('.mp4');
-    },
+      return !this.baseUrl.includes(".mp4");
+    }
   },
   mounted() {
     if (this.shouldRenderToCanvas) {
@@ -72,7 +72,7 @@ export default {
   },
   methods: {
     currentFrame(index) {
-      return `${this.baseUrl}/${index.toString().padStart(4, '0')}.jpg`;
+      return `${this.baseUrl}/${index.toString().padStart(4, "0")}.jpg`;
     },
     preloadImages() {
       for (let i = 1; i < this.frameCount; i += 1) {
@@ -81,45 +81,58 @@ export default {
       }
     },
     parseMarkdown(input) {
-      return marked.parse(input).replace('<a', '<a target="_blank" ');
+      return marked.parse(input).replace("<a", '<a target="_blank" ');
     },
     setupVideoRendering() {
-      document.getElementById('scroll-target').addEventListener('scroll', () => {
-        if (this.progress > 0.0 && this.progress < 100.0) {
-          this.$refs.scrubVideo.currentTime =
-            (this.$refs.scrubVideo.duration * this.progress) / 100;
-        }
-      });
+      document
+        .getElementById("scroll-target")
+        .addEventListener("scroll", () => {
+          if (this.progress > 0.0 && this.progress < 100.0) {
+            this.$refs.scrubVideo.currentTime =
+              (this.$refs.scrubVideo.duration * this.progress) / 100;
+          }
+        });
     },
     setupCanvasRendering() {
-      fetch(`${this.baseUrl}/scrub.json`)
-        .then((response) => {
-          response.json()
-            .then((json) => {
-              this.scrubConfig = json;
-            });
+      fetch(`${this.baseUrl}/scrub.json`).then(response => {
+        response.json().then(json => {
+          this.scrubConfig = json;
         });
+      });
       const canvas = this.$refs.hero;
-      this.context = canvas.getContext('2d');
+      this.context = canvas.getContext("2d");
 
       this.img = new Image();
       this.img.src = this.currentFrame(1);
       canvas.width = 1920;
       canvas.height = 1080;
       this.img.onload = () => {
-        this.context.drawImage(this.img, 0, 0, window.innerWidth, window.innerHeight);
+        this.context.drawImage(
+          this.img,
+          0,
+          0,
+          window.innerWidth,
+          window.innerHeight
+        );
       };
 
       this.preloadImages();
-    },
+    }
   },
   watch: {
     progress(newProgress) {
       if (newProgress >= 0 && newProgress <= 100) {
         if (this.shouldRenderToCanvas) {
-          const newIndex = Math.floor((newProgress * this.frameCount) / 100) + 1;
+          const newIndex =
+            Math.floor((newProgress * this.frameCount) / 100) + 1;
           this.img.src = this.currentFrame(newIndex);
-          this.context.drawImage(this.img, 0, 0, window.innerWidth, window.innerHeight);
+          this.context.drawImage(
+            this.img,
+            0,
+            0,
+            window.innerWidth,
+            window.innerHeight
+          );
         } else {
           const video = this.$refs.scrubVideo;
           video.onloadedmetadata = () => {
@@ -127,7 +140,7 @@ export default {
           };
         }
       }
-    },
-  },
+    }
+  }
 };
 </script>

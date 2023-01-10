@@ -9,12 +9,8 @@
             :base-url="item[1].scrub"
             small
           />
-          <video
-            v-if="item[1].video"
-            width="100%"
-            controls
-          >
-            <source :src="item[1].video" type="video/mp4">
+          <video v-if="item[1].video" width="100%" controls>
+            <source :src="item[1].video" type="video/mp4" />
           </video>
           <img
             v-else
@@ -36,31 +32,31 @@
 </template>
 
 <script>
-import marked from 'marked';
-import VideoScrubbingWindow from './VideoScrubbingWindow';
+import marked from "marked";
+import VideoScrubbingWindow from "./VideoScrubbingWindow";
 
 export default {
   props: {
     item: Array,
     index: Number,
-    progress: Number,
+    progress: Number
   },
   components: {
-    VideoScrubbingWindow,
+    VideoScrubbingWindow
   },
   methods: {
     parseMarkdown(input) {
-      return marked.parse(input).replace('<a', '<a target="_blank" ');
-    },
+      return marked.parse(input).replace("<a", '<a target="_blank" ');
+    }
   },
   data: () => ({
     textPlaceholders: [
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam gravida maximus elit a venenatis. Mauris felis ipsum, placerat sit amet accumsan non, commodo ac arcu. Phasellus lorem urna, consectetur non ornare et, pharetra id risus.',
-      'Proin sit amet commodo velit. Ut vitae quam elit. Donec nulla dui, ullamcorper ac dui nec, pretium feugiat lectus. Nam vestibulum odio arcu, eu efficitur tellus maximus ac.',
-      'Ut vitae quam elit. Donec nulla dui, ullamcorper ac dui nec, pretium feugiat lectus. Nam vestibulum odio arcu, eu efficitur tellus maximus ac.',
-      'Mauris felis ipsum, placerat sit amet accumsan non, commodo ac arcu. Phasellus lorem urna, consectetur non ornare et, pharetra id risus.',
-    ],
-  }),
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam gravida maximus elit a venenatis. Mauris felis ipsum, placerat sit amet accumsan non, commodo ac arcu. Phasellus lorem urna, consectetur non ornare et, pharetra id risus.",
+      "Proin sit amet commodo velit. Ut vitae quam elit. Donec nulla dui, ullamcorper ac dui nec, pretium feugiat lectus. Nam vestibulum odio arcu, eu efficitur tellus maximus ac.",
+      "Ut vitae quam elit. Donec nulla dui, ullamcorper ac dui nec, pretium feugiat lectus. Nam vestibulum odio arcu, eu efficitur tellus maximus ac.",
+      "Mauris felis ipsum, placerat sit amet accumsan non, commodo ac arcu. Phasellus lorem urna, consectetur non ornare et, pharetra id risus."
+    ]
+  })
 };
 </script>
 

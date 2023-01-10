@@ -10,31 +10,28 @@
           autoplay
           width="100%"
         />
-        <ExpansibleTextSection
-          v-else-if="item.text"
-          :text="item.text"
-        />
+        <ExpansibleTextSection v-else-if="item.text" :text="item.text" />
       </article>
     </v-col>
   </v-row>
 </template>
 
 <script>
-import ExpansibleTextSection from '@/components/ExpansibleTextSection';
+import ExpansibleTextSection from "@/components/ExpansibleTextSection";
 
 export default {
   props: {
     item: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   components: {
-    ExpansibleTextSection,
+    ExpansibleTextSection
   },
   data: () => ({
-    isExpanded: false,
-  }),
+    isExpanded: false
+  })
 };
 </script>
 

@@ -24,9 +24,7 @@
           :progress="progress[index] || 0"
         />
         <FullWidthBlock
-          v-else-if="item[0].width === 4
-            && item[0].text
-            || item[0].video"
+          v-else-if="(item[0].width === 4 && item[0].text) || item[0].video"
           :key="index"
           :item="item[0]"
         />
@@ -57,15 +55,15 @@
 </template>
 
 <script>
-import Vue from 'vue';
+import Vue from "vue";
 
-import ImageWithTextOverlay from './components/ScrollyLayouts/ImageWithTextOverlay';
-import FullWidthBlock from './components/ScrollyLayouts/FullWidthBlock';
-import StickyRight from './components/ScrollyLayouts/StickyRight';
-import StickyLeft from './components/ScrollyLayouts/StickyLeft';
-import VideoScrubbingFullWidth from './components/ScrollyLayouts/VideoScrubbingFullWidth';
+import ImageWithTextOverlay from "./components/ScrollyLayouts/ImageWithTextOverlay";
+import FullWidthBlock from "./components/ScrollyLayouts/FullWidthBlock";
+import StickyRight from "./components/ScrollyLayouts/StickyRight";
+import StickyLeft from "./components/ScrollyLayouts/StickyLeft";
+import VideoScrubbingFullWidth from "./components/ScrollyLayouts/VideoScrubbingFullWidth";
 
-import deserialize from '@/util/deserializeComponent';
+import deserialize from "@/util/deserializeComponent";
 
 export default {
   components: {
@@ -73,26 +71,29 @@ export default {
     FullWidthBlock,
     StickyRight,
     StickyLeft,
-    VideoScrubbingFullWidth,
+    VideoScrubbingFullWidth
   },
   created() {
-    window.addEventListener('message', (message) => {
+    window.addEventListener("message", message => {
       if (message) {
         console.info(`✉️ MESSAGE [${message.data.type}]`);
-        
-        switch (message.data.type) { 
-          case 'items':
+
+        switch (message.data.type) {
+          case "items":
             this.items = message.data.data;
-            break
-          
-          case 'footer':
+            break;
+
+          case "footer":
             // Extract Vue component out of JSON string
-            this.footer = Vue.component('ScrollyFooter', deserialize(message.data.data));
+            this.footer = Vue.component(
+              "ScrollyFooter",
+              deserialize(message.data.data)
+            );
             console.log(this.footer);
-            break
-          
+            break;
+
           default:
-            break
+            break;
         }
       }
     });
@@ -100,30 +101,36 @@ export default {
   data: () => ({
     progress: {},
     footer: null,
-    items: [],
+    items: []
   }),
   methods: {
     onScroll() {
       const windowHeight = window.innerHeight;
-      const articles = [...document.querySelectorAll('article')];
+      const articles = [...document.querySelectorAll("article")];
       articles.forEach((currentElement, index) => {
         const elementHeight = currentElement.clientHeight;
         const elementTop = currentElement.getBoundingClientRect().top;
         this.$set(
           this.progress,
           index,
-          ((windowHeight - elementTop - (elementHeight * 0.33)) / elementHeight) *
-            100,
+          ((windowHeight - elementTop - elementHeight * 0.33) / elementHeight) *
+            100
         );
       });
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style>
 @media screen and (min-width: 700px) {
-  h1, h2, h3, h4, h5, h6, p {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
     max-width: 66vw;
   }
 }

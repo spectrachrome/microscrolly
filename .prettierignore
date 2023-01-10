@@ -1,0 +1,8 @@
+dist
+static
+.DS_Store
+.*ignore
+.editorconfig
+*.png
+*.jpg
+*.svg

@@ -1,3 +1,3 @@
 module.exports = {
-  extends: ['@eox/code-style-vue'],
+  extends: ['@eox/eslint-config-code-style-vue'],
 }

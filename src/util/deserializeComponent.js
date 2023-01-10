@@ -27,7 +27,7 @@ export default function deserialize(json) {
     component.methods = {};
 
     // Evaluate and add each string function.
-    for (const [k, v] of json.entries(json.methods)) {
+    for (const [k, v] of Object.entries(json.methods)) {
       eval(`component.methods[k] = ${v}`);
     }
   }

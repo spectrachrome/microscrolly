@@ -1,6 +1,10 @@
-# test-project
+![microscrolly](https://scrollytelling.s3.nl-ams.scw.cloud/microscrolly.png)
 
-> A Vue.js project
+# What's this?
+
+`microscrolly` is a micro-app which takes a scrollytelling story in JSON format and displays it to the user. The provided content can be augmented by integrating reusable, dynamic Vue components in JSON format as well.
+
+The application is intended to be used only: embedded in an iframe or a dedicated testing environment. Otherwise, the data transfer from and to the application (using `postMessage`) **will** fail, making the app unusable.
 
 ## Build Setup
 
@@ -23,5 +27,3 @@ npm run unit
 # run all tests
 npm test
 ```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).

@@ -55,45 +55,49 @@
 </template>
 
 <script>
-import marked from 'marked';
+import marked from "marked";
 
 export default {
   props: {
     progress: Number,
-    baseUrl: String,
+    baseUrl: String
   },
   data: () => ({
     frameCount: 134,
     imageBase:
-      'https://codesandbox-scrollytelling-demo.s3.eu-central-1.amazonaws.com',
+      "https://codesandbox-scrollytelling-demo.s3.eu-central-1.amazonaws.com",
     img: null,
     context: null,
-    scrubConfig: null,
+    scrubConfig: null
   }),
   mounted() {
-    fetch(`${this.baseUrl}/scrub.json`)
-      .then((response) => {
-        response.json()
-          .then((json) => {
-            this.scrubConfig = json;
-          });
+    fetch(`${this.baseUrl}/scrub.json`).then(response => {
+      response.json().then(json => {
+        this.scrubConfig = json;
       });
+    });
     const canvas = this.$refs.hero;
-    this.context = canvas.getContext('2d');
+    this.context = canvas.getContext("2d");
 
     this.img = new Image();
     this.img.src = this.currentFrame(1);
     canvas.width = 1920;
     canvas.height = 1080;
     this.img.onload = () => {
-      this.context.drawImage(this.img, 0, 0, window.innerWidth, window.innerHeight);
+      this.context.drawImage(
+        this.img,
+        0,
+        0,
+        window.innerWidth,
+        window.innerHeight
+      );
     };
 
     this.preloadImages();
   },
   methods: {
     currentFrame(index) {
-      return `${this.baseUrl}/${index.toString().padStart(4, '0')}.jpg`;
+      return `${this.baseUrl}/${index.toString().padStart(4, "0")}.jpg`;
     },
     preloadImages() {
       for (let i = 1; i < this.frameCount; i += 1) {
@@ -102,17 +106,23 @@ export default {
       }
     },
     parseMarkdown(input) {
-      return marked.parse(input).replace('<a', '<a target="_blank" ');
-    },
+      return marked.parse(input).replace("<a", '<a target="_blank" ');
+    }
   },
   watch: {
     progress(newProgress) {
       if (newProgress >= 0 && newProgress <= 100) {
         const newIndex = Math.floor((newProgress * this.frameCount) / 100) + 1;
         this.img.src = this.currentFrame(newIndex);
-        this.context.drawImage(this.img, 0, 0, window.innerWidth, window.innerHeight);
+        this.context.drawImage(
+          this.img,
+          0,
+          0,
+          window.innerWidth,
+          window.innerHeight
+        );
       }
-    },
-  },
+    }
+  }
 };
 </script>

@@ -14,50 +14,50 @@
         <p
           v-show="isExpanded"
           class="expansible"
-          :class="{large: isExpansibleSectionLarge}"
+          :class="{ large: isExpansibleSectionLarge }"
           v-html="parseMarkdown(sections[1])"
         />
       </v-fade-transition>
     </template>
 
-    <div
-      v-else
-      v-html="parseMarkdown(text)"
-    />
+    <div v-else v-html="parseMarkdown(text)" />
   </div>
 </template>
 
 <script>
-import marked from 'marked';
+import marked from "marked";
 
 export default {
   props: {
     text: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
   computed: {
     hasExpansibleSection() {
-      return this.text.includes('<--EXPAND-->') || this.text.includes('<--EXPAND-SMALL-->');
+      return (
+        this.text.includes("<--EXPAND-->") ||
+        this.text.includes("<--EXPAND-SMALL-->")
+      );
     },
     isExpansibleSectionLarge() {
-      return this.text.includes('<--EXPAND-->');
+      return this.text.includes("<--EXPAND-->");
     },
     sections() {
       return this.isExpansibleSectionLarge
-        ? this.text.split('<--EXPAND-->')
-        : this.text.split('<--EXPAND-SMALL-->');
-    },
+        ? this.text.split("<--EXPAND-->")
+        : this.text.split("<--EXPAND-SMALL-->");
+    }
   },
   methods: {
     parseMarkdown(input) {
-      return marked.parse(input).replace('<a', '<a target="_blank" ');
-    },
+      return marked.parse(input).replace("<a", '<a target="_blank" ');
+    }
   },
   data: () => ({
-    isExpanded: false,
-  }),
+    isExpanded: false
+  })
 };
 </script>
 
@@ -74,7 +74,7 @@ export default {
   max-width: 500px;
   padding: 12px;
   margin-top: 12px;
-  border: 1px solid #AAA;
+  border: 1px solid #aaa;
 }
 
 .expansible.large {

@@ -14,12 +14,8 @@
             :base-url="item[1].scrub"
             small
           />
-          <video
-            v-if="item[1].video"
-            width="100%"
-            controls
-          >
-            <source :src="item[1].video" type="video/mp4">
+          <video v-if="item[1].video" width="100%" controls>
+            <source :src="item[1].video" type="video/mp4" />
           </video>
           <img
             v-else
@@ -36,19 +32,19 @@
 </template>
 
 <script>
-import ExpansibleTextSection from '@/components/ExpansibleTextSection';
-import VideoScrubbingWindow from './VideoScrubbingWindow';
+import ExpansibleTextSection from "@/components/ExpansibleTextSection";
+import VideoScrubbingWindow from "./VideoScrubbingWindow";
 
 export default {
   props: {
     item: Array,
     index: Number,
-    progress: Number,
+    progress: Number
   },
   components: {
     ExpansibleTextSection,
-    VideoScrubbingWindow,
-  },
+    VideoScrubbingWindow
+  }
 };
 </script>
 

@@ -1,29 +1,49 @@
 ![microscrolly](https://scrollytelling.s3.nl-ams.scw.cloud/microscrolly.png)
 
+<p align="center">
+  <img src="https://img.shields.io/github/issues/spectrachrome/microscrolly" />
+  <img src="https://img.shields.io/github/issues-pr/spectrachrome/microscrolly?color=1a9" />
+  <img src="https://img.shields.io/github/commit-activity/m/spectrachrome/microscrolly" />
+</p>
+
 # What's this?
 
-`microscrolly` is a micro-app which takes a scrollytelling story in JSON format and displays it to the user. The provided content can be augmented by integrating reusable, dynamic Vue components in JSON format as well.
+`microscrolly` is a micro-app which takes a scrollytelling story in JSON format and displays it to the user. 
 
-The application is intended to be used only: embedded in an iframe or a dedicated testing environment. Otherwise, the data transfer from and to the application (using `postMessage`) **will** fail, making the app unusable.
+The app must be embedded in an iframe, where scrollytelling content can be injected using the PostMessage API. Furthermore, a set of hooks is provided, which allow dynamic, reusable Vue components to be inserted at specific locations in the scrolly flow.
 
-## Build Setup
+# How do I interact with it?
 
-```bash
-# install dependencies
-npm install
+There are currently two types of messages that can be sent over the API:
 
-# serve with hot reload at localhost:8080
-npm run dev
+### `items`
+Set the content of the scrollytelling engine, as an array of arrays of objects.
+```js
+{
+  type: 'items',
+  data: items,
+}
+```
 
-# build for production with minification
-npm run build
+### `hook:HOOKNAME`
+Inject a dynamic JSON component into the scrollytelling flow at one of the given hook positions. (`beforeFooter`, `footer`)
+```js
+{
+  type: `hook:${hookName}`,
+  data: jsonComponent,
+}
+```
 
-# build for production and view the bundle analyzer report
-npm run build --report
+---
 
-# run unit tests
-npm run unit
+# Known Issues
 
-# run all tests
-npm test
+##### Failure to update after change has been made
+
+Unfortunately, it usually doesn't work if you change something in this repository, build and then push the new built assets to your host application. This is probably because of a relatively aggressive caching strategy used in modern browsers.
+
+The solution is to set off a manual AJAX call fetching the assets you just changed:
+
+```js
+const justForSideEffects = await axios.get('./bla/bundle/index.html');
 ```

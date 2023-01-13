@@ -1,9 +1,9 @@
 ![microscrolly](https://scrollytelling.s3.nl-ams.scw.cloud/microscrolly.png)
 
 <p align="center">
-  ![issues](https://img.shields.io/github/issues/spectrachrome/microscrolly)
-  ![prs](https://img.shields.io/github/issues-pr/spectrachrome/microscrolly?color=1a9)
-  ![commit_activity](https://img.shields.io/github/commit-activity/m/spectrachrome/microscrolly)
+  <img src="https://img.shields.io/github/issues/spectrachrome/microscrolly" />
+  <img src="https://img.shields.io/github/issues-pr/spectrachrome/microscrolly?color=1a9" />
+  <img src="https://img.shields.io/github/commit-activity/m/spectrachrome/microscrolly" />
 </p>
 
 # What's this?

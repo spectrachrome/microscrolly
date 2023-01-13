@@ -76,7 +76,8 @@ export default {
   },
   created() {
     window.addEventListener("message", message => {
-      if (message) {
+      // Look also for message.data.type here since there are also Webpack messages
+      if (message && message.data.type) {
         console.info(`✉️ MESSAGE [${message.data.type}]`);
 
         if (message.data.type.includes('hook')) {

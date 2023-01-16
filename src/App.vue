@@ -49,7 +49,8 @@
           :base-url="item[0].scrub"
         />
       </template>
-      <component v-if="footer" :is="'ScrollyFooter'"></component>
+      <component v-if="hooks.beforeFooter" :is="'BeforeFooter'"></component>
+      <component v-if="hooks.footer" :is="'Footer'"></component>
     </v-container>
   </v-app>
 </template>
@@ -75,25 +76,27 @@ export default {
   },
   created() {
     window.addEventListener("message", message => {
-      if (message) {
+      // Look also for message.data.type here since there are also Webpack messages
+      if (message && message.data.type) {
         console.info(`✉️ MESSAGE [${message.data.type}]`);
 
-        switch (message.data.type) {
-          case "items":
-            this.items = message.data.data;
-            break;
+        if (message.data.type.includes('hook')) {
+          let hookName = message.data.type.split(':')[1];
 
-          case "footer":
-            // Extract Vue component out of JSON string
-            this.footer = Vue.component(
-              "ScrollyFooter",
-              deserialize(message.data.data)
-            );
-            console.log(this.footer);
-            break;
+          this.hooks[hookName] = Vue.component(
+            // Convert first letter to uppercase.
+            hookName.charAt(0).toUpperCase() + hookName.slice(1),
+            deserialize(message.data.data)
+          );
+        } else {
+          switch (message.data.type) {
+            case "items":
+              this.items = message.data.data;
+              break;
 
-          default:
-            break;
+            default:
+              break;
+          }
         }
       }
     });
@@ -101,7 +104,11 @@ export default {
   data: () => ({
     progress: {},
     footer: null,
-    items: []
+    items: [],
+    hooks: {
+      beforeFooter: null,
+      footer: null,
+    },
   }),
   methods: {
     onScroll() {
@@ -117,7 +124,7 @@ export default {
             100
         );
       });
-    }
+    },
   }
 };
 </script>

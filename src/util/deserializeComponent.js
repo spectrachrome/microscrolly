@@ -23,6 +23,10 @@ export default function deserialize(json) {
     eval(`component.data = ${json.data}`);
   }
 
+  if (json.props) {
+    eval(`component.props = ${json.props}`);
+  }
+
   if (json.methods) {
     component.methods = {};
 

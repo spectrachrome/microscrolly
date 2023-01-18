@@ -96,8 +96,8 @@ export default {
       if (message && message.data.type) {
         console.info(`✉️ MESSAGE [${message.data.type}]`);
 
-        if (message.data.type.includes('hook')) {
-          let hookName = message.data.type.split(':')[1];
+        if (message.data.type.includes("hook")) {
+          let hookName = message.data.type.split(":")[1];
 
           this.hooks[hookName] = Vue.component(
             // Convert first letter to uppercase.
@@ -126,12 +126,12 @@ export default {
     hooks: {
       header: null,
       beforeFooter: null,
-      footer: null,
+      footer: null
     },
     componentProps: {
       header: {},
       beforeFooter: {},
-      footer: {},
+      footer: {}
     }
   }),
   methods: {
@@ -148,7 +148,7 @@ export default {
             100
         );
       });
-    },
+    }
   }
 };
 </script>

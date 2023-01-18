@@ -49,8 +49,18 @@
           :base-url="item[0].scrub"
         />
       </template>
-      <component v-if="hooks.beforeFooter" :is="'BeforeFooter'"></component>
-      <component v-if="hooks.footer" :is="'Footer'"></component>
+
+      <component
+        v-if="hooks.beforeFooter"
+        v-bind="this.componentProps['beforeFooter']"
+        :is="'BeforeFooter'"
+      ></component>
+
+      <component
+        v-if="hooks.footer"
+        v-bind="this.componentProps['beforeFooter']"
+        :is="'Footer'"
+      ></component>
     </v-container>
   </v-app>
 </template>
@@ -88,6 +98,9 @@ export default {
             hookName.charAt(0).toUpperCase() + hookName.slice(1),
             deserialize(message.data.data)
           );
+
+          // Populate our prop fields.
+          this.componentProps[hookName] = message.data.props;
         } else {
           switch (message.data.type) {
             case "items":
@@ -109,6 +122,11 @@ export default {
       beforeFooter: null,
       footer: null,
     },
+    componentProps: {
+      header: {},
+      beforeFooter: {},
+      footer: {},
+    }
   }),
   methods: {
     onScroll() {

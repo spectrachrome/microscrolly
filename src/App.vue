@@ -122,7 +122,6 @@ export default {
   },
   data: () => ({
     progress: {},
-    footer: null,
     items: [],
     hooks: {
       header: null,

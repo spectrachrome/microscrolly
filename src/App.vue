@@ -15,6 +15,12 @@
       class="overflow-y-auto overflow-x-hidden mx-0"
       v-scroll.self="onScroll"
     >
+      <component
+        v-if="hooks.header"
+        v-bind="this.componentProps['header']"
+        :is="'Header'"
+      ></component>
+
       <template v-for="(item, index) in items">
         <ImageWithTextOverlay
           v-if="item[0].width === 4 && item[0].image"
@@ -119,6 +125,7 @@ export default {
     footer: null,
     items: [],
     hooks: {
+      header: null,
       beforeFooter: null,
       footer: null,
     },

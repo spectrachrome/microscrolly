@@ -11,19 +11,19 @@
           />
 
           <video
-            v-if="item[0].video && !item[0].autoplay"
+            v-else-if="item[0].video && item[0].autoplay == undefined"
             width="100%"
-            controls
+            muted
+            playsinline
+            autoplay
           >
             <source :src="item[0].video" type="video/mp4" />
           </video>
 
           <video
-            v-else-if="item[0].video && item[0].autoplay"
+            v-else-if="item[0].video && item[0].autoplay === false"
             width="100%"
-            muted
-            playsinline
-            autoplay
+            controls
           >
             <source :src="item[0].video" type="video/mp4" />
           </video>

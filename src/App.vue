@@ -15,6 +15,12 @@
       class="overflow-y-auto overflow-x-hidden mx-0"
       v-scroll.self="onScroll"
     >
+      <component
+        v-if="hooks.header"
+        v-bind="this.componentProps['header']"
+        :is="'Header'"
+      ></component>
+
       <template v-for="(item, index) in items">
         <ImageWithTextOverlay
           v-if="item[0].width === 4 && item[0].image"
@@ -49,8 +55,18 @@
           :base-url="item[0].scrub"
         />
       </template>
-      <component v-if="hooks.beforeFooter" :is="'BeforeFooter'"></component>
-      <component v-if="hooks.footer" :is="'Footer'"></component>
+
+      <component
+        v-if="hooks.beforeFooter"
+        v-bind="this.componentProps['beforeFooter']"
+        :is="'BeforeFooter'"
+      ></component>
+
+      <component
+        v-if="hooks.footer"
+        v-bind="this.componentProps['beforeFooter']"
+        :is="'Footer'"
+      ></component>
     </v-container>
   </v-app>
 </template>
@@ -80,14 +96,17 @@ export default {
       if (message && message.data.type) {
         console.info(`✉️ MESSAGE [${message.data.type}]`);
 
-        if (message.data.type.includes('hook')) {
-          let hookName = message.data.type.split(':')[1];
+        if (message.data.type.includes("hook")) {
+          let hookName = message.data.type.split(":")[1];
 
           this.hooks[hookName] = Vue.component(
             // Convert first letter to uppercase.
             hookName.charAt(0).toUpperCase() + hookName.slice(1),
             deserialize(message.data.data)
           );
+
+          // Populate our prop fields.
+          this.componentProps[hookName] = message.data.props;
         } else {
           switch (message.data.type) {
             case "items":
@@ -103,12 +122,17 @@ export default {
   },
   data: () => ({
     progress: {},
-    footer: null,
     items: [],
     hooks: {
+      header: null,
       beforeFooter: null,
-      footer: null,
+      footer: null
     },
+    componentProps: {
+      header: {},
+      beforeFooter: {},
+      footer: {}
+    }
   }),
   methods: {
     onScroll() {
@@ -124,7 +148,7 @@ export default {
             100
         );
       });
-    },
+    }
   }
 };
 </script>

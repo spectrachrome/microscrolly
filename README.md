@@ -17,7 +17,9 @@ The app must be embedded in an iframe, where scrollytelling content can be injec
 There are currently two types of messages that can be sent over the API:
 
 ### `items`
+
 Set the content of the scrollytelling engine, as an array of arrays of objects.
+
 ```js
 {
   type: 'items',
@@ -26,11 +28,16 @@ Set the content of the scrollytelling engine, as an array of arrays of objects.
 ```
 
 ### `hook:HOOKNAME`
-Inject a dynamic JSON component into the scrollytelling flow at one of the given hook positions. (`beforeFooter`, `footer`)
+
+Inject a dynamic JSON component into the scrollytelling flow at one of the given hook positions. (`header`, `beforeFooter`, `footer`).
+
 ```js
 {
   type: `hook:${hookName}`,
   data: jsonComponent,
+  props: {
+    name: 'John'
+  }
 }
 ```
 

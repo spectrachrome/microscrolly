@@ -4,8 +4,7 @@
       id="scroll-target"
       style="
         height: 100vh;
-        max-width: 100%;
-        position: fixed;
+        margin: 0 auto;
         top: 0;
         bottom: 0;
         left: 0;

@@ -28,7 +28,7 @@
             <source :src="item[0].video" type="video/mp4" />
           </video>
 
-          <img
+          <v-img
             v-else
             :src="item[0].image"
             :style="`filter: saturate(${(progress || 0) / 100});`"

@@ -14,7 +14,7 @@
             :base-url="item[1].scrub"
             small
           />
-          
+
           <video
             v-else-if="item[1].video && !item[1].autoplay"
             width="100%"
@@ -27,6 +27,7 @@
             v-else-if="item[1].video && item[1].autoplay"
             width="100%"
             muted
+            playsinline
             autoplay
           >
             <source :src="item[1].video" type="video/mp4" />

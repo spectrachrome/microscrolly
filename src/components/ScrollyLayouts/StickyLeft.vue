@@ -22,6 +22,7 @@
             v-else-if="item[0].video && item[0].autoplay"
             width="100%"
             muted
+            playsinline
             autoplay
           >
             <source :src="item[0].video" type="video/mp4" />

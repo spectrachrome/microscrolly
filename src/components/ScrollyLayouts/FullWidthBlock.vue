@@ -5,7 +5,9 @@
         <video
           v-if="item.video && item.autoplay"
           width="100%"
-          controls
+          muted
+          playsinline
+          autoplay
         >
           <source :src="item.video" type="video/mp4" />
         </video>
@@ -13,9 +15,7 @@
         <video
           v-else-if="item.video && !item.autoplay"
           width="100%"
-          muted
-          playsinline
-          autoplay
+          controls
         >
           <source :src="item.video" type="video/mp4" />
         </video>

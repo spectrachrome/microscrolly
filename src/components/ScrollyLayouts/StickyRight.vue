@@ -14,9 +14,24 @@
             :base-url="item[1].scrub"
             small
           />
-          <video v-if="item[1].video" width="100%" controls>
+          
+          <video
+            v-else-if="item[1].video && !item[1].autoplay"
+            width="100%"
+            controls
+          >
             <source :src="item[1].video" type="video/mp4" />
           </video>
+
+          <video
+            v-else-if="item[1].video && item[1].autoplay"
+            width="100%"
+            muted
+            autoplay
+          >
+            <source :src="item[1].video" type="video/mp4" />
+          </video>
+
           <img
             v-else
             :src="item[1].image"

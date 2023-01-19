@@ -4,19 +4,35 @@
       <v-fade-transition>
         <figure v-show="progress >= 0 && progress <= 100">
           <VideoScrubbingWindow
-            v-if="item[1].scrub"
+            v-if="item[0].scrub"
             :progress="progress"
-            :base-url="item[1].scrub"
+            :base-url="item[0].scrub"
             small
           />
-          <video v-if="item[1].video" width="100%" controls>
-            <source :src="item[1].video" type="video/mp4" />
+
+          <video
+            v-if="item[0].video && !item[0].autoplay"
+            width="100%"
+            controls
+          >
+            <source :src="item[0].video" type="video/mp4" />
           </video>
+
+          <video
+            v-else-if="item[0].video && item[0].autoplay"
+            width="100%"
+            muted
+            autoplay
+          >
+            <source :src="item[0].video" type="video/mp4" />
+          </video>
+
           <img
             v-else
-            :src="item[1].image"
+            :src="item[0].image"
             :style="`filter: saturate(${(progress || 0) / 100});`"
           />
+
           <span class="white--text pa-2" style="position: absolute; right: 0"
             >{{ Math.round(progress) || 0 }}%</span
           >

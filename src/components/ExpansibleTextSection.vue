@@ -1,7 +1,10 @@
 <template>
   <div class="expansible-text-section">
     <template v-if="hasExpansibleSection">
-      <p v-html="parseMarkdown(sections[0])" />
+      <p
+        class="content"
+        v-html="parseMarkdown(sections[0])"
+      />
 
       <img
         src="../../static/img/circle-plus-solid.svg"
@@ -20,7 +23,11 @@
       </v-fade-transition>
     </template>
 
-    <div v-else v-html="parseMarkdown(text)" />
+    <p
+      v-else
+      class="content"
+      v-html="parseMarkdown(text)"
+    />
   </div>
 </template>
 
@@ -70,6 +77,13 @@ export default {
   padding-top: 80px;
   padding-bottom: 80px;
 }
+
+@media screen and (min-width: 1264px) {
+  .expansible-text-section p.content, .expansible-text-section .expansible {
+    max-width: 1185px;
+  }
+}
+
 .expansible {
   max-width: 500px;
   padding: 12px;

@@ -4,7 +4,7 @@
       id="scroll-target"
       style="
         height: 100vh;
-        margin: 0 auto;
+        position: fixed;
         top: 0;
         bottom: 0;
         left: 0;

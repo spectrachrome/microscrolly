@@ -74,13 +74,13 @@
 <script>
 import Vue from "vue";
 
-import ImageWithTextOverlay from "./components/ScrollyLayouts/ImageWithTextOverlay";
-import FullWidthBlock from "./components/ScrollyLayouts/FullWidthBlock";
-import StickyRight from "./components/ScrollyLayouts/StickyRight";
-import StickyLeft from "./components/ScrollyLayouts/StickyLeft";
-import VideoScrubbingFullWidth from "./components/ScrollyLayouts/VideoScrubbingFullWidth";
+import ImageWithTextOverlay from "./components/ScrollyLayouts/ImageWithTextOverlay.vue";
+import FullWidthBlock from "./components/ScrollyLayouts/FullWidthBlock.vue";
+import StickyRight from "./components/ScrollyLayouts/StickyRight.vue";
+import StickyLeft from "./components/ScrollyLayouts/StickyLeft.vue";
+import VideoScrubbingFullWidth from "./components/ScrollyLayouts/VideoScrubbingFullWidth.vue";
 
-import deserialize from "@/util/deserializeComponent";
+import deserialize from "./util/deserializeComponent.js";
 
 export default {
   components: {

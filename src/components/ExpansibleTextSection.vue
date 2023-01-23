@@ -4,7 +4,7 @@
       <p v-html="parseMarkdown(sections[0])" />
 
       <img
-        src="../../static/img/circle-plus-solid.svg"
+        src="/img/circle-plus-solid.svg"
         data-section="4"
         class="expand-button"
         @click="isExpanded = !isExpanded"
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import marked from "marked";
+import { marked } from "marked";
 
 export default {
   props: {

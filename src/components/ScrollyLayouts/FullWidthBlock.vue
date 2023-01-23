@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import ExpansibleTextSection from "@/components/ExpansibleTextSection";
+import ExpansibleTextSection from "../ExpansibleTextSection.vue";
 
 export default {
   props: {

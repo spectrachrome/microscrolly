@@ -49,8 +49,8 @@
 </template>
 
 <script>
-import marked from "marked";
-import VideoScrubbingWindow from "./VideoScrubbingWindow";
+import { marked } from "marked";
+import VideoScrubbingWindow from "./VideoScrubbingWindow.vue";
 
 export default {
   props: {

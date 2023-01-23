@@ -55,12 +55,12 @@
 </template>
 
 <script>
-import marked from "marked";
+import { marked } from "marked";
 
 export default {
   props: {
     progress: Number,
-    baseUrl: String
+    baseUrl: String,
   },
   data: () => ({
     frameCount: 134,
@@ -68,11 +68,11 @@ export default {
       "https://codesandbox-scrollytelling-demo.s3.eu-central-1.amazonaws.com",
     img: null,
     context: null,
-    scrubConfig: null
+    scrubConfig: null,
   }),
   mounted() {
-    fetch(`${this.baseUrl}/scrub.json`).then(response => {
-      response.json().then(json => {
+    fetch(`${this.baseUrl}/scrub.json`).then((response) => {
+      response.json().then((json) => {
         this.scrubConfig = json;
       });
     });
@@ -107,7 +107,7 @@ export default {
     },
     parseMarkdown(input) {
       return marked.parse(input).replace("<a", '<a target="_blank" ');
-    }
+    },
   },
   watch: {
     progress(newProgress) {
@@ -122,7 +122,7 @@ export default {
           window.innerHeight
         );
       }
-    }
-  }
+    },
+  },
 };
 </script>

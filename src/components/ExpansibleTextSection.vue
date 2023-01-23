@@ -4,7 +4,7 @@
       <p v-html="parseMarkdown(sections[0])" />
 
       <img
-        src="../../static/img/circle-plus-solid.svg"
+        src="/img/circle-plus-solid.svg"
         data-section="4"
         class="expand-button"
         @click="isExpanded = !isExpanded"
@@ -25,14 +25,14 @@
 </template>
 
 <script>
-import marked from "marked";
+import { marked } from "marked";
 
 export default {
   props: {
     text: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
     hasExpansibleSection() {
@@ -48,16 +48,16 @@ export default {
       return this.isExpansibleSectionLarge
         ? this.text.split("<--EXPAND-->")
         : this.text.split("<--EXPAND-SMALL-->");
-    }
+    },
   },
   methods: {
     parseMarkdown(input) {
       return marked.parse(input).replace("<a", '<a target="_blank" ');
-    }
+    },
   },
   data: () => ({
-    isExpanded: false
-  })
+    isExpanded: false,
+  }),
 };
 </script>
 

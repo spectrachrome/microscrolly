@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import marked from "marked";
+import { marked } from "marked";
 
 export default {
   props: {
@@ -47,8 +47,8 @@ export default {
     baseUrl: String,
     small: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   data: () => ({
     frameCount: 134,
@@ -56,12 +56,12 @@ export default {
       "https://codesandbox-scrollytelling-demo.s3.eu-central-1.amazonaws.com",
     img: null,
     context: null,
-    scrubConfig: null
+    scrubConfig: null,
   }),
   computed: {
     shouldRenderToCanvas() {
       return !this.baseUrl.includes(".mp4");
-    }
+    },
   },
   mounted() {
     if (this.shouldRenderToCanvas) {
@@ -94,8 +94,8 @@ export default {
         });
     },
     setupCanvasRendering() {
-      fetch(`${this.baseUrl}/scrub.json`).then(response => {
-        response.json().then(json => {
+      fetch(`${this.baseUrl}/scrub.json`).then((response) => {
+        response.json().then((json) => {
           this.scrubConfig = json;
         });
       });
@@ -117,7 +117,7 @@ export default {
       };
 
       this.preloadImages();
-    }
+    },
   },
   watch: {
     progress(newProgress) {
@@ -140,7 +140,7 @@ export default {
           };
         }
       }
-    }
-  }
+    },
+  },
 };
 </script>

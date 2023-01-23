@@ -1,17 +1,14 @@
-import { defineConfig } from 'vite'
-import { createVuePlugin as vue } from 'vite-plugin-vue2'
+import vue from '@vitejs/plugin-vue2'
 
-const path = require('path')
+export default {
+    build: {
 
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [vue()],
-  resolve: {
-    alias: [
-      {
-        find: /^@\/(.+)/,
-        replacement: path.resolve(__dirname, 'src') + '/$1'
-      }
-    ]
-  }
-})
+        /** If you set esmExternals to true, this plugins assumes that 
+             all external dependencies are ES modules */
+        
+        commonjsOptions: {
+            esmExternals: true 
+        },
+        },
+  plugins: [vue()]
+}

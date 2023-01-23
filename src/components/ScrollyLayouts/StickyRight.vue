@@ -48,8 +48,8 @@
 </template>
 
 <script>
-import ExpansibleTextSection from "@/components/ExpansibleTextSection";
-import VideoScrubbingWindow from "./VideoScrubbingWindow";
+import ExpansibleTextSection from "../ExpansibleTextSection.vue";
+import VideoScrubbingWindow from "./VideoScrubbingWindow.vue";
 
 export default {
   props: {

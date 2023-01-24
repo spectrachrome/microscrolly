@@ -9,6 +9,11 @@ export default {
         commonjsOptions: {
             esmExternals: true 
         },
-        },
-  plugins: [vue()]
+    },
+    resolve: {
+        alias: {
+            vue: 'vue/dist/vue.esm.js'
+        }
+    },
+    plugins: [vue()]
 }

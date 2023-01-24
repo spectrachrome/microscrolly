@@ -113,6 +113,8 @@ export default {
         if (message.data.type.includes("hook")) {
           let hookName = message.data.type.split(":")[1];
 
+          console.log(message.data);
+
           this.hooks[hookName] = Vue.component(
             // Convert first letter to uppercase.
             hookName.charAt(0).toUpperCase() + hookName.slice(1),
@@ -125,6 +127,10 @@ export default {
           switch (message.data.type) {
             case "items":
               this.items = message.data.data;
+              break;
+
+            case "css":
+              this.linkStyle(message.data.path);
               break;
 
             default:
@@ -148,7 +154,23 @@ export default {
             100
         );
       });
-    }
+    },
+
+    /**
+     * Add the CSS styles from a given path to the iframe.
+     *
+     * @param {string} path - The path of the style to be applied.
+     */
+    linkStyle(path) {
+/*
+        TODO: find a way to use SCSS for dedicated iframe styles
+*/
+      const link = document.createElement('link');
+      link.href = path;
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      document.head.appendChild(link);
+    },
   }
 };
 </script>

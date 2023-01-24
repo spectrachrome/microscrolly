@@ -1,7 +1,7 @@
 <template>
   <div class="fill-width fill-height">
     <v-fade-transition>
-      <div style="position: relative" v-show="progress >= 0 && progress <= 100">
+      <div v-show="progress >= 0 && progress <= 100" style="position: relative">
         <video
           v-if="baseUrl.includes('.mp4')"
           ref="scrubVideo"
@@ -63,6 +63,29 @@ export default {
       return !this.baseUrl.includes(".mp4");
     }
   },
+  watch: {
+    progress(newProgress) {
+      if (newProgress >= 0 && newProgress <= 100) {
+        if (this.shouldRenderToCanvas) {
+          const newIndex =
+            Math.floor((newProgress * this.frameCount) / 100) + 1;
+          this.img.src = this.currentFrame(newIndex);
+          this.context.drawImage(
+            this.img,
+            0,
+            0,
+            window.innerWidth,
+            window.innerHeight
+          );
+        } else {
+          const video = this.$refs.scrubVideo;
+          video.onloadedmetadata = () => {
+            video.currentTime = video.duration * (this.progress / 100);
+          };
+        }
+      }
+    }
+  },
   mounted() {
     if (this.shouldRenderToCanvas) {
       this.setupCanvasRendering();
@@ -117,29 +140,6 @@ export default {
       };
 
       this.preloadImages();
-    }
-  },
-  watch: {
-    progress(newProgress) {
-      if (newProgress >= 0 && newProgress <= 100) {
-        if (this.shouldRenderToCanvas) {
-          const newIndex =
-            Math.floor((newProgress * this.frameCount) / 100) + 1;
-          this.img.src = this.currentFrame(newIndex);
-          this.context.drawImage(
-            this.img,
-            0,
-            0,
-            window.innerWidth,
-            window.innerHeight
-          );
-        } else {
-          const video = this.$refs.scrubVideo;
-          video.onloadedmetadata = () => {
-            video.currentTime = video.duration * (this.progress / 100);
-          };
-        }
-      }
     }
   }
 };

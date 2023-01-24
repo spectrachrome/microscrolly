@@ -53,18 +53,13 @@ import { marked } from "marked";
 import VideoScrubbingWindow from "./VideoScrubbingWindow.vue";
 
 export default {
+  components: {
+    VideoScrubbingWindow
+  },
   props: {
     item: Array,
     index: Number,
     progress: Number
-  },
-  components: {
-    VideoScrubbingWindow
-  },
-  methods: {
-    parseMarkdown(input) {
-      return marked.parse(input).replace("<a", '<a target="_blank" ');
-    }
   },
   data: () => ({
     textPlaceholders: [
@@ -73,7 +68,12 @@ export default {
       "Ut vitae quam elit. Donec nulla dui, ullamcorper ac dui nec, pretium feugiat lectus. Nam vestibulum odio arcu, eu efficitur tellus maximus ac.",
       "Mauris felis ipsum, placerat sit amet accumsan non, commodo ac arcu. Phasellus lorem urna, consectetur non ornare et, pharetra id risus."
     ]
-  })
+  }),
+  methods: {
+    parseMarkdown(input) {
+      return marked.parse(input).replace("<a", '<a target="_blank" ');
+    }
+  }
 };
 </script>
 

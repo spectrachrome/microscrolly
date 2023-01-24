@@ -2,6 +2,7 @@
   <v-app>
     <v-container
       id="scroll-target"
+      v-scroll.self="onScroll"
       style="
         height: 100vh;
         max-width: 100%;
@@ -13,12 +14,11 @@
         padding: 0;
       "
       class="overflow-y-auto overflow-x-hidden mx-0"
-      v-scroll.self="onScroll"
     >
       <component
-        v-if="hooks.header"
-        v-bind="this.componentProps['header']"
+        v-bind="componentProps['header']"
         :is="'Header'"
+        v-if="hooks.header"
       ></component>
 
       <template v-for="(item, index) in items">
@@ -57,15 +57,15 @@
       </template>
 
       <component
-        v-if="hooks.beforeFooter"
-        v-bind="this.componentProps['beforeFooter']"
+        v-bind="componentProps['beforeFooter']"
         :is="'BeforeFooter'"
+        v-if="hooks.beforeFooter"
       ></component>
 
       <component
-        v-if="hooks.footer"
-        v-bind="this.componentProps['beforeFooter']"
+        v-bind="componentProps['beforeFooter']"
         :is="'Footer'"
+        v-if="hooks.footer"
       ></component>
     </v-container>
   </v-app>
@@ -90,6 +90,20 @@ export default {
     StickyLeft,
     VideoScrubbingFullWidth
   },
+  data: () => ({
+    progress: {},
+    items: [],
+    hooks: {
+      header: null,
+      beforeFooter: null,
+      footer: null
+    },
+    componentProps: {
+      header: {},
+      beforeFooter: {},
+      footer: {}
+    }
+  }),
   created() {
     window.addEventListener("message", message => {
       // Look also for message.data.type here since there are also Webpack messages
@@ -120,20 +134,6 @@ export default {
       }
     });
   },
-  data: () => ({
-    progress: {},
-    items: [],
-    hooks: {
-      header: null,
-      beforeFooter: null,
-      footer: null
-    },
-    componentProps: {
-      header: {},
-      beforeFooter: {},
-      footer: {}
-    }
-  }),
   methods: {
     onScroll() {
       const windowHeight = window.innerHeight;

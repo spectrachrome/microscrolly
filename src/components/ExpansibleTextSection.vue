@@ -2,6 +2,7 @@
   <div class="expansible-text-section">
     <template v-if="hasExpansibleSection">
       <p v-html="parseMarkdown(sections[0])" />
+      <!-- /* eslint-disable-line vue/no-v-html */ -->
 
       <img
         src="/img/circle-plus-solid.svg"
@@ -34,6 +35,9 @@ export default {
       required: true
     }
   },
+  data: () => ({
+    isExpanded: false
+  }),
   computed: {
     hasExpansibleSection() {
       return (
@@ -54,10 +58,7 @@ export default {
     parseMarkdown(input) {
       return marked.parse(input).replace("<a", '<a target="_blank" ');
     }
-  },
-  data: () => ({
-    isExpanded: false
-  })
+  }
 };
 </script>
 

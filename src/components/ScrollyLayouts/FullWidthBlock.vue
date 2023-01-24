@@ -12,11 +12,7 @@
           <source :src="item.video" type="video/mp4" />
         </video>
 
-        <video
-          v-else-if="item.video && !item.autoplay"
-          width="100%"
-          controls
-        >
+        <video v-else-if="item.video && !item.autoplay" width="100%" controls>
           <source :src="item.video" type="video/mp4" />
         </video>
 
@@ -30,14 +26,14 @@
 import ExpansibleTextSection from "../ExpansibleTextSection.vue";
 
 export default {
+  components: {
+    ExpansibleTextSection
+  },
   props: {
     item: {
       type: Object,
       required: true
     }
-  },
-  components: {
-    ExpansibleTextSection
   },
   data: () => ({
     isExpanded: false

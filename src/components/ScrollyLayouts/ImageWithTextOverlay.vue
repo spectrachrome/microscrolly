@@ -36,11 +36,6 @@ export default {
     progress: Number,
     text: String
   },
-  methods: {
-    parseMarkdown(input) {
-      return marked.parse(input).replace("<a", '<a target="_blank" ');
-    }
-  },
   data: () => ({
     textPlaceholders: [
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam gravida maximus elit a venenatis. Mauris felis ipsum, placerat sit amet accumsan non, commodo ac arcu. Phasellus lorem urna, consectetur non ornare et, pharetra id risus.",
@@ -48,7 +43,12 @@ export default {
       "Ut vitae quam elit. Donec nulla dui, ullamcorper ac dui nec, pretium feugiat lectus. Nam vestibulum odio arcu, eu efficitur tellus maximus ac.",
       "Mauris felis ipsum, placerat sit amet accumsan non, commodo ac arcu. Phasellus lorem urna, consectetur non ornare et, pharetra id risus."
     ]
-  })
+  }),
+  methods: {
+    parseMarkdown(input) {
+      return marked.parse(input).replace("<a", '<a target="_blank" ');
+    }
+  }
 };
 </script>
 

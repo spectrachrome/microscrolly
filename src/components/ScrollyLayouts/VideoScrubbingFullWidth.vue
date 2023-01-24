@@ -70,6 +70,21 @@ export default {
     context: null,
     scrubConfig: null
   }),
+  watch: {
+    progress(newProgress) {
+      if (newProgress >= 0 && newProgress <= 100) {
+        const newIndex = Math.floor((newProgress * this.frameCount) / 100) + 1;
+        this.img.src = this.currentFrame(newIndex);
+        this.context.drawImage(
+          this.img,
+          0,
+          0,
+          window.innerWidth,
+          window.innerHeight
+        );
+      }
+    }
+  },
   mounted() {
     fetch(`${this.baseUrl}/scrub.json`).then(response => {
       response.json().then(json => {
@@ -107,21 +122,6 @@ export default {
     },
     parseMarkdown(input) {
       return marked.parse(input).replace("<a", '<a target="_blank" ');
-    }
-  },
-  watch: {
-    progress(newProgress) {
-      if (newProgress >= 0 && newProgress <= 100) {
-        const newIndex = Math.floor((newProgress * this.frameCount) / 100) + 1;
-        this.img.src = this.currentFrame(newIndex);
-        this.context.drawImage(
-          this.img,
-          0,
-          0,
-          window.innerWidth,
-          window.innerHeight
-        );
-      }
     }
   }
 };

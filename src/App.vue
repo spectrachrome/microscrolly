@@ -6,7 +6,9 @@
       style="
         height: 100vh;
         max-width: 100%;
-        position: fixed;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         top: 0;
         bottom: 0;
         left: 0;
@@ -185,6 +187,12 @@ export default {
   h6,
   p {
     max-width: 66vw;
+  }
+}
+
+@media screen and (min-width: 1800px) {
+  .row {
+    max-width: 1500px;
   }
 }
 </style>

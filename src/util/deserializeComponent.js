@@ -24,7 +24,7 @@ export default function deserialize(json) {
   }
 
   if (json.props) {
-    eval(`component.props = ${json.props}`);
+    component.props = json.props;
   }
 
   if (json.methods) {

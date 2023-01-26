@@ -115,14 +115,14 @@ export default {
 
           console.log(message.data);
 
+          // Populate our prop fields.
+          this.componentProps[hookName] = message.data.props;
+
           this.hooks[hookName] = Vue.component(
             // Convert first letter to uppercase.
             hookName.charAt(0).toUpperCase() + hookName.slice(1),
             deserialize(message.data.data)
           );
-
-          // Populate our prop fields.
-          this.componentProps[hookName] = message.data.props;
         } else {
           switch (message.data.type) {
             case "items":

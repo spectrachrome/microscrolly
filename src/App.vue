@@ -192,7 +192,16 @@ export default {
 
 @media screen and (min-width: 1800px) {
   .row {
-    max-width: 1500px;
+    max-width: 1300px;
   }
 }
+
+/* Expand to full width even if the environment has constrained width */
+.full-width {
+  width: 100vw;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  position: relative;
+}
+
 </style>

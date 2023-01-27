@@ -4,6 +4,7 @@
       <article class="full-text-block d-flex">
         <video
           v-if="item.video && item.autoplay"
+          :class="{'full-width': item.fullwidth}"
           width="100%"
           muted
           playsinline

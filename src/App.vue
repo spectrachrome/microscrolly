@@ -194,11 +194,15 @@ export default {
   .row {
     max-width: 1300px;
   }
+
+  .col {
+    max-width:40vw;
+  }
 }
 
 /* Expand to full width even if the environment has constrained width */
 .full-width {
-  width: 100vw;
+  width: 100vw !important;
   margin-left: -50vw;
   margin-right: -50vw;
   position: relative;

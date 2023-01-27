@@ -70,6 +70,7 @@ export default {
   width: 100%;
   padding-top: 80px;
   padding-bottom: 80px;
+  min-width: 520px;
 }
 .expansible {
   max-width: 500px;

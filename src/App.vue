@@ -132,7 +132,7 @@ export default {
               break;
 
             case "css":
-              this.linkStyle(message.data.path);
+              this.linkStyle(message.data.css);
               break;
 
             default:
@@ -163,15 +163,16 @@ export default {
      *
      * @param {string} path - The path of the style to be applied.
      */
-    linkStyle(path) {
-/*
-        TODO: find a way to use SCSS for dedicated iframe styles
-*/
-      const link = document.createElement('link');
-      link.href = path;
-      link.rel = 'stylesheet';
-      link.type = 'text/css';
-      document.head.appendChild(link);
+    linkStyle(css) {
+    /*
+            TODO: find a way to use SCSS for dedicated iframe styles
+    */
+      // Create a new <style> element from the style string and add it to document header.
+      var style = document.createElement("style");
+      style.type = "text/css";
+      document.getElementsByTagName("head")[0].appendChild(style);
+
+      style.innerHTML = css;
     },
   }
 };

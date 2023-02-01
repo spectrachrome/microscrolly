@@ -90,7 +90,7 @@ export default {
     FullWidthBlock,
     StickyRight,
     StickyLeft,
-    VideoScrubbingFullWidth
+    VideoScrubbingFullWidth,
   },
   data: () => ({
     progress: {},
@@ -98,16 +98,16 @@ export default {
     hooks: {
       header: null,
       beforeFooter: null,
-      footer: null
+      footer: null,
     },
     componentProps: {
       header: {},
       beforeFooter: {},
-      footer: {}
-    }
+      footer: {},
+    },
   }),
   created() {
-    window.addEventListener("message", message => {
+    window.addEventListener("message", (message) => {
       // Look also for message.data.type here since there are also Webpack messages
       if (message && message.data.type) {
         console.info(`✉️ MESSAGE [${message.data.type}]`);
@@ -164,16 +164,16 @@ export default {
      * @param {string} path - The path of the style to be applied.
      */
     linkStyle(path) {
-/*
+      /*
         TODO: find a way to use SCSS for dedicated iframe styles
 */
-      const link = document.createElement('link');
+      const link = document.createElement("link");
       link.href = path;
-      link.rel = 'stylesheet';
-      link.type = 'text/css';
+      link.rel = "stylesheet";
+      link.type = "text/css";
       document.head.appendChild(link);
     },
-  }
+  },
 };
 </script>
 
@@ -196,7 +196,7 @@ export default {
   }
 
   .col {
-    max-width:40vw;
+    max-width: 40vw;
   }
 }
 
@@ -207,5 +207,4 @@ export default {
   margin-right: -50vw;
   position: relative;
 }
-
 </style>

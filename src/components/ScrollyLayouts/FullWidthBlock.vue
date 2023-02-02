@@ -17,7 +17,15 @@
           <source :src="item.video" type="video/mp4" />
         </video>
 
-        <ExpansibleTextSection v-else-if="item.text" :text="item.text" />
+        <VideoScrubbingWindow
+          v-else-if="item.scrub"
+          :progress="progress"
+          :base-url="item.scrub"
+          is-full-width
+          small
+        />
+
+        <ExpansibleTextSection v-else :text="item.text" />
       </article>
     </v-col>
   </v-row>
@@ -25,15 +33,21 @@
 
 <script>
 import ExpansibleTextSection from "../ExpansibleTextSection.vue";
+import VideoScrubbingWindow from "./VideoScrubbingWindow.vue";
 
 export default {
   components: {
-    ExpansibleTextSection
+    ExpansibleTextSection,
+    VideoScrubbingWindow,
   },
   props: {
     item: {
       type: Object,
       required: true
+    },
+    progress: {
+      type: Number,
+      required: true,
     }
   },
   data: () => ({

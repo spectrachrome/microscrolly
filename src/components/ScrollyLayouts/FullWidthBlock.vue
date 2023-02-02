@@ -17,7 +17,7 @@
           <source :src="item.video" type="video/mp4" />
         </video>
 
-        <VideoScrubbingWindow
+        <VideoScrubber
           v-else-if="item.scrub"
           :progress="progress"
           :base-url="item.scrub"
@@ -33,12 +33,12 @@
 
 <script>
 import ExpansibleTextSection from "../ExpansibleTextSection.vue";
-import VideoScrubbingWindow from "./VideoScrubbingWindow.vue";
+import VideoScrubber from "./VideoScrubber.vue";
 
 export default {
   components: {
     ExpansibleTextSection,
-    VideoScrubbingWindow,
+    VideoScrubber,
   },
   props: {
     item: {

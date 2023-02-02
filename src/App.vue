@@ -75,7 +75,6 @@ import ImageWithTextOverlay from "./components/ScrollyLayouts/ImageWithTextOverl
 import FullWidthBlock from "./components/ScrollyLayouts/FullWidthBlock.vue";
 import StickyRight from "./components/ScrollyLayouts/StickyRight.vue";
 import StickyLeft from "./components/ScrollyLayouts/StickyLeft.vue";
-import VideoScrubbingFullWidth from "./components/ScrollyLayouts/VideoScrubbingFullWidth.vue";
 
 import deserialize from "./util/deserializeComponent.js";
 
@@ -85,7 +84,6 @@ export default {
     FullWidthBlock,
     StickyRight,
     StickyLeft,
-    VideoScrubbingFullWidth
   },
   data: () => ({
     progress: {},

@@ -1,7 +1,8 @@
 <template>
-  <div class="fill-width fill-height">
+  <div class="videoscrubber fill-width fill-height">
+    {{ progress }}
     <v-fade-transition>
-      <div v-show="progress >= 0 && progress <= 100" style="position: relative">
+      <div v-show="isFullWidth || progress >= 0 && progress <= 100" style="position: relative">
         <video
           v-if="baseUrl.includes('.mp4')"
           ref="scrubVideo"
@@ -45,6 +46,7 @@ export default {
   props: {
     progress: Number,
     baseUrl: String,
+    isFullWidth: Boolean,
     small: {
       type: Boolean,
       default: false

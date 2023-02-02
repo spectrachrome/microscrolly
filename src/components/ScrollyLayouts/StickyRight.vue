@@ -8,7 +8,7 @@
     <v-col cols="6" style="min-width: 520px;">
       <v-fade-transition>
         <figure v-show="progress >= 0 && progress <= 100">
-          <VideoScrubbingWindow
+          <VideoScrubber
             v-if="item[1].scrub"
             :progress="progress"
             :base-url="item[1].scrub"
@@ -49,12 +49,12 @@
 
 <script>
 import ExpansibleTextSection from "../ExpansibleTextSection.vue";
-import VideoScrubbingWindow from "./VideoScrubbingWindow.vue";
+import VideoScrubber from "./VideoScrubber.vue";
 
 export default {
   components: {
     ExpansibleTextSection,
-    VideoScrubbingWindow
+    VideoScrubber
   },
   props: {
     item: Array,

@@ -3,7 +3,7 @@
     <v-col cols="6">
       <v-fade-transition>
         <figure v-show="progress >= 0 && progress <= 100">
-          <VideoScrubbingWindow
+          <VideoScrubber
             v-if="item[0].scrub"
             :progress="progress"
             :base-url="item[0].scrub"
@@ -50,11 +50,11 @@
 
 <script>
 import { marked } from "marked";
-import VideoScrubbingWindow from "./VideoScrubbingWindow.vue";
+import VideoScrubber from "./VideoScrubber.vue";
 
 export default {
   components: {
-    VideoScrubbingWindow
+    VideoScrubber
   },
   props: {
     item: Array,

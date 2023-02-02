@@ -35,6 +35,7 @@
           v-else-if="(item[0].width === 4 && item[0].text) || item[0].video"
           :key="index"
           :item="item[0]"
+          :progress="progress[index]"
         />
         <StickyRight
           v-else-if="item[0].width === 1"
@@ -49,12 +50,6 @@
           :item="item"
           :index="index"
           :progress="progress[index]"
-        />
-        <VideoScrubbingFullWidth
-          v-else-if="item[0].scrub"
-          :key="index"
-          :progress="progress[index]"
-          :base-url="item[0].scrub"
         />
       </template>
 

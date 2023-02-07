@@ -1,6 +1,7 @@
 <template>
   <div class="videoscrubber fill-width fill-height">
-    {{ progress }}
+    <!-- Progress display for debugging -->
+    <!-- {{ progress }} -->
     <v-fade-transition>
       <div
         v-show="isFullWidth || (progress >= 0 && progress <= 100)"

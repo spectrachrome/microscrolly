@@ -20,28 +20,26 @@
 
           <video
             v-else-if="item[0].video && item[0].autoplay"
+            ref="autoplayVideo"
             width="100%"
             muted
             playsinline
             autoplay
+            loop
           >
             <source :src="item[0].video" type="video/mp4" />
           </video>
 
-          <img
-            v-else
-            :src="item[0].image"
-            :style="`filter: saturate(${(progress || 0) / 100});`"
-          />
-
-          <span class="white--text pa-2" style="position: absolute; right: 0"
+          <img v-else-if="item[1].image" :src="item[0].image" />
+          <!-- Progress display for debugging -->
+          <!-- <span class="white--text pa-2" style="position: absolute; right: 0"
             >{{ Math.round(progress) || 0 }}%</span
-          >
+          > -->
         </figure>
       </v-fade-transition>
     </v-col>
     <v-col cols="6">
-      <article>
+      <article class="d-flex align-center" style="min-height: 800px">
         <p v-html="parseMarkdown(item[1].text)"></p>
       </article>
     </v-col>
@@ -51,11 +49,13 @@
 <script>
 import { marked } from "marked";
 import VideoScrubber from "./VideoScrubber.vue";
+import autoplayVideo from "../../mixins/autoplayVideo";
 
 export default {
   components: {
     VideoScrubber,
   },
+  mixins: [autoplayVideo],
   props: {
     item: Array,
     index: Number,
@@ -79,17 +79,14 @@ export default {
 
 <style scoped>
 article {
-  padding: 200px 50px;
-}
-
-article p {
-  margin-bottom: 200px !important;
+  padding: 800px 50px 800px 50px;
 }
 
 figure {
   position: sticky;
   top: 50%;
   transform: translateY(-50%);
+  margin-top: 400px;
 }
 
 img {

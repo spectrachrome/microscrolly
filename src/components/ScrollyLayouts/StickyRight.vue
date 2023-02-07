@@ -1,7 +1,7 @@
 <template>
   <v-row justify="center" class="mx-0">
     <v-col cols="6">
-      <article style="min-height: 800px">
+      <article class="d-flex align-center" style="min-height: 800px">
         <ExpansibleTextSection :text="item[0].text" />
       </article>
     </v-col>
@@ -25,22 +25,20 @@
 
           <video
             v-else-if="item[1].video && item[1].autoplay"
+            ref="autoplayVideo"
             width="100%"
             muted
             playsinline
-            autoplay
+            loop
           >
             <source :src="item[1].video" type="video/mp4" />
           </video>
 
-          <img
-            v-else
-            :src="item[1].image"
-            :style="`filter: saturate(${(progress || 0) / 100});`"
-          />
-          <span class="white--text pa-2" style="position: absolute; left: 0">
+          <img v-else-if="item[1].image" :src="item[1].image" />
+          <!-- Progress display for debugging -->
+          <!-- <span class="white--text pa-2" style="position: absolute; left: 0">
             {{ Math.round(progress) || 0 }}%
-          </span>
+          </span> -->
         </figure>
       </v-fade-transition>
     </v-col>
@@ -50,12 +48,14 @@
 <script>
 import ExpansibleTextSection from "../ExpansibleTextSection.vue";
 import VideoScrubber from "./VideoScrubber.vue";
+import autoplayVideo from "../../mixins/autoplayVideo";
 
 export default {
   components: {
     ExpansibleTextSection,
     VideoScrubber,
   },
+  mixins: [autoplayVideo],
   props: {
     item: Array,
     index: Number,
@@ -66,17 +66,14 @@ export default {
 
 <style scoped>
 article {
-  padding: 200px 50px;
-}
-
-article p {
-  margin-bottom: 200px !important;
+  padding: 800px 50px 800px 50px;
 }
 
 figure {
   position: sticky;
   top: 50%;
   transform: translateY(-50%);
+  margin-top: 400px;
 }
 
 img {

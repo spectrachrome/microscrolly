@@ -1,7 +1,7 @@
 <template>
   <div class="expansible-text-section">
     <template v-if="hasExpansibleSection">
-      <p v-html="parseMarkdown(sections[0])" />
+      <p v-if="sections[0].length" v-html="parseMarkdown(sections[0])" />
       <!-- /* eslint-disable-line vue/no-v-html */ -->
 
       <svg
@@ -19,9 +19,8 @@
 
       <v-fade-transition>
         <p
-          v-show="isExpanded"
           class="expansible"
-          :class="{ large: isExpansibleSectionLarge }"
+          :class="{ large: isExpansibleSectionLarge, hidden: !isExpanded }"
           v-html="parseMarkdown(sections[1])"
         />
       </v-fade-transition>
@@ -72,21 +71,31 @@ export default {
 .expansible-text-section {
   display: flex;
   flex-direction: column;
-  align-items: center;
   width: 100%;
   padding-top: 80px;
   padding-bottom: 80px;
   min-width: 520px;
 }
+
+.expansible-text-section svg {
+  align-self: center;
+}
 .expansible {
-  max-width: 500px;
+  max-width: 320px;
   padding: 12px;
   margin-top: 12px;
   border: 1px solid #aaa;
+  font-size: 1rem;
+  transition: all 0.3s ease-in-out;
+  text-align: center;
 }
 
 .expansible.large {
   max-width: 100% !important;
+}
+
+.expansible.hidden {
+  opacity: 0;
 }
 
 .expand-button {

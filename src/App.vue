@@ -35,7 +35,7 @@
           v-else-if="(item[0].width === 4 && item[0].text) || item[0].video"
           :key="index"
           :item="item[0]"
-          :progress="progress[index]"
+          :progress="progress[index] || 0"
         />
         <StickyRight
           v-else-if="item[0].width === 1"
@@ -172,18 +172,6 @@ export default {
 </script>
 
 <style>
-@media screen and (min-width: 700px) {
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  p {
-    max-width: 66vw;
-  }
-}
-
 @media screen and (min-width: 1800px) {
   .row {
     max-width: 1300px;
@@ -194,11 +182,35 @@ export default {
   }
 }
 
-/* Expand to full width even if the environment has constrained width */
+figure img,
+figure video {
+  border-radius: 16px;
+}
+
+/* Use this class inside scrolly items to expand to full width even if the environment has constrained width */
 .full-width {
   width: 100vw !important;
   margin-left: -50vw;
   margin-right: -50vw;
+  left: 50%;
+  right: 50%;
   position: relative;
+  padding: 40px 24px;
+}
+
+@media screen and (min-width: 800px) {
+  .full-width {
+    padding: 40px 120px;
+  }
+}
+
+/* Make all videos display block by default to avoid whitespaces */
+video {
+  display: block;
+}
+
+/* Fix Vuetify col spacing in order to allow seamless stories */
+.col {
+  padding: 0;
 }
 </style>

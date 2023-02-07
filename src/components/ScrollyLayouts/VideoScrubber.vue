@@ -2,7 +2,10 @@
   <div class="videoscrubber fill-width fill-height">
     {{ progress }}
     <v-fade-transition>
-      <div v-show="isFullWidth || progress >= 0 && progress <= 100" style="position: relative">
+      <div
+        v-show="isFullWidth || (progress >= 0 && progress <= 100)"
+        style="position: relative"
+      >
         <video
           v-if="baseUrl.includes('.mp4')"
           ref="scrubVideo"
@@ -49,8 +52,8 @@ export default {
     isFullWidth: Boolean,
     small: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   data: () => ({
     frameCount: 134,
@@ -58,12 +61,12 @@ export default {
       "https://codesandbox-scrollytelling-demo.s3.eu-central-1.amazonaws.com",
     img: null,
     context: null,
-    scrubConfig: null
+    scrubConfig: null,
   }),
   computed: {
     shouldRenderToCanvas() {
       return !this.baseUrl.includes(".mp4");
-    }
+    },
   },
   watch: {
     progress(newProgress) {
@@ -86,7 +89,7 @@ export default {
           };
         }
       }
-    }
+    },
   },
   mounted() {
     if (this.shouldRenderToCanvas) {
@@ -119,8 +122,8 @@ export default {
         });
     },
     setupCanvasRendering() {
-      fetch(`${this.baseUrl}/scrub.json`).then(response => {
-        response.json().then(json => {
+      fetch(`${this.baseUrl}/scrub.json`).then((response) => {
+        response.json().then((json) => {
           this.scrubConfig = json;
         });
       });
@@ -142,7 +145,7 @@ export default {
       };
 
       this.preloadImages();
-    }
-  }
+    },
+  },
 };
 </script>

@@ -91,16 +91,16 @@ export default {
     hooks: {
       header: null,
       beforeFooter: null,
-      footer: null
+      footer: null,
     },
     componentProps: {
       header: {},
       beforeFooter: {},
-      footer: {}
-    }
+      footer: {},
+    },
   }),
   created() {
-    window.addEventListener("message", message => {
+    window.addEventListener("message", (message) => {
       // Look also for message.data.type here since there are also Webpack messages
       if (message && message.data.type) {
         console.info(`✉️ MESSAGE [${message.data.type}]`);
@@ -157,7 +157,7 @@ export default {
      * @param {string} path - The path of the style to be applied.
      */
     linkStyle(css) {
-    /*
+      /*
             TODO: find a way to use SCSS for dedicated iframe styles
     */
       // Create a new <style> element from the style string and add it to document header.
@@ -167,7 +167,7 @@ export default {
 
       style.innerHTML = css;
     },
-  }
+  },
 };
 </script>
 
@@ -190,7 +190,7 @@ export default {
   }
 
   .col {
-    max-width:40vw;
+    max-width: 40vw;
   }
 }
 
@@ -201,5 +201,4 @@ export default {
   margin-right: -50vw;
   position: relative;
 }
-
 </style>

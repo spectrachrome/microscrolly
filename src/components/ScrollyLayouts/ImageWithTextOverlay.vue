@@ -5,12 +5,11 @@
         <v-fade-transition>
           <v-img
             v-show="progress >= 0 && progress <= 100"
-            :style="
-              `position: fixed; top: 0; right: 0; bottom: 0;
+            :style="`position: fixed; top: 0; right: 0; bottom: 0;
             left: 0; pointer-events: none; filter: brightness(0.7)
-            hue-rotate(${progress * 3}deg); transform: scale(${1 +
-                progress / 100}); transform-origin: center`
-            "
+            hue-rotate(${progress * 3}deg); transform: scale(${
+              1 + progress / 100
+            }); transform-origin: center`"
             :src="item[0].image"
           >
           </v-img>
@@ -34,21 +33,21 @@ export default {
     item: Array,
     index: Number,
     progress: Number,
-    text: String
+    text: String,
   },
   data: () => ({
     textPlaceholders: [
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam gravida maximus elit a venenatis. Mauris felis ipsum, placerat sit amet accumsan non, commodo ac arcu. Phasellus lorem urna, consectetur non ornare et, pharetra id risus.",
       "Proin sit amet commodo velit. Ut vitae quam elit. Donec nulla dui, ullamcorper ac dui nec, pretium feugiat lectus. Nam vestibulum odio arcu, eu efficitur tellus maximus ac.",
       "Ut vitae quam elit. Donec nulla dui, ullamcorper ac dui nec, pretium feugiat lectus. Nam vestibulum odio arcu, eu efficitur tellus maximus ac.",
-      "Mauris felis ipsum, placerat sit amet accumsan non, commodo ac arcu. Phasellus lorem urna, consectetur non ornare et, pharetra id risus."
-    ]
+      "Mauris felis ipsum, placerat sit amet accumsan non, commodo ac arcu. Phasellus lorem urna, consectetur non ornare et, pharetra id risus.",
+    ],
   }),
   methods: {
     parseMarkdown(input) {
       return marked.parse(input).replace("<a", '<a target="_blank" ');
-    }
-  }
+    },
+  },
 };
 </script>
 

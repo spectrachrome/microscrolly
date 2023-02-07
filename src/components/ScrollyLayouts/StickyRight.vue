@@ -5,7 +5,7 @@
         <ExpansibleTextSection :text="item[0].text" />
       </article>
     </v-col>
-    <v-col cols="6" style="min-width: 520px;">
+    <v-col cols="6" style="min-width: 520px">
       <v-fade-transition>
         <figure v-show="progress >= 0 && progress <= 100">
           <VideoScrubber
@@ -54,13 +54,13 @@ import VideoScrubber from "./VideoScrubber.vue";
 export default {
   components: {
     ExpansibleTextSection,
-    VideoScrubber
+    VideoScrubber,
   },
   props: {
     item: Array,
     index: Number,
-    progress: Number
-  }
+    progress: Number,
+  },
 };
 </script>
 

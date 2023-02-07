@@ -38,11 +38,11 @@ export default {
   props: {
     text: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   data: () => ({
-    isExpanded: false
+    isExpanded: false,
   }),
   computed: {
     hasExpansibleSection() {
@@ -58,13 +58,13 @@ export default {
       return this.isExpansibleSectionLarge
         ? this.text.split("<--EXPAND-->")
         : this.text.split("<--EXPAND-SMALL-->");
-    }
+    },
   },
   methods: {
     parseMarkdown(input) {
       return marked.parse(input).replace("<a", '<a target="_blank" ');
-    }
-  }
+    },
+  },
 };
 </script>
 

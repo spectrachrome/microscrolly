@@ -8,5 +8,5 @@ Vue.use(Vuetify);
 
 new Vue({
   vuetify: new Vuetify(),
-  render: h => h(App)
+  render: (h) => h(App),
 }).$mount("#app");

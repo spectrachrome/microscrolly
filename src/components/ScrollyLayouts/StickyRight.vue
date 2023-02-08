@@ -34,10 +34,30 @@
           </video>
 
           <img
-            v-else
+            v-else-if="item[1].image"
             :src="item[1].image"
             :style="`filter: saturate(${(progress || 0) / 100});`"
           />
+
+          <iframe
+            v-else
+            class="item"
+            :src="`https://race.esa.int/iframe?poi=${
+              item[1].id.split('@')[0]
+            }&z=${
+              item[1].mapInfo.zoom
+            }&lat=${
+              item[1].mapInfo.center.lat
+            }&lng=${
+              item[1].mapInfo.center.lng
+            }`"
+            width="800px"
+            height="500px"
+            frameBorder="0"
+            scroll="no"
+            style="overflow:hidden"
+          ></iframe>
+
           <span class="white--text pa-2" style="position: absolute; left: 0">
             {{ Math.round(progress) || 0 }}%
           </span>

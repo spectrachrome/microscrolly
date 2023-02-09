@@ -18,11 +18,16 @@
       </svg>
 
       <v-fade-transition>
-        <p
-          class="expansible"
-          :class="{ large: isExpansibleSectionLarge, hidden: !isExpanded }"
-          v-html="parseMarkdown(sections[1])"
-        />
+        <div
+          class="expansible-container full-width"
+          :class="{ hidden: !isExpanded }"
+        >
+          <p
+            class="expansible"
+            :class="{ large: isExpansibleSectionLarge }"
+            v-html="parseMarkdown(sections[1])"
+          />
+        </div>
       </v-fade-transition>
     </template>
 
@@ -94,7 +99,13 @@ export default {
   max-width: 100% !important;
 }
 
-.expansible.hidden {
+.expansible-container {
+  max-height: 200vh;
+  transition: all 0.3s ease-in-out;
+}
+
+.expansible-container.hidden {
+  max-height: 0 !important;
   opacity: 0;
 }
 

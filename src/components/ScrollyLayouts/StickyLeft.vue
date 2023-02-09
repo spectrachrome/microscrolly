@@ -35,9 +35,9 @@
           />
 
           <iframe
-            v-else-if="item[1].iframe"
+            v-else-if="item[0].iframe"
             class="item"
-            :src="item[1].iframe"
+            :src="item[0].iframe"
             width="800px"
             height="500px"
             frameBorder="0"

@@ -2,7 +2,7 @@
   <v-row justify="center" class="mx-0">
     <v-col cols="6">
       <v-fade-transition>
-        <figure v-show="progress >= 0 && progress <= 100">
+        <figure v-show="progress >= -50 && progress <= 150">
           <VideoScrubber
             v-if="item[0].scrub"
             :progress="progress"

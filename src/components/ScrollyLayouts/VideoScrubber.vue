@@ -1,11 +1,13 @@
 <template>
   <div class="videoscrubber fill-width fill-height">
     <!-- Progress display for debugging -->
-    <!-- {{ progress }} -->
+    <!-- <div style="top: 0; position: absolute; left: 0; z-index: 999">
+      {{ progress }}
+    </div> -->
     <v-fade-transition>
       <div
-        v-show="isFullWidth || (progress >= 0 && progress <= 100)"
-        style="position: relative"
+        v-show="isFullWidth || (progress >= -20 && progress <= 120)"
+        style="position: sticky; top: 6vh"
       >
         <video
           v-if="baseUrl.includes('.mp4')"
@@ -150,3 +152,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.videoscrubber {
+  /* TEMP, make dynamic */
+  height: 2000px;
+}
+</style>

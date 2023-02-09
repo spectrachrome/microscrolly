@@ -137,17 +137,31 @@ export default {
   },
   methods: {
     onScroll() {
+      const mapBetween = (currentNum, minAllowed, maxAllowed, min, max) => {
+        // https://stackoverflow.com/a/42110995
+        return (
+          ((maxAllowed - minAllowed) * (currentNum - min)) / (max - min) +
+          minAllowed
+        );
+      };
+
       const windowHeight = window.innerHeight;
       const articles = [...document.querySelectorAll("article")];
       articles.forEach((currentElement, index) => {
+        const scrollProgress =
+          document.querySelector("#scroll-target").scrollTop;
+        const elementDistanceToTop = currentElement.offsetTop;
         const elementHeight = currentElement.clientHeight;
-        const elementTop = currentElement.getBoundingClientRect().top;
-        this.$set(
-          this.progress,
-          index,
-          ((windowHeight - elementTop - elementHeight * 0.33) / elementHeight) *
-            100
+        const startProgress = elementDistanceToTop;
+        const endProgress = elementDistanceToTop + elementHeight - windowHeight;
+        const currentProgress = mapBetween(
+          scrollProgress,
+          0,
+          100,
+          startProgress,
+          endProgress
         );
+        this.$set(this.progress, index, currentProgress);
       });
     },
 

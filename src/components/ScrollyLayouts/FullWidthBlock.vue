@@ -25,6 +25,8 @@
           small
         />
 
+        <ImageCompare v-else-if="item.compare" :compare="item.compare" />
+
         <ExpansibleTextSection v-else :text="item.text" />
       </article>
     </v-col>
@@ -34,11 +36,13 @@
 <script>
 import ExpansibleTextSection from "../ExpansibleTextSection.vue";
 import VideoScrubber from "./VideoScrubber.vue";
+import ImageCompare from "./ImageCompare.vue";
 
 export default {
   components: {
     ExpansibleTextSection,
     VideoScrubber,
+    ImageCompare,
   },
   props: {
     item: {

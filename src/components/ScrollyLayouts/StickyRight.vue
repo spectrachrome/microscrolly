@@ -34,6 +34,11 @@
             <source :src="item[1].video" type="video/mp4" />
           </video>
 
+          <ImageCompare
+            v-else-if="item[1].compare"
+            :compare="item[1].compare"
+          />
+
           <img
             v-else-if="item[1].image"
             :src="item[1].image"
@@ -65,11 +70,13 @@
 import ExpansibleTextSection from "../ExpansibleTextSection.vue";
 import VideoScrubber from "./VideoScrubber.vue";
 import autoplayVideo from "../../mixins/autoplayVideo";
+import ImageCompare from "./ImageCompare.vue";
 
 export default {
   components: {
     ExpansibleTextSection,
     VideoScrubber,
+    ImageCompare,
   },
   mixins: [autoplayVideo],
   props: {

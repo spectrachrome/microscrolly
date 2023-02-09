@@ -30,6 +30,11 @@
             <source :src="item[0].video" type="video/mp4" />
           </video>
 
+          <ImageCompare
+            v-else-if="item[1].compare"
+            :compare="item[1].compare"
+          />
+
           <img
             v-else-if="item[0].image"
             :src="item[0].image"
@@ -65,10 +70,12 @@
 import { marked } from "marked";
 import VideoScrubber from "./VideoScrubber.vue";
 import autoplayVideo from "../../mixins/autoplayVideo";
+import ImageCompare from "./ImageCompare.vue";
 
 export default {
   components: {
     VideoScrubber,
+    ImageCompare,
   },
   mixins: [autoplayVideo],
   props: {

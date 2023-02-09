@@ -7,13 +7,15 @@
     <v-fade-transition>
       <div
         v-show="isFullWidth || (progress >= -20 && progress <= 120)"
-        style="position: sticky; top: 6vh"
+        style="position: sticky; top: 5vh"
       >
         <video
           v-if="baseUrl.includes('.mp4')"
           ref="scrubVideo"
           width="100%"
           muted
+          class="full-width"
+          style="padding: 0 10vw"
         >
           <source :src="baseUrl" type="video/mp4" />
         </video>

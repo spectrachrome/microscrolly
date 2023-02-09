@@ -30,11 +30,26 @@
             <source :src="item[0].video" type="video/mp4" />
           </video>
 
-          <img v-else-if="item[1].image" :src="item[0].image" />
+          <img
+            v-else-if="item[0].image"
+            :src="item[0].image"
+            :style="`filter: saturate(${(progress || 0) / 100});`"
+          />
+
+          <iframe
+            v-else-if="item[0].iframe"
+            class="item"
+            :src="item[0].iframe"
+            width="800px"
+            height="500px"
+            frameBorder="0"
+            scroll="no"
+            style="overflow: hidden"
+          ></iframe>
           <!-- Progress display for debugging -->
-          <!-- <span class="white--text pa-2" style="position: absolute; right: 0"
-            >{{ Math.round(progress) || 0 }}%</span
-          > -->
+          <!-- <span class="white--text pa-2" style="position: absolute; left: 0">
+            {{ Math.round(progress) || 0 }}%
+          </span> -->
         </figure>
       </v-fade-transition>
     </v-col>

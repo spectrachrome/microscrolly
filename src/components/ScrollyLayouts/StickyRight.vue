@@ -34,7 +34,23 @@
             <source :src="item[1].video" type="video/mp4" />
           </video>
 
-          <img v-else-if="item[1].image" :src="item[1].image" />
+          <img
+            v-else-if="item[1].image"
+            :src="item[1].image"
+            :style="`filter: saturate(${(progress || 0) / 100});`"
+          />
+
+          <iframe
+            v-else-if="item[1].iframe"
+            class="item"
+            :src="item[1].iframe"
+            width="800px"
+            height="500px"
+            frameBorder="0"
+            scroll="no"
+            style="overflow: hidden"
+          ></iframe>
+
           <!-- Progress display for debugging -->
           <!-- <span class="white--text pa-2" style="position: absolute; left: 0">
             {{ Math.round(progress) || 0 }}%

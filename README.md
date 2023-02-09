@@ -6,6 +6,10 @@
   <img src="https://img.shields.io/github/commit-activity/m/spectrachrome/microscrolly" />
 </p>
 
+**Notice: This software is still in a beta stage**
+
+Further documentation can be found [in the project wiki](https://github.com/spectrachrome/microscrolly/wiki).
+
 # What's this?
 
 `microscrolly` is a micro-app which takes a scrollytelling story in JSON format and displays it to the user. 

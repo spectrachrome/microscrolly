@@ -40,17 +40,9 @@
           />
 
           <iframe
-            v-else
+            v-else-if="item[1].iframe"
             class="item"
-            :src="`https://race.esa.int/iframe?poi=${
-              item[1].id.split('@')[0]
-            }&z=${
-              item[1].mapInfo.zoom
-            }&lat=${
-              item[1].mapInfo.center.lat
-            }&lng=${
-              item[1].mapInfo.center.lng
-            }`"
+            :src="item[1].iframe"
             width="800px"
             height="500px"
             frameBorder="0"

@@ -15,7 +15,7 @@
           width="100%"
           muted
           class="full-width"
-          style="padding: 0 10vw"
+          style="padding: 0 20vw"
         >
           <source :src="baseUrl" type="video/mp4" />
         </video>

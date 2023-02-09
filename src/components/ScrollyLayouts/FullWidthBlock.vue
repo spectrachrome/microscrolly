@@ -25,25 +25,6 @@
           small
         />
 
-        <iframe
-            v-else-if="item.mapInfo"
-            class="item"
-            :src="`https://race.esa.int/iframe?poi=${
-              item.id.split('@')[0]
-            }&z=${
-              item.mapInfo.zoom
-            }&lat=${
-              item.mapInfo.center.lat
-            }&lng=${
-              item.mapInfo.center.lng
-            }`"
-            width="800px"
-            height="500px"
-            frameBorder="0"
-            scroll="no"
-            style="overflow:hidden"
-          ></iframe>
-
         <ExpansibleTextSection v-else :text="item.text" />
       </article>
     </v-col>

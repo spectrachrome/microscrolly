@@ -39,11 +39,7 @@
             :compare="item[1].compare"
           />
 
-          <img
-            v-else-if="item[1].image"
-            :src="item[1].image"
-            :style="`filter: saturate(${(progress || 0) / 100});`"
-          />
+          <img v-else-if="item[1].image" :src="item[1].image" />
 
           <iframe
             v-else-if="item[1].iframe"

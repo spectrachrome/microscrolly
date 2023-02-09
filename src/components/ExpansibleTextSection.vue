@@ -19,8 +19,8 @@
 
       <v-fade-transition>
         <div
-          class="expansible-container full-width"
-          :class="{ hidden: !isExpanded }"
+          class="expansible-container"
+          :class="{ hidden: !isExpanded, 'full-width': isExpansibleSectionLarge }"
         >
           <p
             class="expansible"
@@ -93,6 +93,8 @@ export default {
   font-size: 1rem;
   transition: all 0.3s ease-in-out;
   text-align: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .expansible.large {

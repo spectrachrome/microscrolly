@@ -56,20 +56,21 @@
     </v-col>
     <v-col cols="6">
       <article class="d-flex align-center" style="min-height: 800px">
-        <p v-html="parseMarkdown(item[1].text)"></p>
+        <ExpansibleTextSection :text="item[1].text" />
       </article>
     </v-col>
   </v-row>
 </template>
 
 <script>
-import { marked } from "marked";
+import ExpansibleTextSection from "../ExpansibleTextSection.vue";
 import VideoScrubber from "./VideoScrubber.vue";
 import autoplayVideo from "../../mixins/autoplayVideo";
 import ImageCompare from "./ImageCompare.vue";
 
 export default {
   components: {
+    ExpansibleTextSection,
     VideoScrubber,
     ImageCompare,
   },
@@ -87,11 +88,6 @@ export default {
       "Mauris felis ipsum, placerat sit amet accumsan non, commodo ac arcu. Phasellus lorem urna, consectetur non ornare et, pharetra id risus.",
     ],
   }),
-  methods: {
-    parseMarkdown(input) {
-      return marked.parse(input).replace("<a", '<a target="_blank" ');
-    },
-  },
 };
 </script>
 

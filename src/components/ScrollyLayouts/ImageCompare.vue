@@ -25,7 +25,4 @@ export default {
   --default-handle-shadow: 0px 0px 5px rgba(0, 0, 0, 1);
   --default-handle-width: 100px;
 }
-img {
-  max-width: 80vw;
-}
 </style>

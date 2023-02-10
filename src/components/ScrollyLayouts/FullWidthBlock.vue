@@ -1,11 +1,12 @@
 <template>
   <v-row>
     <v-col>
-      <article class="full-width-block d-flex">
+      <article
+        class="full-width-block d-flex"
+        :style="item.scrub ? 'padding: 1000px 0' : ''"
+      >
         <video
           v-if="item.video && item.autoplay"
-          :class="{ 'full-width': item.fullwidth }"
-          width="100%"
           muted
           playsinline
           autoplay
@@ -28,20 +29,20 @@
 
         <ImageCompare v-else-if="item.compare" :compare="item.compare" />
 
-        <ExpansibleTextSection v-else :text="item.text" />
+        <TextSection v-else :text="item.text" />
       </article>
     </v-col>
   </v-row>
 </template>
 
 <script>
-import ExpansibleTextSection from "../ExpansibleTextSection.vue";
+import TextSection from "../TextSection.vue";
 import VideoScrubber from "./VideoScrubber.vue";
 import ImageCompare from "./ImageCompare.vue";
 
 export default {
   components: {
-    ExpansibleTextSection,
+    TextSection,
     VideoScrubber,
     ImageCompare,
   },
@@ -60,9 +61,3 @@ export default {
   }),
 };
 </script>
-
-<style scoped>
-article.full-width-block {
-  width: 100%;
-}
-</style>

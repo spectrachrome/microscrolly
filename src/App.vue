@@ -186,19 +186,25 @@ export default {
 </script>
 
 <style>
+.row + .row {
+  margin-top: 100px;
+}
+
+.row {
+  max-width: 1000px;
+  padding: 0 10vw;
+}
+
+@media screen and (min-width: 800px) {
+  .row {
+    padding: 0 5vw;
+  }
+}
+
 @media screen and (min-width: 1800px) {
   .row {
     max-width: 1300px;
   }
-
-  .col {
-    max-width: 40vw;
-  }
-}
-
-figure img,
-figure video {
-  border-radius: 16px;
 }
 
 /* Use this class inside scrolly items to expand to full width even if the environment has constrained width */
@@ -226,5 +232,23 @@ video {
 /* Fix Vuetify col spacing in order to allow seamless stories */
 .col {
   padding: 0;
+}
+</style>
+
+<style>
+article canvas,
+article video,
+article img,
+article .v-image {
+  max-width: 100%;
+  height: auto;
+}
+
+figure iframe,
+figure img,
+figure video,
+figure .v-image {
+  border-radius: 16px;
+  position: absolute;
 }
 </style>

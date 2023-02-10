@@ -1,7 +1,11 @@
 <template>
-  <div class="expansible-text-section">
+  <div class="d-flex flex-column fill-width">
     <template v-if="hasExpansibleSection">
-      <p v-if="sections[0].length" v-html="parseMarkdown(sections[0])" />
+      <div
+        v-if="sections[0].length"
+        class="expansible-text"
+        v-html="parseMarkdown(sections[0])"
+      />
       <!-- /* eslint-disable-line vue/no-v-html */ -->
 
       <svg
@@ -20,9 +24,12 @@
       <v-fade-transition>
         <div
           class="expansible-container"
-          :class="{ hidden: !isExpanded, 'full-width': isExpansibleSectionLarge }"
+          :class="{
+            hidden: !isExpanded,
+            'full-width': isExpansibleSectionLarge,
+          }"
         >
-          <p
+          <div
             class="expansible"
             :class="{ large: isExpansibleSectionLarge }"
             v-html="parseMarkdown(sections[1])"
@@ -73,18 +80,25 @@ export default {
 </script>
 
 <style scoped>
-.expansible-text-section {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  padding-top: 80px;
-  padding-bottom: 80px;
-  min-width: 520px;
+:deep(p) {
+  margin-bottom: 200px;
+}
+:deep(.expansible-text p),
+:deep(.expansible p),
+:deep(p:last-child) {
+  margin-bottom: 16px;
 }
 
-.expansible-text-section svg {
-  align-self: center;
+.expansible-container {
+  max-height: 200vh;
+  transition: all 0.3s ease-in-out;
 }
+
+.expansible-container.hidden {
+  max-height: 0 !important;
+  opacity: 0;
+}
+
 .expansible {
   max-width: 320px;
   padding: 12px;
@@ -101,17 +115,8 @@ export default {
   max-width: 100% !important;
 }
 
-.expansible-container {
-  max-height: 200vh;
-  transition: all 0.3s ease-in-out;
-}
-
-.expansible-container.hidden {
-  max-height: 0 !important;
-  opacity: 0;
-}
-
 .expand-button {
+  align-self: center;
   width: 24px;
   height: 24px;
   margin-top: 16px;

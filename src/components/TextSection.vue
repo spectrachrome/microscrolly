@@ -73,7 +73,7 @@ export default {
   },
   methods: {
     parseMarkdown(input) {
-      return marked.parse(input).replace("<a", '<a target="_blank" ');
+      return marked.parse(input).replace("<a href", '<a target="_blank href" ');
     },
   },
 };

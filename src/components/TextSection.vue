@@ -83,10 +83,19 @@ export default {
 :deep(p) {
   margin-bottom: 200px;
 }
-:deep(.expansible-text p),
-:deep(.expansible p),
+
 :deep(p:last-child) {
   margin-bottom: 16px;
+}
+
+:deep(.expansible-text p),
+:deep(.expansible p) {
+  font-size: 1rem;
+  margin-bottom: 0;
+}
+
+:deep(.expansible p)+:deep(.expansible p) {
+  margin-top: 16px;
 }
 
 .expansible-container {
@@ -104,7 +113,6 @@ export default {
   padding: 12px;
   margin-top: 12px;
   border: 1px solid #aaa;
-  font-size: 1rem;
   transition: all 0.3s ease-in-out;
   text-align: center;
   margin-left: auto;

@@ -187,7 +187,7 @@ export default {
 
 <style>
 .row + .row {
-  margin-top: 100px;
+  margin-top: 0;
 }
 
 .row {
@@ -250,5 +250,19 @@ figure video,
 figure .v-image {
   border-radius: 16px;
   position: absolute;
+}
+
+h1 {
+  font-size: 3rem;
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+h2 {
+  font-size: 2rem;
+  margin-top: 30px;
+  margin-bottom: 15px;
+}
+p {
+  font-size: 1.3rem;
 }
 </style>

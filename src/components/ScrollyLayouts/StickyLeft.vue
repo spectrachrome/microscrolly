@@ -100,7 +100,7 @@ figure img,
 figure video {
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 0;
   transform: translate(-25%, -50%);
   max-height: 100vh;
   max-width: 100%;

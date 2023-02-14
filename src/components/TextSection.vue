@@ -3,7 +3,6 @@
     <template v-if="hasExpansibleSection">
       <div
         v-if="sections[0].length"
-        class="expansible-text"
         v-html="parseMarkdown(sections[0])"
       />
       <!-- /* eslint-disable-line vue/no-v-html */ -->
@@ -80,16 +79,7 @@ export default {
 </script>
 
 <style scoped>
-:deep(p) {
-  margin-bottom: 200px;
-}
-
-:deep(p:last-child) {
-  margin-bottom: 16px;
-}
-
-:deep(.expansible-text p),
-:deep(.expansible p) {
+:deep(.expansible-container p) {
   font-size: 1rem;
   margin-bottom: 0;
 }

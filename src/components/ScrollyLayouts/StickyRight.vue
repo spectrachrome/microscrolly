@@ -7,7 +7,7 @@
     </v-col>
     <v-col cols="8" style="z-index: 0">
       <v-fade-transition>
-        <figure v-show="progress >= 0 && progress <= 100">
+        <figure v-show="progress >= -50 && progress <= 150">
           <VideoScrubber
             v-if="item[1].scrub"
             :progress="progress"
@@ -97,5 +97,13 @@ figure video {
   transform: translate(-25%, -50%);
   max-height: 100vh;
   max-width: 100%;
+}
+
+:deep(p) {
+  margin-bottom: 200px;
+}
+
+:deep(p:last-child) {
+  margin-bottom: 16px;
 }
 </style>

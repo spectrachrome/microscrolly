@@ -105,4 +105,12 @@ figure video {
   max-height: 100vh;
   max-width: 100%;
 }
+
+:deep(p) {
+  margin-bottom: 200px;
+}
+
+:deep(p:last-child) {
+  margin-bottom: 16px;
+}
 </style>

@@ -35,7 +35,7 @@
           v-else-if="(item[0].width === 4 && item[0].text) || item[0].video"
           :key="index"
           :item="item[0]"
-          :progress="progress[index]"
+          :progress="progress[index] || 0"
         />
         <StickyRight
           v-else-if="item[0].width === 1"
@@ -137,17 +137,31 @@ export default {
   },
   methods: {
     onScroll() {
+      const mapBetween = (currentNum, minAllowed, maxAllowed, min, max) => {
+        // https://stackoverflow.com/a/42110995
+        return (
+          ((maxAllowed - minAllowed) * (currentNum - min)) / (max - min) +
+          minAllowed
+        );
+      };
+
       const windowHeight = window.innerHeight;
       const articles = [...document.querySelectorAll("article")];
       articles.forEach((currentElement, index) => {
+        const scrollProgress =
+          document.querySelector("#scroll-target").scrollTop;
+        const elementDistanceToTop = currentElement.offsetTop;
         const elementHeight = currentElement.clientHeight;
-        const elementTop = currentElement.getBoundingClientRect().top;
-        this.$set(
-          this.progress,
-          index,
-          ((windowHeight - elementTop - elementHeight * 0.33) / elementHeight) *
-            100
+        const startProgress = elementDistanceToTop;
+        const endProgress = elementDistanceToTop + elementHeight - windowHeight;
+        const currentProgress = mapBetween(
+          scrollProgress,
+          0,
+          100,
+          startProgress,
+          endProgress
         );
+        this.$set(this.progress, index, currentProgress);
       });
     },
 
@@ -172,15 +186,18 @@ export default {
 </script>
 
 <style>
-@media screen and (min-width: 700px) {
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  p {
-    max-width: 66vw;
+.row + .row {
+  margin-top: 0;
+}
+
+.row {
+  max-width: 1000px;
+  padding: 0 10vw;
+}
+
+@media screen and (min-width: 800px) {
+  .row {
+    padding: 0 5vw;
   }
 }
 
@@ -188,17 +205,64 @@ export default {
   .row {
     max-width: 1300px;
   }
-
-  .col {
-    max-width: 40vw;
-  }
 }
 
-/* Expand to full width even if the environment has constrained width */
+/* Use this class inside scrolly items to expand to full width even if the environment has constrained width */
 .full-width {
   width: 100vw !important;
   margin-left: -50vw;
   margin-right: -50vw;
+  left: 50%;
+  right: 50%;
   position: relative;
+  padding: 40px 24px;
+}
+
+@media screen and (min-width: 800px) {
+  .full-width {
+    padding: 40px 120px;
+  }
+}
+
+/* Make all videos display block by default to avoid whitespaces */
+video {
+  display: block;
+}
+
+/* Fix Vuetify col spacing in order to allow seamless stories */
+.col {
+  padding: 0;
+}
+</style>
+
+<style>
+article canvas,
+article video,
+article img,
+article .v-image {
+  max-width: 100%;
+  height: auto;
+}
+
+figure iframe,
+figure img,
+figure video,
+figure .v-image {
+  border-radius: 16px;
+  position: absolute;
+}
+
+h1 {
+  font-size: 3rem;
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+h2 {
+  font-size: 2rem;
+  margin-top: 30px;
+  margin-bottom: 15px;
+}
+p {
+  font-size: 1.3rem;
 }
 </style>

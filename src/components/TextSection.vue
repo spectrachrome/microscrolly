@@ -1,7 +1,10 @@
 <template>
-  <div class="expansible-text-section">
+  <div class="d-flex flex-column fill-width">
     <template v-if="hasExpansibleSection">
-      <p v-html="parseMarkdown(sections[0])" />
+      <div
+        v-if="sections[0].length"
+        v-html="parseMarkdown(sections[0])"
+      />
       <!-- /* eslint-disable-line vue/no-v-html */ -->
 
       <svg
@@ -18,12 +21,19 @@
       </svg>
 
       <v-fade-transition>
-        <p
-          v-show="isExpanded"
-          class="expansible"
-          :class="{ large: isExpansibleSectionLarge }"
-          v-html="parseMarkdown(sections[1])"
-        />
+        <div
+          class="expansible-container"
+          :class="{
+            hidden: !isExpanded,
+            'full-width': isExpansibleSectionLarge,
+          }"
+        >
+          <div
+            class="expansible"
+            :class="{ large: isExpansibleSectionLarge }"
+            v-html="parseMarkdown(sections[1])"
+          />
+        </div>
       </v-fade-transition>
     </template>
 
@@ -62,27 +72,41 @@ export default {
   },
   methods: {
     parseMarkdown(input) {
-      return marked.parse(input).replace("<a", '<a target="_blank" ');
+      return marked.parse(input).replace("<a href", '<a target="_blank href" ');
     },
   },
 };
 </script>
 
 <style scoped>
-.expansible-text-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  padding-top: 80px;
-  padding-bottom: 80px;
-  min-width: 520px;
+:deep(.expansible-container p) {
+  font-size: 1rem;
+  margin-bottom: 0;
 }
+
+:deep(.expansible p)+:deep(.expansible p) {
+  margin-top: 16px;
+}
+
+.expansible-container {
+  max-height: 200vh;
+  transition: all 0.3s ease-in-out;
+}
+
+.expansible-container.hidden {
+  max-height: 0 !important;
+  opacity: 0;
+}
+
 .expansible {
-  max-width: 500px;
+  max-width: 320px;
   padding: 12px;
   margin-top: 12px;
   border: 1px solid #aaa;
+  transition: all 0.3s ease-in-out;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .expansible.large {
@@ -90,6 +114,7 @@ export default {
 }
 
 .expand-button {
+  align-self: center;
   width: 24px;
   height: 24px;
   margin-top: 16px;

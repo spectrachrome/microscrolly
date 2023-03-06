@@ -1,16 +1,23 @@
 <template>
-  <div class="videoscrubber fill-width fill-height">
-    {{ progress }}
+  <div>
+    <!-- Progress display for debugging -->
+    <!-- <div style="top: 0; position: absolute; left: 0; z-index: 999">
+      {{ progress }}
+    </div> -->
     <v-fade-transition>
-      <div
-        v-show="isFullWidth || (progress >= 0 && progress <= 100)"
-        style="position: relative"
-      >
+      <div v-show="progress >= 0 && progress <= 100" style="display: none">
         <video
           v-if="baseUrl.includes('.mp4')"
           ref="scrubVideo"
           width="100%"
           muted
+          style="
+            position: fixed;
+            top: 50vh;
+            left: 50vw;
+            width: 80%;
+            transform: translate(-40vw, -50vh);
+          "
         >
           <source :src="baseUrl" type="video/mp4" />
         </video>

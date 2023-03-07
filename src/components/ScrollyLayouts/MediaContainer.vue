@@ -90,13 +90,14 @@ figure {
     height: 30vh;
   }
 
-  :deep(figure iframe),
+  figure iframe,
   figure img,
-  :deep(figure .v-image),
+  figure .v-image,
   figure video {
     position: fixed;
     top: 0;
     width: 100%;
+    border-radius: 0;
   }
 }
 
@@ -106,9 +107,9 @@ figure {
     top: 50%;
   }
 
-  :deep(figure iframe),
+  figure iframe,
   figure img,
-  :deep(figure .v-image),
+  figure .v-image,
   figure video {
     position: absolute;
     top: 50%;

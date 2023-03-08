@@ -83,6 +83,17 @@ figure {
   position: sticky;
 }
 
+figure iframe,
+figure img,
+figure .v-image,
+figure video {
+  pointer-events: none;
+}
+
+figure video[controls] {
+  pointer-events: all;
+}
+
 /* smAndDown */
 @media only screen and (max-width: 959px) {
   figure {

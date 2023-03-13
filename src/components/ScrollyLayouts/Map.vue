@@ -64,6 +64,10 @@ export default {
       const lng = Math.min(Math.max(startLng + progressRatio * (endLng - startLng), minLng), maxLng);
 
       this.$refs.mapframe.contentWindow.postMessage({
+        command: 'map:enableScrolly',
+      }, '*');
+      
+      this.$refs.mapframe.contentWindow.postMessage({
         command: 'map:setZoom',
         zoom: this.zoom,
       }, '*');
@@ -82,7 +86,8 @@ export default {
       return this.mapInfo.endZoom || 5.5
     },
   },
-  methods: {
+  mounted () {
+  
   },
   components: {
 

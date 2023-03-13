@@ -1,6 +1,9 @@
 <template>
   <v-fade-transition>
-    <figure v-show="progress >= -50 && progress <= 150">
+    <figure
+      v-show="progress >= -50 && progress <= 150"
+      :class="{'overlay': shouldOverlayText}"
+    >
       <VideoScrubber
         v-if="item.scrub"
         :progress="progress"
@@ -68,6 +71,13 @@ export default {
       type: Number,
       required: true,
     },
+    shouldOverlayText: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  mounted () {
+    console.log(`shouldOverlayText? ${this.shouldOverlayText}`);
   },
   mixins: [autoplayVideo],
   components: {
@@ -92,6 +102,21 @@ figure video {
 
 figure video[controls] {
   pointer-events: all;
+}
+
+figure.overlay {
+  position: fixed;
+  pointer-events: none;
+}
+
+figure.overlay iframe,
+figure.overlay img,
+figure.overlay .v-image,
+figure.overlay video {
+  height: 100% !important;
+  width: auto !important;
+  pointer-events: none;
+  left: -50%;
 }
 
 /* smAndDown */

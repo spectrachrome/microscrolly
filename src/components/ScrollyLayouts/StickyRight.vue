@@ -14,6 +14,24 @@
       </v-col>
     </v-row>
 
+    <v-col v-else-if="$vuetify.breakpoint.smAndDown && shouldOverlayText" justify="center">
+      <div style="z-index: 0">
+        <MediaContainer
+          :item="item[1]"
+          :progress="progress"
+          :should-overlay-text="shouldOverlayText"
+        />
+      </div>
+      <div style="position: relative; z-index: 50">
+        <article style="padding: 800px 0 z-index: 200">
+          <TextSection
+            :text="item[0].text"
+            :should-overlay-text="shouldOverlayText"
+          />
+        </article>
+      </div>
+    </v-col>
+
     <v-col v-else justify="center">
       <div style="z-index: 0">
         <MediaContainer
@@ -43,10 +61,7 @@ export default {
     item: Array,
     index: Number,
     progress: Number,
+    shouldOverlayText: Boolean,
   },
 };
 </script>
-
-<style scoped>
-
-</style>

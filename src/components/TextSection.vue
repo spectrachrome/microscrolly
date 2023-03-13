@@ -4,6 +4,7 @@
       <div
         v-if="sections[0].length"
         v-html="parseMarkdown(sections[0])"
+        :class="{'backdrop': shouldOverlayText}"
       />
       <!-- /* eslint-disable-line vue/no-v-html */ -->
 
@@ -37,7 +38,11 @@
       </v-fade-transition>
     </template>
 
-    <div v-else v-html="parseMarkdown(text)" />
+    <div
+      v-else
+      v-html="parseMarkdown(text)"
+      :class="{'backdrop': shouldOverlayText}"
+    />
   </div>
 </template>
 
@@ -49,6 +54,10 @@ export default {
     text: {
       type: String,
       required: true,
+    },
+    shouldOverlayText: {
+      type: Boolean,
+      default: false,
     },
   },
   data: () => ({
@@ -86,6 +95,14 @@ export default {
 
 :deep(.expansible p)+:deep(.expansible p) {
   margin-top: 16px;
+}
+
+.backdrop {
+  background: white;
+}
+
+.backdrop p {
+  margin: 16px;
 }
 
 .expansible-container {

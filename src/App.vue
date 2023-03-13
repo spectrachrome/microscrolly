@@ -17,6 +17,10 @@
       "
       class="overflow-y-auto overflow-x-hidden mx-0"
     >
+      <div class="debug-tools" style="position: fixed; right: 20px; top: 20px; padding: 10px; background: white; z-index: 3000;">
+        <input type="checkbox" v-model="shouldOverlayText"> overlay text?
+      </div>
+
       <component
         v-bind="componentProps['header']"
         :is="'Header'"
@@ -43,6 +47,7 @@
           :item="item"
           :index="index"
           :progress="progress[index]"
+          :should-overlay-text="shouldOverlayText"
         />
         <StickyLeft
           v-else-if="item[0].width === 3"
@@ -98,6 +103,7 @@ export default {
       beforeFooter: {},
       footer: {},
     },
+    shouldOverlayText: false,
   }),
   created() {
     window.addEventListener("message", (message) => {

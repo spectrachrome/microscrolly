@@ -1,18 +1,24 @@
 <template>
   <div
-    class="ml-16"
-    style="width: 100%; height: 500px;"
-    >
+    :class="{
+      'ml-16': $vuetify.breakpoint.mdAndUp,
+      'fullscreen': $vuetify.breakpoint.mdAndDown,
+    }"
+    style="pointer-events: none;"
+    :style="{
+      height: $vuetify.breakpoint.lgAndUp ? '500px': '100%',
+    }"
+  >
       <div style="position: fixed; right: 30px; top: 30px;">
         {{ zoom }}
       </div>
-        <iframe
-            :src="url"
-            ref="mapframe"
-            scroll="no"
-            class="fill-height fill-width"
-            frameborder="0"
-        ></iframe>
+      <iframe
+          :src="url"
+          ref="mapframe"
+          scroll="no"
+          class="fill-height fill-width"
+          frameborder="0"
+      ></iframe>
     </div>
 </template>
 
@@ -34,7 +40,7 @@ export default {
       minProgress: 0,
       maxProgress: 100,
       zoom: 3.5,
-      url: 'http://trilateral.eox.world:8812/iframe?poi=W12-NCEO&embedMap=true&z=2.562242424221073&lat=-9.480253386695793&lng=71.42857142857143',
+      url: 'http://gtif.eox.world:8812/iframe?poi=AT-AQC&embedMap=true&z=2.562242424221073&lat=14.5&lng=47.5',
       loaded: false,
     }
   },
@@ -51,9 +57,9 @@ export default {
 
       // interpolate from one latitude-longitude pair to another
       const startLat = this.mapInfo.startLat || -9.480253386695793;
-      const endLat = this.mapInfo.endLat || 0.0;
+      const endLat = this.mapInfo.endLat || 14.5;
       const startLng = this.mapInfo.startLng || 71.42857142857143;
-      const endLng = this.mapInfo.endLng || 20.0;
+      const endLng = this.mapInfo.endLng || 47.5;
 
       const maxLat = Math.max(startLat, endLat);
       const minLat = Math.min(startLat, endLat);
@@ -96,6 +102,12 @@ export default {
 </script>
 
 <style scoped>
-
+  .fullscreen {
+    position: fixed;
+    top: -10px;
+    right: -10px;
+    bottom: -10px;
+    left: -10px;
+  }
 </style>
 

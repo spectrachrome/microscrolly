@@ -1,7 +1,8 @@
 <template>
   <div
+    ref="map"
     :class="{
-      'ml-16': $vuetify.breakpoint.mdAndUp,
+      'ml-16': $vuetify.breakpoint.lgAndUp,
       'fullscreen': $vuetify.breakpoint.mdAndDown,
     }"
     style="pointer-events: none;"
@@ -23,6 +24,11 @@
 </template>
 
 <script>
+/**
+ * @typedef {Object} props
+ * @property {number} [longitudeOffset=0] - A positive or negative offset value to be applied to the map's longitude for scrolly layouts. Positive values move the map to the east, while negative values move it to the west.
+ */
+
 export default {
   name: 'Map',
   props: {
@@ -34,13 +40,19 @@ export default {
       type: Number,
       required: true,
     },
+    longitudeOffset: {
+      type: Number,
+      default: 0,
+    },
   },
   data() {
     return {
       minProgress: 0,
       maxProgress: 100,
       zoom: 3.5,
-      url: 'http://gtif.eox.world:8812/iframe?poi=AT-AQC&embedMap=true&z=2.562242424221073&lat=14.5&lng=47.5',
+      accumulatedDuration: 0,
+      lastTime: '',
+      url: `http://gtif.eox.world:8812/iframe?poi=${this.mapInfo.poi}&embedMap=true&z=2.562242424221073&lat=14.5&lng=47.5`,
       loaded: false,
     }
   },
@@ -49,47 +61,119 @@ export default {
       // Set the loaded flag to true after the iframe has loaded
       this.loaded = true
     },
-  },
-  watch: {
-    progress(newValue) {
-      const progressRatio = (this.progress - this.minProgress) / (this.maxProgress - this.minProgress);
-      this.zoom = this.startZoom + progressRatio * (this.endZoom - this.startZoom);
 
-      // interpolate from one latitude-longitude pair to another
-      const startLat = this.mapInfo.startLat || -9.480253386695793;
-      const endLat = this.mapInfo.endLat || 14.5;
-      const startLng = this.mapInfo.startLng || 71.42857142857143;
-      const endLng = this.mapInfo.endLng || 47.5;
+    findCurrentTimelineSegment (progressValue, timeline) {
+      // Find the current timeline segment based on the progress value
+      this.accumulatedDuration = 0;
+      let currentSegment = null;
+      let prevSegment = null;
 
-      const maxLat = Math.max(startLat, endLat);
-      const minLat = Math.min(startLat, endLat);
-      const maxLng = Math.max(startLng, endLng);
-      const minLng = Math.min(startLng, endLng);
+      for (let i = 0; i < timeline.length; i++) {
+        prevSegment = currentSegment;
+        currentSegment = timeline[i];
+        this.accumulatedDuration += timeline[i].duration;
 
-      const lat = Math.min(Math.max(startLat + progressRatio * (endLat - startLat), minLat), maxLat);
-      const lng = Math.min(Math.max(startLng + progressRatio * (endLng - startLng), minLng), maxLng);
+        if (progressValue <= this.accumulatedDuration) {
+          break;
+        }
+      }
 
+      return { prevSegment, currentSegment };
+    },
+
+    calculateSegmentProgress (prevSegment, currentSegment, progressValue) {
+      // Calculate the progress ratio within the current segment
+      const segmentDuration = currentSegment.duration;
+      return prevSegment ? (progressValue - (this.accumulatedDuration - segmentDuration)) / segmentDuration : 0;
+    },
+
+    interpolateZoom (prevSegment, currentSegment, segmentProgress) {
+      // Interpolate the zoom value based on the progress ratio
+      return prevSegment ? prevSegment.zoom + segmentProgress * (currentSegment.zoom - prevSegment.zoom) : currentSegment.zoom;
+    },
+
+    interpolateLatLng (prevSegment, currentSegment, segmentProgress) {
+      // Interpolate the latitude and longitude values based on the progress ratio
+      let lat = prevSegment ? prevSegment.center.lat + segmentProgress * (currentSegment.center.lat - prevSegment.center.lat) : currentSegment.center.lat;
+      let lng = prevSegment ? prevSegment.center.lng + segmentProgress * (currentSegment.center.lng - prevSegment.center.lng) : currentSegment.center.lng;
+      return { lat, lng };
+    },
+
+    updateMap(zoom, lat, lng) {
+      // Update the map center and zoom based on the interpolated latitude, longitude, and zoom values
       this.$refs.mapframe.contentWindow.postMessage({
         command: 'map:enableScrolly',
       }, '*');
       
       this.$refs.mapframe.contentWindow.postMessage({
         command: 'map:setZoom',
-        zoom: this.zoom,
+        zoom: zoom,
       }, '*');
 
       this.$refs.mapframe.contentWindow.postMessage({
         command: 'map:setCenter',
-        center: [lat, lng],
+        center: [lng, lat],
       }, '*');
+    },
+    setMapTime (time) {
+      console.log(`${time.value} === ${this.lastTime.value}?   ${time.value === this.lastTime.value}`);
+      if (time.value !== this.lastTime.value) {
+        this.$refs.mapframe.contentWindow.postMessage({
+          command: 'map:setTime',
+          time: time,
+        }, '*');
+
+        this.lastTime = time;
+      }
+    },
+  },
+  mounted () {
+    let poi = this.mapInfo.poi;
+    let lat = this.mapInfo.center.lat;
+    let lng = this.mapInfo.center.lng;
+    let z   = this.mapInfo.zoom;
+
+    this.url = `http://gtif.eox.world:8812/iframe?poi=${this.mapInfo.poi}&embedMap=true&z=${z}&lat=${lat}&lng=${lng}`
+  },
+  watch: {
+    progress(newValue) {
+      const timeline = this.mapInfo.timeline;
+      const progressValue = this.progress / 100;
+
+      // Find the current timeline segment based on the progress value
+      const { prevSegment, currentSegment } = this.findCurrentTimelineSegment(progressValue, timeline);
+
+      // Calculate the progress ratio within the current segment
+      const segmentProgress = this.calculateSegmentProgress(prevSegment, currentSegment, progressValue);
+
+      // Interpolate center and zoom values based on the progress ratio
+      let   { lat, lng } = this.interpolateLatLng(prevSegment, currentSegment, segmentProgress);
+      const zoom         = this.interpolateZoom(prevSegment, currentSegment, segmentProgress);
+
+      if (currentSegment.time) {
+        this.setMapTime({
+          name: currentSegment.time,
+          value: currentSegment.time,
+        });
+      }
+
+      //lng -= this.longitudeRange / 5;
+
+      // Update the map center and zoom based on the interpolated latitude, longitude, and zoom values
+      this.updateMap(zoom, lat, lng);
     },
   },
   computed: {
-    startZoom() {
+    startZoom () {
       return this.mapInfo.startZoom || 2.5
     },
-    endZoom() {
+
+    endZoom () {
       return this.mapInfo.endZoom || 5.5
+    },
+
+    longitudeRange () {
+      return 360 * this.$refs.map.clientWidth / (256 * Math.pow(2, this.zoom))
     },
   },
   mounted () {

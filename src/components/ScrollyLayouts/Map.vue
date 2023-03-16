@@ -148,7 +148,7 @@ export default {
 
       // Interpolate center and zoom values based on the progress ratio
       let   { lat, lng } = this.interpolateLatLng(prevSegment, currentSegment, segmentProgress);
-      const zoom         = this.interpolateZoom(prevSegment, currentSegment, segmentProgress);
+      this.zoom          = this.interpolateZoom(prevSegment, currentSegment, segmentProgress);
 
       if (currentSegment.time) {
         this.setMapTime({
@@ -157,10 +157,10 @@ export default {
         });
       }
 
-      //lng -= this.longitudeRange / 5;
+      lng -= this.longitudeRange / 5;
 
       // Update the map center and zoom based on the interpolated latitude, longitude, and zoom values
-      this.updateMap(zoom, lat, lng);
+      this.updateMap(this.zoom, lat, lng);
     },
   },
   computed: {

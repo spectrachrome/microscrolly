@@ -115,8 +115,8 @@ export default {
         center: [lng, lat],
       }, '*');
     },
+
     setMapTime (time) {
-      console.log(`${time.value} === ${this.lastTime.value}?   ${time.value === this.lastTime.value}`);
       if (time.value !== this.lastTime.value) {
         this.$refs.mapframe.contentWindow.postMessage({
           command: 'map:setTime',
@@ -126,14 +126,28 @@ export default {
         this.lastTime = time;
       }
     },
+
+    enableLayer (name) {
+      this.$refs.mapframe.contentWindow.postMessage({
+        command: 'map:enableLayer',
+        name: name,
+      }, '*');
+    },
+
+    disableLayer (name) {
+      this.$refs.mapframe.contentWindow.postMessage({
+        command: 'map:disableLayer',
+        name: name,
+      }, '*');
+    },
   },
   mounted () {
     let poi = this.mapInfo.poi;
-    let lat = this.mapInfo.center.lat;
-    let lng = this.mapInfo.center.lng;
+    let lat = this.mapInfo.timeline[0].center.lat;
+    let lng = this.mapInfo.timeline[0].center.lng;
     let z   = this.mapInfo.zoom;
 
-    this.url = `http://gtif.eox.world:8812/iframe?poi=${this.mapInfo.poi}&embedMap=true&z=${z}&lat=${lat}&lng=${lng}`
+    this.url = `http://gtif.eox.world:8812/iframe?poi=${this.mapInfo.poi}&embedMap=true&z=${z}&lat=${lat}&lng=${lng}`;
   },
   watch: {
     progress(newValue) {
@@ -157,6 +171,13 @@ export default {
         });
       }
 
+      if (currentSegment.layers) {
+        for (var layer of currentSegment.layers.enable) {
+          this.enableLayer(layer);
+        }
+        currentSegment.layers.disable.map(n => this.disableLayer(n));
+      }
+
       lng -= this.longitudeRange / 5;
 
       // Update the map center and zoom based on the interpolated latitude, longitude, and zoom values
@@ -175,12 +196,6 @@ export default {
     longitudeRange () {
       return 360 * this.$refs.map.clientWidth / (256 * Math.pow(2, this.zoom))
     },
-  },
-  mounted () {
-  
-  },
-  components: {
-
   },
 };
 </script>

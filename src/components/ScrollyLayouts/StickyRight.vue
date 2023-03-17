@@ -1,7 +1,12 @@
 <template>
   <div class="sticky-right">
     <v-row v-if="$vuetify.breakpoint.mdAndUp" justify="center">
-      <v-col cols="4" style="z-index: 50">
+      <v-col
+        :cols="$vuetify.breakpoint.lgAndUp ? 4 : 12"
+        :class="{'align-center': $vuetify.breakpoint.mdAndDown}"
+        class="d-flex"
+        style="z-index: 50"
+      >
         <article style="padding: 800px 0">
           <TextSection :text="item[0].text" />
         </article>

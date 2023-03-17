@@ -171,6 +171,16 @@ export default {
         });
       }
 
+      if (currentSegment.times) {
+        const idx = Math.floor(segmentProgress * (currentSegment.times.length));
+        let currentTime = currentSegment.times[idx];
+
+        this.setMapTime({
+          name:  currentTime,
+          value: currentTime,
+        });
+      }
+
       if (currentSegment.layers) {
         for (var layer of currentSegment.layers.enable) {
           this.enableLayer(layer);

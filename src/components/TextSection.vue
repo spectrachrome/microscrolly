@@ -1,5 +1,7 @@
 <template>
-  <div class="d-flex flex-column fill-width">
+  <div class="text-section d-flex flex-column fill-width" :class="{
+    'with-background': $vuetify.breakpoint.mdAndDown,
+  }">
     <template v-if="hasExpansibleSection">
       <div
         v-if="sections[0].length"
@@ -124,5 +126,17 @@ export default {
 
 .expand-button:hover {
   transform: scale(1.3);
+}
+
+:deep(p) {
+  max-width: 40%;
+  margin-bottom: 500px;
+  padding: 16px;
+}
+
+.text-section.with-background :deep(p) {
+  background: #FFF;
+  border-radius: 9px;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
 }
 </style>

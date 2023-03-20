@@ -129,12 +129,12 @@ export default {
 }
 
 :deep(p) {
-  max-width: 40%;
   margin-bottom: 500px;
   padding: 16px;
 }
 
 .text-section.with-background :deep(p) {
+  max-width: 40%;
   background: #FFF;
   border-radius: 9px;
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);

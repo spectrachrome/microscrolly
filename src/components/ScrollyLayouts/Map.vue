@@ -1,23 +1,14 @@
 <template>
   <div
     ref="map"
-    :class="{
-      'ml-16': $vuetify.breakpoint.lgAndUp,
-      'fullscreen': $vuetify.breakpoint.mdAndDown,
-    }"
-    style="pointer-events: none;"
-    :style="{
-      height: $vuetify.breakpoint.lgAndUp ? '500px': '100%',
-    }"
+    class="map fill-width fill-height"
+    style="position: relative; pointer-events: none;"
   >
-      <div style="position: fixed; right: 30px; top: 30px;">
-        {{ zoom }}
-      </div>
       <iframe
           :src="url"
           ref="mapframe"
           scroll="no"
-          class="fill-height fill-width"
+          style="position: absolute; inset: -10px; width: calc(100vw + 20px); height: calc(100vh + 20px);"
           frameborder="0"
       ></iframe>
     </div>
@@ -209,14 +200,4 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-  .fullscreen {
-    position: fixed;
-    top: -10px;
-    right: -10px;
-    bottom: -10px;
-    left: -10px;
-  }
-</style>
 

@@ -1,24 +1,32 @@
 <template>
-  <v-row align="center" justify="center">
+  <v-row class="image-with-text-overlay fill-width" align="center" justify="center">
     <v-col>
       <article style="margin-bottom: 50px">
-        <v-fade-transition>
-          <v-img
-            v-show="progress >= 0 && progress <= 100"
-            :style="`position: fixed; top: 0; right: 0; bottom: 0;
-            left: 0; pointer-events: none; filter: brightness(0.7)
-            hue-rotate(${progress * 3}deg); transform: scale(${
-              1 + progress / 100
-            }); transform-origin: center`"
-            :src="item[0].image"
+        <!--<v-img
+          :style="`position: sticky; top: 0; height: var(--view-height); pointer-events: none; filter: brightness(0.7) hue-rotate(${progress * 3}deg);`"
+          :src="item.image"
+        />-->
+
+        <div
+          :style="`position: sticky; top: 0; height: var(--view-height); pointer-events: none;`"
+        >
+          <div
+            class="fill-height fill-height"
+            style="position: relative"
           >
-          </v-img>
-        </v-fade-transition>
-        <div class="white--text text-center pa-16" style="position: relative">
-          <h1 class="text-h1 mb-8">Hello World.</h1>
-          <h4 class="text-h4 mb-8">Scroll to get started</h4>
-          <p v-html="parseMarkdown(text)"></p>
+            <Map
+              style=""
+              :mapInfo="item.mapInfo"
+              :progress="progress"
+            />
+          </div>
         </div>
+
+        <div
+          v-html="parseMarkdown(item.text)"
+          class="text-overlay white--text text-left pa-16 mb-32"
+          style="position: relative; width: 40%"
+        />
       </article>
     </v-col>
   </v-row>
@@ -27,13 +35,17 @@
 <script>
 import { marked } from "marked";
 
+import Map from './Map.vue';
+
 export default {
   name: "ImageWithTextOverlay",
   props: {
-    item: Array,
+    item: Object,
     index: Number,
     progress: Number,
-    text: String,
+  },
+  components: {
+    Map,
   },
   data: () => ({
     textPlaceholders: [
@@ -53,10 +65,13 @@ export default {
 
 <style scoped>
 article {
-  padding: 200px 50px 400px 50px;
+  --view-width: 100vw;
+  --view-height: 100vh;
 }
 
-article p {
-  margin-bottom: 50px !important;
+:deep(.text-overlay p) {
+  margin-bottom: var(--view-height);
+  background: #010;
+  padding: 20px;
 }
 </style>

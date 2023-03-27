@@ -5,11 +5,11 @@
     style="position: relative; pointer-events: none;"
   >
       <iframe
-          :src="url"
-          ref="mapframe"
-          scroll="no"
-          style="position: absolute; inset: -10px; width: calc(100vw + 20px); height: calc(100vh + 20px);"
-          frameborder="0"
+        :src="url"
+        ref="mapframe"
+        scroll="no"
+        style="position: absolute; inset: -10px; width: calc(100vw + 20px); height: calc(100vh + 20px);"
+        frameborder="0"
       ></iframe>
     </div>
 </template>
@@ -45,12 +45,25 @@ export default {
       lastTime: '',
       url: `http://gtif.eox.world:8812/iframe?poi=${this.mapInfo.poi}&embedMap=true&z=2.562242424221073&lat=14.5&lng=47.5`,
       loaded: false,
+      config: {
+        zoom:   0.0,
+        center: [],
+        layers: [],
+      },
     }
   },
   methods: {
-    onIframeLoaded() {
+    onReady() {
       // Set the loaded flag to true after the iframe has loaded
-      this.loaded = true
+      this.loaded = true;
+
+      this.enableLayer(this.mapInfo.baseLayer);
+    },
+
+    requestUpdateMap() {
+      requestAnimationFrame(() => {
+        this.updateMap();
+      });
     },
 
     findCurrentTimelineSegment (progressValue, timeline) {
@@ -90,7 +103,7 @@ export default {
       return { lat, lng };
     },
 
-    updateMap(zoom, lat, lng) {
+    updateMap() {
       // Update the map center and zoom based on the interpolated latitude, longitude, and zoom values
       this.$refs.mapframe.contentWindow.postMessage({
         command: 'map:enableScrolly',
@@ -98,13 +111,16 @@ export default {
       
       this.$refs.mapframe.contentWindow.postMessage({
         command: 'map:setZoom',
-        zoom: zoom,
+        zoom: this.config.zoom,
       }, '*');
 
       this.$refs.mapframe.contentWindow.postMessage({
         command: 'map:setCenter',
-        center: [lng, lat],
+        center: this.config.center,
       }, '*');
+
+      this.disableAllLayers();
+      this.config.layers.map(l => this.enableLayer(l));
     },
 
     setMapTime (time) {
@@ -131,6 +147,13 @@ export default {
         name: name,
       }, '*');
     },
+
+    disableAllLayers (name) {
+      this.$refs.mapframe.contentWindow.postMessage({
+        command: 'map:disableAllLayers',
+        baseLayer: this.mapInfo.baseLayer,
+      }, '*');
+    },
   },
   mounted () {
     let poi = this.mapInfo.poi;
@@ -139,6 +162,8 @@ export default {
     let z   = this.mapInfo.zoom;
 
     this.url = `http://gtif.eox.world:8812/iframe?poi=${this.mapInfo.poi}&embedMap=true&z=${z}&lat=${lat}&lng=${lng}`;
+
+    this.$refs.mapframe.addEventListener('load', this.onReady);
   },
   watch: {
     progress(newValue) {
@@ -153,7 +178,8 @@ export default {
 
       // Interpolate center and zoom values based on the progress ratio
       let   { lat, lng } = this.interpolateLatLng(prevSegment, currentSegment, segmentProgress);
-      this.zoom          = this.interpolateZoom(prevSegment, currentSegment, segmentProgress);
+      this.config.center = [lng, lat];
+      this.config.zoom   = this.interpolateZoom(prevSegment, currentSegment, segmentProgress);
 
       if (currentSegment.time) {
         this.setMapTime({
@@ -173,10 +199,9 @@ export default {
       }
 
       if (currentSegment.layers) {
-        for (var layer of currentSegment.layers.enable) {
-          this.enableLayer(layer);
-        }
-        currentSegment.layers.disable.map(n => this.disableLayer(n));
+        this.config.layers = currentSegment.layers;
+      } else {
+        currentSegment.layers = [];
       }
 
       lng -= this.longitudeRange / 5;

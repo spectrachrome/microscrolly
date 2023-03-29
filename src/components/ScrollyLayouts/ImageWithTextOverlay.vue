@@ -64,6 +64,14 @@ export default {
 </script>
 
 <style scoped>
+.image-with-text-overlay {
+  scroll-snap-type: y mandatory;
+}
+
+.image-with-text-overlay .text-overlay p {
+  scroll-snap-align: start;
+}
+
 article {
   --view-width: 100vw;
   --view-height: 100vh;

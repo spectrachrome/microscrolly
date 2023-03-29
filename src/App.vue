@@ -220,6 +220,14 @@ export default {
   padding: 40px 24px;
 }
 
+#scroll-target {
+  scroll-snap-type: y mandatory;
+}
+
+#scroll-target > * {
+  scroll-snap-align: start;
+}
+
 @media screen and (min-width: 800px) {
   .full-width {
     padding: 40px 120px;

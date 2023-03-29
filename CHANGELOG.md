@@ -30,11 +30,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 ### Added
 - Start using [human-readable changelogs](https://keepachangelog.com/en/1.0.0/) and [semantic versioning](https://semver.org/).
+- A layout component for sticky subsections (scroll in, scroll through itself, scroll out)
+- A timeline format that allows the synchronization of map movement and layers with paragraphs of text.
+- Snap points for subsections
 
 ### Changed
 - Simplify layer control by using a singular list of enabled layers instead of separate `enable` and `disable` arrays.
 - Reset default NPM package version `1.0.0` to starting version `0.1.0`.
 
 ### Fixed
-- Prevent flickering with a permanent base layer and usage of `requestAnimationFrame()`.
+- Prevent flickering with a permanent base layer and increase render performance by integrating `requestAnimationFrame()`.
 - An error which prevented rendering of the base layer in Chrome.

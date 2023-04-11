@@ -58,6 +58,7 @@ export default {
       this.loaded = true;
 
       this.enableLayer(this.mapInfo.baseLayer);
+      console.log(`READY => ${JSON.stringify(this.mapInfo)}`);
     },
 
     requestUpdateMap() {
@@ -118,6 +119,8 @@ export default {
         command: 'map:setCenter',
         center: this.config.center,
       }, '*');
+
+      console.log(`z => ${this.config.zoom}, c => ${this.config.center}, l => ${this.config.layers}`);
 
       this.disableAllLayers();
       this.config.layers.map(l => this.enableLayer(l));

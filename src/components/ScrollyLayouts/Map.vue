@@ -238,14 +238,6 @@ export default {
     },
   },
   computed: {
-    startZoom () {
-      return this.mapInfo.startZoom || 2.5
-    },
-
-    endZoom () {
-      return this.mapInfo.endZoom || 5.5
-    },
-
     // How many degrees of longitude is the map wide?
     longitudeRange () {
       if (isNaN(this.zoom)) {

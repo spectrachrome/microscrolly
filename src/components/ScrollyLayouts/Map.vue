@@ -89,18 +89,42 @@ export default {
     calculateSegmentProgress (prevSegment, currentSegment, progressValue) {
       // Calculate the progress ratio within the current segment
       const segmentDuration = currentSegment.duration;
-      return prevSegment ? (progressValue - (this.accumulatedDuration - segmentDuration)) / segmentDuration : 0;
+      if (segmentDuration === 0) {
+        return 0;
+      }
+      return (progressValue - (this.accumulatedDuration - segmentDuration)) / segmentDuration;
     },
 
     interpolateZoom (prevSegment, currentSegment, segmentProgress) {
+      if (!prevSegment
+          || isNaN(currentSegment.zoom)
+          || isNaN(prevSegment.zoom)
+          || isNaN(segmentProgress)
+      ) {
+        return currentSegment.zoom;
+      }
       // Interpolate the zoom value based on the progress ratio
       return prevSegment ? prevSegment.zoom + segmentProgress * (currentSegment.zoom - prevSegment.zoom) : currentSegment.zoom;
     },
 
     interpolateLatLng (prevSegment, currentSegment, segmentProgress) {
       // Interpolate the latitude and longitude values based on the progress ratio
-      let lat = prevSegment ? prevSegment.center.lat + segmentProgress * (currentSegment.center.lat - prevSegment.center.lat) : currentSegment.center.lat;
-      let lng = prevSegment ? prevSegment.center.lng + segmentProgress * (currentSegment.center.lng - prevSegment.center.lng) : currentSegment.center.lng;
+      let lat, lng;
+
+      if (!prevSegment 
+          || isNaN(currentSegment.center.lat)
+          || isNaN(currentSegment.center.lng)
+          || isNaN(prevSegment.center.lat)
+          || isNaN(prevSegment.center.lng)
+          || isNaN(segmentProgress)
+      ) {
+        lat = currentSegment.center.lat;
+        lng = currentSegment.center.lng;
+      } else {
+        lat = prevSegment.center.lat + segmentProgress * (currentSegment.center.lat - prevSegment.center.lat);
+        lng = prevSegment.center.lng + segmentProgress * (currentSegment.center.lng - prevSegment.center.lng);
+      }
+
       return { lat, lng };
     },
 
@@ -222,7 +246,11 @@ export default {
       return this.mapInfo.endZoom || 5.5
     },
 
+    // How many degrees of longitude is the map wide?
     longitudeRange () {
+      if (isNaN(this.zoom)) {
+        return 0;
+      }
       return 360 * this.$refs.map.clientWidth / (256 * Math.pow(2, this.zoom))
     },
   },

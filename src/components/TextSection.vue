@@ -1,6 +1,6 @@
 <template>
   <div class="text-section d-flex flex-column fill-width" :class="{
-    'with-background': $vuetify.breakpoint.mdAndDown,
+    'with-background': false,
   }">
     <template v-if="hasExpansibleSection">
       <div
@@ -88,6 +88,10 @@ export default {
 
 :deep(.expansible p)+:deep(.expansible p) {
   margin-top: 16px;
+}
+
+.text-section {
+  padding: 0 5vw;
 }
 
 .expansible-container {

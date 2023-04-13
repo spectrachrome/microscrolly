@@ -92,6 +92,7 @@ export default {
 
 .text-section {
   padding: 0 5vw;
+  max-width: 1000px;
 }
 
 .expansible-container {

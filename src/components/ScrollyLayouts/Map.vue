@@ -144,9 +144,6 @@ export default {
         center: this.config.center,
       }, '*');
 
-      console.log(`z => ${this.config.zoom}, c => ${this.config.center}, l => ${this.config.layers}`);
-
-      this.disableAllLayers();
       this.config.layers.map(l => this.enableLayer(l));
     },
 

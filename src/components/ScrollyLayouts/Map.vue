@@ -200,6 +200,11 @@ export default {
       // Calculate the progress ratio within the current segment
       const segmentProgress = this.calculateSegmentProgress(prevSegment, currentSegment, progressValue);
 
+      this.$refs.mapframe.contentWindow.postMessage({
+        command: 'map:setPoi',
+        poi: currentSegment.poi,
+      }, '*');
+
       // Interpolate center and zoom values based on the progress ratio
       let   { lat, lng } = this.interpolateLatLng(prevSegment, currentSegment, segmentProgress);
       this.config.center = [lng, lat];

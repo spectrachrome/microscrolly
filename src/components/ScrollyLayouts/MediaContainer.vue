@@ -43,8 +43,18 @@
         style="overflow: hidden"
       ></iframe>
 
+      <iframe
+        v-else-if="item.mapInfo && item.mapInfo.timeline === undefined"
+        :src="`https://gtif.esa.int/iframe?poi=${item.mapInfo.poi}&embedMap=true&z=${item.mapInfo.zoom}&lat=${item.mapInfo.center.lat}&lng=${item.mapInfo.center.lng}`"
+        width="640px"
+        height="500px"
+        frameBorder="0"
+        scroll="no"
+        style="overflow: hidden"
+      ></iframe>
+
       <Map
-        v-else-if="item.mapInfo"
+        v-else-if="item.mapInfo && item.mapInfo.timeline"
         :map-info="item.mapInfo"
         :progress="progress"
       />
@@ -126,43 +136,45 @@ figure.overlay video {
   pointer-events: none;
   left: -50%;
 }
+/*
+  /* smAndDown */
+  @media only screen and (max-width: 959px) {
+    figure {
+      top: 120px !important;
+      height: 30vh;
+    }
 
-/* smAndDown */
-@media only screen and (max-width: 959px) {
-  figure {
-    top: 120px !important;
-    height: 30vh;
+    figure iframe,
+    figure img,
+    figure .v-image,
+    figure video {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      border-radius: 0;
+    }
   }
 
-  figure iframe,
-  figure img,
-  figure .v-image,
-  figure video {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    border-radius: 0;
-  }
-}
+  /* mdAndUp */
+  @media only screen and (min-width: 960px) {
+    figure {
+      top: calc(50% - 500px / 2);
+    }
 
-/* mdAndUp */
-@media only screen and (min-width: 960px) {
-  figure {
-    top: calc(50% - 500px / 2);
+    figure iframe,
+    figure img,
+    figure .v-image,
+    figure video {
+/*
+      position: absolute;
+      top: 50%;
+      left: 50%;
+*/
+      /*transform: translate(-25%, -50%);*/
+      max-height: 100vh;
+      max-width: 100%;
+    }
   }
-
-  figure iframe,
-  figure img,
-  figure .v-image,
-  figure video {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    /*transform: translate(-25%, -50%);*/
-    max-height: 100vh;
-    max-width: 100%;
-  }
-}
 
 :deep(p) {
   margin-bottom: 200px;

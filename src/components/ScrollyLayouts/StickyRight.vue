@@ -2,7 +2,7 @@
   <div class="sticky-right">
     <v-row v-if="$vuetify.breakpoint.mdAndUp" justify="center">
       <v-col
-        :cols="$vuetify.breakpoint.lgAndUp ? 4 : 12"
+        :cols="$vuetify.breakpoint.lgAndUp ? 6 : 12"
         :class="{'align-center': $vuetify.breakpoint.mdAndDown}"
         class="d-flex"
         style="z-index: 50"
@@ -11,7 +11,7 @@
           <TextSection :text="item[0].text" />
         </article>
       </v-col>
-      <v-col cols="8" style="z-index: 0">
+      <v-col cols="6" style="z-index: 0">
         <MediaContainer
           :item="item[1]"
           :progress="progress"

@@ -1,7 +1,7 @@
 <template>
   <v-fade-transition>
     <figure
-      v-show="progress >= -50 && progress <= 150"
+      v-show="progress >= -15 && progress <= 115"
       :class="{'overlay': shouldOverlayText}"
     >
       <VideoScrubber

@@ -59,7 +59,7 @@
         :progress="progress"
       />
 
-      <TextSection v-else :text="item.text || ''" />
+      <TextSection v-else :text="item.text" />
 
       <!-- Progress display for debugging -->
       <!-- <span class="white--text pa-2" style="position: absolute; left: 0">

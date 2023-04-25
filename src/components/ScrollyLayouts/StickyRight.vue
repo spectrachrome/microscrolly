@@ -5,13 +5,13 @@
         :cols="$vuetify.breakpoint.lgAndUp ? 6 : 12"
         :class="{'align-center': $vuetify.breakpoint.mdAndDown}"
         class="d-flex"
-        style="z-index: 50"
+        style="z-index: 0"
       >
         <article style="padding: 800px 0">
           <TextSection :text="item[0].text" />
         </article>
       </v-col>
-      <v-col cols="6" style="z-index: 0">
+      <v-col cols="6" style="z-index: 50">
         <MediaContainer
           :item="item[1]"
           :progress="progress"
@@ -20,15 +20,15 @@
     </v-row>
 
     <v-col v-else-if="$vuetify.breakpoint.smAndDown && shouldOverlayText" justify="center">
-      <div style="z-index: 0">
+      <div style="z-index: 50">
         <MediaContainer
           :item="item[1]"
           :progress="progress"
           :should-overlay-text="shouldOverlayText"
         />
       </div>
-      <div style="position: relative; z-index: 50">
-        <article style="padding: 800px 0 z-index: 200">
+      <div style="position: relative; z-index: 0">
+        <article style="padding: 800px 0 z-index: 0">
           <TextSection
             :text="item[0].text"
             :should-overlay-text="shouldOverlayText"
@@ -38,13 +38,13 @@
     </v-col>
 
     <v-col v-else justify="center">
-      <div style="z-index: 0">
+      <div style="z-index: 50">
         <MediaContainer
           :item="item[1]"
           :progress="progress"
         />
       </div>
-      <div style="z-index: 50">
+      <div style="z-index: 0">
         <article style="padding: 800px 0">
           <TextSection :text="item[0].text" />
         </article>

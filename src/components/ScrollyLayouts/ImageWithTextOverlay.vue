@@ -23,6 +23,7 @@
         </div>
 
         <div
+          v-if="item.text"
           v-html="parseMarkdown(item.text)"
           class="text-overlay white--text text-left pa-16 mb-32"
           style="position: relative; width: 40%"

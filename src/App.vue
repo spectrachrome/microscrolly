@@ -37,6 +37,13 @@
           :item="item[0]"
           :progress="progress[index] || 0"
         />
+        <img
+          v-else-if="item[0].width === 4 && item[0].image"
+          :key="index"
+          :src="item[0].image"
+          height="300"
+          contain
+        />
         <StickyRight
           v-else-if="item[0].width === 1"
           :key="index"

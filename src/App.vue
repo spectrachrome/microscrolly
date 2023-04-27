@@ -25,9 +25,9 @@
 
       <template v-for="(item, index) in items">
         <ImageWithTextOverlay
-          v-if="item[0].width === 4 && item[0].image"
+          v-if="item[0].width === 4 && item[0].mapInfo"
           :key="index"
-          :item="item"
+          :item="item[0]"
           :index="index"
           :progress="progress[index] || 0"
         />
@@ -36,6 +36,13 @@
           :key="index"
           :item="item[0]"
           :progress="progress[index] || 0"
+        />
+        <img
+          v-else-if="item[0].width === 4 && item[0].image"
+          :key="index"
+          :src="item[0].image"
+          height="300"
+          contain
         />
         <StickyRight
           v-else-if="item[0].width === 1"
@@ -190,22 +197,24 @@ export default {
   margin-top: 0;
 }
 
-.row {
-  max-width: 1000px;
-  padding: 0 10vw;
-}
-
-@media screen and (min-width: 800px) {
+/*
   .row {
-    padding: 0 5vw;
+    max-width: 1000px;
+    padding: 0 10vw;
   }
-}
 
-@media screen and (min-width: 1800px) {
-  .row {
-    max-width: 1300px;
+  @media screen and (min-width: 800px) {
+    .row {
+      padding: 0 5vw;
+    }
   }
-}
+
+  @media screen and (min-width: 1800px) {
+    .row {
+      max-width: 1300px;
+    }
+  }
+*/
 
 /* Use this class inside scrolly items to expand to full width even if the environment has constrained width */
 .full-width {

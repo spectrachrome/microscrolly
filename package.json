@@ -1,6 +1,6 @@
 {
   "name": "vuetify-scrollytelling",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "",
   "main": "src/main.js",
   "private": true,
@@ -12,6 +12,7 @@
     "format": "prettier --write 'src/**'"
   },
   "dependencies": {
+    "d3-interpolate": "^3.0.1",
     "img-comparison-slider": "^7.8.1",
     "marked": "^4.2.3",
     "vue": "^2.7.0",

@@ -1,5 +1,7 @@
 <template>
-  <div class="d-flex flex-column fill-width">
+  <div class="text-section d-flex flex-column fill-width" :class="{
+    'with-background': false,
+  }">
     <template v-if="hasExpansibleSection">
       <div
         v-if="sections[0].length"
@@ -88,6 +90,11 @@ export default {
   margin-top: 16px;
 }
 
+.text-section {
+  padding: 0 5vw;
+  max-width: 1300px;
+}
+
 .expansible-container {
   max-height: 200vh;
   transition: all 0.3s ease-in-out;
@@ -124,5 +131,16 @@ export default {
 
 .expand-button:hover {
   transform: scale(1.3);
+}
+
+:deep(p) {
+  margin-bottom: 16px;
+}
+
+.text-section.with-background :deep(p) {
+  max-width: 40%;
+  background: #FFF;
+  border-radius: 9px;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
 }
 </style>

@@ -11,13 +11,6 @@
           ref="scrubVideo"
           width="100%"
           muted
-          style="
-            position: fixed;
-            top: 50vh;
-            left: 50vw;
-            width: 80%;
-            transform: translate(-40vw, -50vh);
-          "
         >
           <source :src="baseUrl" type="video/mp4" />
         </video>
@@ -25,15 +18,7 @@
         <canvas
           v-else
           ref="hero"
-          style="
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            pointer-events: none;
-            z-index: -1;
-          "
+          style="pointer-events: none"
         />
       </div>
     </v-fade-transition>

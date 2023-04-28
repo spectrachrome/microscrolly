@@ -39,7 +39,7 @@ import { marked } from "marked";
 import Map from './Map.vue';
 
 export default {
-  name: "ImageWithTextOverlay",
+  name: "MediaWithTextOverlay",
   props: {
     item: Object,
     index: Number,

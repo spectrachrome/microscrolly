@@ -29,7 +29,7 @@
       />
 
       <template v-for="(item, index) in items">
-        <ImageWithTextOverlay
+        <MediaWithTextOverlay
           v-if="item[0].width === 4 && item[0].mapInfo"
           :key="index"
           :item="item[0]"
@@ -83,7 +83,7 @@
 <script>
 import Vue from "vue";
 
-import ImageWithTextOverlay from "./components/ScrollyLayouts/ImageWithTextOverlay.vue";
+import MediaWithTextOverlay from "./components/ScrollyLayouts/MediaWithTextOverlay.vue";
 import FullWidthBlock from "./components/ScrollyLayouts/FullWidthBlock.vue";
 import StickyRight from "./components/ScrollyLayouts/StickyRight.vue";
 import StickyLeft from "./components/ScrollyLayouts/StickyLeft.vue";
@@ -92,7 +92,7 @@ import deserialize from "./util/deserializeComponent.js";
 
 export default {
   components: {
-    ImageWithTextOverlay,
+    MediaWithTextOverlay,
     FullWidthBlock,
     StickyRight,
     StickyLeft,

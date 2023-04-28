@@ -8,9 +8,21 @@
         :src="url"
         ref="mapframe"
         scroll="no"
-        style="position: absolute; inset: -10px; width: calc(100vw + 20px); height: calc(100vh + 20px);"
+        style="position: absolute; inset: -10px; width: calc(100vw + 20px); height: calc(100vh + 20px); z-index: 40;"
         frameborder="0"
       ></iframe>
+
+      <v-fade-transition>
+        <div
+          v-show="image !== null"
+          class="fill-width fill-height"
+          style="position: absolute; inset: -20px; width: calc(100vw + 20px); height: calc(100vh + 20px); z-index: 43;
+          background-size: cover; background-position: center; background-repeat: norepeat"
+          :style="{
+            background: `url(${image})`,
+          }"
+        />
+      </v-fade-transition>
     </div>
 </template>
 
@@ -45,6 +57,7 @@ export default {
       lastTime: '',
       url: `http://gtif.eox.world:8812/iframe?poi=${this.mapInfo.poi}&embedMap=true&z=2.562242424221073&lat=14.5&lng=47.5`,
       loaded: false,
+      image: null,
       config: {
         zoom:   0.0,
         center: [],
@@ -200,43 +213,59 @@ export default {
       // Calculate the progress ratio within the current segment
       const segmentProgress = this.calculateSegmentProgress(prevSegment, currentSegment, progressValue);
 
-      this.$refs.mapframe.contentWindow.postMessage({
-        command: 'map:setPoi',
-        poi: currentSegment.poi,
-      }, '*');
+      const seg = currentSegment;
+      if (seg.type) {
+        // Image
+        switch (seg.type) {
+          case 'image':
+            this.image = seg.image
+            break
 
-      // Interpolate center and zoom values based on the progress ratio
-      let   { lat, lng } = this.interpolateLatLng(prevSegment, currentSegment, segmentProgress);
-      this.config.center = [lng, lat];
-      this.config.zoom   = this.interpolateZoom(prevSegment, currentSegment, segmentProgress);
-
-      if (currentSegment.time) {
-        this.setMapTime({
-          name: currentSegment.time,
-          value: currentSegment.time,
-        });
-      }
-
-      if (currentSegment.times) {
-        const idx = Math.floor(segmentProgress * (currentSegment.times.length));
-        let currentTime = currentSegment.times[idx];
-
-        this.setMapTime({
-          name:  currentTime,
-          value: currentTime,
-        });
-      }
-
-      if (currentSegment.layers) {
-        this.config.layers = currentSegment.layers;
+          default:
+            console.warn(`Unknown segment type: ${seg.type}`);
+        }
       } else {
-        currentSegment.layers = [];
+        this.image = null;
+
+        // Map
+        this.$refs.mapframe.contentWindow.postMessage({
+          command: 'map:setPoi',
+          poi: currentSegment.poi,
+        }, '*');
+
+        // Interpolate center and zoom values based on the progress ratio
+        let   { lat, lng } = this.interpolateLatLng(prevSegment, currentSegment, segmentProgress);
+        this.config.center = [lng, lat];
+        this.config.zoom   = this.interpolateZoom(prevSegment, currentSegment, segmentProgress);
+
+        if (currentSegment.time) {
+          this.setMapTime({
+            name: currentSegment.time,
+            value: currentSegment.time,
+          });
+        }
+
+        if (currentSegment.times) {
+          const idx = Math.floor(segmentProgress * (currentSegment.times.length));
+          let currentTime = currentSegment.times[idx];
+
+          this.setMapTime({
+            name:  currentTime,
+            value: currentTime,
+          });
+        }
+
+        if (currentSegment.layers) {
+          this.config.layers = currentSegment.layers;
+        } else {
+          currentSegment.layers = [];
+        }
+
+        lng -= this.longitudeRange / 5;
+
+        // Update the map center and zoom based on the interpolated latitude, longitude, and zoom values
+        this.updateMap(this.zoom, lat, lng);
       }
-
-      lng -= this.longitudeRange / 5;
-
-      // Update the map center and zoom based on the interpolated latitude, longitude, and zoom values
-      this.updateMap(this.zoom, lat, lng);
     },
   },
   computed: {

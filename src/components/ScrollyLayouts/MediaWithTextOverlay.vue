@@ -1,12 +1,7 @@
 <template>
   <v-row class="image-with-text-overlay fill-width" align="center" justify="center">
     <v-col>
-      <article style="margin-bottom: 50px">
-        <!--<v-img
-          :style="`position: sticky; top: 0; height: var(--view-height); pointer-events: none; filter: brightness(0.7) hue-rotate(${progress * 3}deg);`"
-          :src="item.image"
-        />-->
-
+      <article>
         <div
           :style="`position: sticky; top: 0; height: var(--view-height); pointer-events: none;`"
         >
@@ -24,9 +19,10 @@
 
         <div
           v-if="item.text"
+          ref="paragraphContainer"
           v-html="parseMarkdown(item.text)"
           class="text-overlay white--text text-left pa-16 mb-32"
-          style="position: relative; width: 40%"
+          style="position: relative; width: 100%"
         />
       </article>
     </v-col>
@@ -49,13 +45,22 @@ export default {
     Map,
   },
   data: () => ({
-    textPlaceholders: [
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam gravida maximus elit a venenatis. Mauris felis ipsum, placerat sit amet accumsan non, commodo ac arcu. Phasellus lorem urna, consectetur non ornare et, pharetra id risus.",
-      "Proin sit amet commodo velit. Ut vitae quam elit. Donec nulla dui, ullamcorper ac dui nec, pretium feugiat lectus. Nam vestibulum odio arcu, eu efficitur tellus maximus ac.",
-      "Ut vitae quam elit. Donec nulla dui, ullamcorper ac dui nec, pretium feugiat lectus. Nam vestibulum odio arcu, eu efficitur tellus maximus ac.",
-      "Mauris felis ipsum, placerat sit amet accumsan non, commodo ac arcu. Phasellus lorem urna, consectetur non ornare et, pharetra id risus.",
-    ],
+    paragraphSides: [],
   }),
+  mounted () {
+    const timeline = this.item.mapInfo.timeline;
+
+    // Extract the sides so we can render paragraphs appropriately
+    if (timeline) {
+      this.paragraphSides = timeline
+        .map(e => e.textSide ? e.textSide : 'left');
+
+      console.log(this.$refs.paragraphContainer.querySelectorAll('p'));
+
+      this.$refs.paragraphContainer.querySelectorAll('p')
+        .forEach((p, i) => p.classList.add(this.paragraphSides[i]));
+    }
+  },
   methods: {
     parseMarkdown(input) {
       return marked.parse(input).replace("<a", '<a target="_blank" ');
@@ -82,5 +87,10 @@ article {
   margin-bottom: var(--view-height);
   background: #010;
   padding: 20px;
+  width: 350px;
+}
+
+:deep(.text-overlay p.right) {
+  margin-left: calc(100% - 350px);
 }
 </style>

@@ -193,10 +193,10 @@ export default {
     },
   },
   mounted () {
-    let poi = this.mapInfo.poi;
-    let lat = this.mapInfo.timeline[0].center.lat;
-    let lng = this.mapInfo.timeline[0].center.lng;
-    let z   = this.mapInfo.zoom;
+    let poi = this.mapInfo.poi || 'AT-AQ5';
+    let lat = this.mapInfo.timeline[0].center.lat || 48.21;
+    let lng = this.mapInfo.timeline[0].center.lng || 16.36;
+    let z   = this.mapInfo.zoom || 7;
 
     this.url = `http://gtif.eox.world:8812/iframe?poi=${this.mapInfo.poi}&embedMap=true&z=${z}&lat=${lat}&lng=${lng}`;
 

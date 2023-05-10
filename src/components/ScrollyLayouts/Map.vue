@@ -56,7 +56,7 @@ export default {
       zoom: 3.5,
       accumulatedDuration: 0,
       lastTime: '',
-      url: `http://gtif.eox.world:8812/iframe?poi=${this.mapInfo.poi}&embedMap=true&z=2.562242424221073&lat=14.5&lng=47.5`,
+      url: `/iframe?poi=${this.mapInfo.poi}&embedMap=true&z=2.562242424221073&lat=14.5&lng=47.5`,
       loaded: false,
       image: null,
       config: {

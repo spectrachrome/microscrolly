@@ -20,7 +20,7 @@
         >
           <img
             :src="image"
-            style="object-fit: cover;"
+            style="object-fit: cover; width: 100%;"
           />
         </div>
       </v-fade-transition>

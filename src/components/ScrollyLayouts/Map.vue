@@ -16,12 +16,13 @@
         <div
           v-show="image !== null"
           class="fill-width fill-height"
-          style="position: absolute; inset: -20px; width: calc(100vw + 20px); height: calc(100vh + 20px); z-index: 43;
-          background-size: cover; background-position: center; background-repeat: norepeat"
-          :style="{
-            background: `url(${image})`,
-          }"
-        />
+          style="position: absolute; inset: -20px; width: calc(100vw + 20px); height: calc(100vh + 20px); z-index: 43"
+        >
+          <img
+            :src="image"
+            style="object-fit: cover;"
+          />
+        </div>
       </v-fade-transition>
     </div>
 </template>

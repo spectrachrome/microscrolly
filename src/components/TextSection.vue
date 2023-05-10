@@ -135,6 +135,7 @@ export default {
 
 :deep(p) {
   margin-bottom: 16px;
+  padding-top: 50px;
 }
 
 .text-section.with-background :deep(p) {

@@ -23,11 +23,6 @@
         v-if="hooks.header"
       ></component>
 
-      <div
-        class="fill-width"
-        style="margin-bottom: 30px;"
-      />
-
       <template v-for="(item, index) in items">
         <MediaWithTextOverlay
           v-if="item[0].width === 4 && item[0].mapInfo"

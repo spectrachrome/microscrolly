@@ -83,11 +83,40 @@ article {
   --view-height: 100vh;
 }
 
-:deep(.text-overlay p) {
+:deep(.text-overlay p),
+:deep(.text-overlay h1),
+:deep(.text-overlay h2),
+:deep(.text-overlay h3),
+:deep(.text-overlay h4),
+:deep(.text-overlay h5),
+:deep(.text-overlay h6),
+:deep(.text-overlay ul),
+:deep(.text-overlay ol) {
   margin-bottom: var(--view-height);
-  background: #010;
+  background: #000a;
   padding: 20px;
-  width: 350px;
+}
+
+:deep(.text-overlay ul h1),
+:deep(.text-overlay ul h2),
+:deep(.text-overlay ul h3),
+:deep(.text-overlay ul h4),
+:deep(.text-overlay ul h5) {
+  margin-bottom: 30px;
+  background: transparent;
+}
+
+/* smAndDown */
+@media screen and (max-width: 959px) {
+  :deep(.text-overlay > *) {
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  :deep(.text-overlay > *) {
+    width: 40%;
+  }
 }
 
 :deep(.text-overlay p.right) {

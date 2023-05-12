@@ -5,6 +5,7 @@
     style="position: relative; pointer-events: none;"
   >
       <iframe
+        v-show="image === null"
         :src="url"
         ref="mapframe"
         scroll="no"

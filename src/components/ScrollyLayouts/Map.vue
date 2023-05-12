@@ -195,11 +195,22 @@ export default {
   },
   mounted () {
     let poi = this.mapInfo.poi || 'AT-AQ5';
-    let lat = this.mapInfo.timeline[0].center.lat || 48.21;
-    let lng = this.mapInfo.timeline[0].center.lng || 16.36;
+    let lat = 48.21;
+    let lng = 16.36;
     let z   = this.mapInfo.zoom || 7;
 
+    if (this.mapInfo.timeline[0].center) {
+      lat = this.mapInfo.timeline[0].center.lat;
+      lng = this.mapInfo.timeline[0].center.lng;
+    }
+
     this.url = `http://gtif.eox.world:8812/iframe?poi=${this.mapInfo.poi}&embedMap=true&z=${z}&lat=${lat}&lng=${lng}`;
+
+    const seg = this.mapInfo.timeline[0];
+    if (seg.type && seg.type === 'image') {
+      // Make sure not to render a map if starting with image
+      this.image = seg.image
+    }
 
     this.$refs.mapframe.addEventListener('load', this.onReady);
   },

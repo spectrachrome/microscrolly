@@ -6,7 +6,7 @@
   >
       <iframe
         v-show="image === null"
-        :src="url"
+        :src="iframeURL"
         ref="mapframe"
         scroll="no"
         style="position: absolute; inset: -10px; width: calc(100vw + 20px); height: calc(100vh + 20px); z-index: 40;"
@@ -57,7 +57,6 @@ export default {
       zoom: 3.5,
       accumulatedDuration: 0,
       lastTime: '',
-      url: `/iframe?poi=${this.mapInfo.poi}&embedMap=true&z=2.562242424221073&lat=14.5&lng=47.5`,
       loaded: false,
       image: null,
       config: {
@@ -205,7 +204,9 @@ export default {
       lng = this.mapInfo.timeline[0].center.lng;
     }
 
-    this.url = `http://gtif.eox.world:8812/iframe?poi=${this.mapInfo.poi}&embedMap=true&z=${z}&lat=${lat}&lng=${lng}`;
+    console.log(this.mapInfo.timeline);
+
+    this.url = `localhost:5173/iframe?poi=${this.mapInfo.poi}&embedMap=true&z=${z}&lat=${lat}&lng=${lng}`;
 
     const seg = this.mapInfo.timeline[0];
     if (seg.type && seg.type === 'image') {
@@ -251,14 +252,17 @@ export default {
         this.config.center = [lng, lat];
         this.config.zoom   = this.interpolateZoom(prevSegment, currentSegment, segmentProgress);
 
-        if (currentSegment.time) {
+
+        if (currentSegment.dataLayerTime) {
+          console.log('SET_MAP_TIME');
           this.setMapTime({
-            name: currentSegment.time,
-            value: currentSegment.time,
+            name: currentSegment.dataLayerTime,
+            value: currentSegment.dataLayerTime,
           });
         }
 
         if (currentSegment.times) {
+          console.log('SET_MAP_TIME');
           const idx = Math.floor(segmentProgress * (currentSegment.times.length));
           let currentTime = currentSegment.times[idx];
 
@@ -289,6 +293,12 @@ export default {
       }
       return 360 * this.$refs.map.clientWidth / (256 * Math.pow(2, this.zoom))
     },
+
+    iframeURL () {
+      return process.env.NODE_ENV === 'production'
+        ? `/iframe?poi=${this.mapInfo.poi}&embedMap=true&z=2.562242424221073&lat=14.5&lng=47.5`
+        : `http://gtif.eox.world:8812/iframe?poi=${this.mapInfo.poi}&embedMap=true&z=2.562242424221073&lat=14.5&lng=47.5`;
+    }
   },
 };
 </script>

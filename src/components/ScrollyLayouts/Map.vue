@@ -72,7 +72,6 @@ export default {
       this.loaded = true;
 
       this.enableLayer(this.mapInfo.baseLayer);
-      console.log(`READY => ${JSON.stringify(this.mapInfo)}`);
     },
 
     requestUpdateMap() {
@@ -162,14 +161,10 @@ export default {
     },
 
     setMapTime (time) {
-      if (time.value !== this.lastTime.value) {
-        this.$refs.mapframe.contentWindow.postMessage({
-          command: 'map:setTime',
-          time: time,
-        }, '*');
-
-        this.lastTime = time;
-      }
+      this.$refs.mapframe.contentWindow.postMessage({
+        command: 'map:setTime',
+        time: time,
+      }, '*');
     },
 
     enableLayer (name) {
@@ -203,10 +198,6 @@ export default {
       lat = this.mapInfo.timeline[0].center.lat;
       lng = this.mapInfo.timeline[0].center.lng;
     }
-
-    console.log(this.mapInfo.timeline);
-
-    this.url = `localhost:5173/iframe?poi=${this.mapInfo.poi}&embedMap=true&z=${z}&lat=${lat}&lng=${lng}`;
 
     const seg = this.mapInfo.timeline[0];
     if (seg.type && seg.type === 'image') {
@@ -254,15 +245,10 @@ export default {
 
 
         if (currentSegment.dataLayerTime) {
-          console.log('SET_MAP_TIME');
-          this.setMapTime({
-            name: currentSegment.dataLayerTime,
-            value: currentSegment.dataLayerTime,
-          });
+          this.setMapTime(currentSegment.dataLayerTime);
         }
 
         if (currentSegment.times) {
-          console.log('SET_MAP_TIME');
           const idx = Math.floor(segmentProgress * (currentSegment.times.length));
           let currentTime = currentSegment.times[idx];
 

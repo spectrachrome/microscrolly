@@ -219,6 +219,13 @@ export default {
       const segmentProgress = this.calculateSegmentProgress(prevSegment, currentSegment, progressValue);
 
       const seg = currentSegment;
+
+      if (currentSegment.dataLayerTime) {
+        this.setMapTime(currentSegment.dataLayerTime);
+      } else {
+        this.setMapTime('newest');
+      }
+
       if (seg.type) {
         // Image
         switch (seg.type) {
@@ -242,11 +249,6 @@ export default {
         let   { lat, lng } = this.interpolateLatLng(prevSegment, currentSegment, segmentProgress);
         this.config.center = [lng, lat];
         this.config.zoom   = this.interpolateZoom(prevSegment, currentSegment, segmentProgress);
-
-
-        if (currentSegment.dataLayerTime) {
-          this.setMapTime(currentSegment.dataLayerTime);
-        }
 
         if (currentSegment.times) {
           const idx = Math.floor(segmentProgress * (currentSegment.times.length));

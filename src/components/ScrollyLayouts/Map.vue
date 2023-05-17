@@ -5,7 +5,7 @@
     style="position: relative; pointer-events: none;"
   >
       <iframe
-        v-show="image === null"
+        v-show="image === null && scrub === null"
         :src="iframeURL"
         ref="mapframe"
         scroll="no"
@@ -15,13 +15,21 @@
 
       <v-fade-transition>
         <div
-          v-show="image !== null"
+          v-show="image !== null || scrub !== null"
           class="fill-width fill-height"
           style="position: absolute; inset: -20px; width: calc(100vw + 20px); height: calc(100vh + 20px); z-index: 43"
         >
           <img
+          v-if="image"
             :src="image"
             style="object-fit: cover; width: 100%;"
+          />
+
+          <VideoScrubber
+            v-else-if="scrub"
+            :progress="progress"
+            :base-url="scrub"
+            small
           />
         </div>
       </v-fade-transition>
@@ -29,11 +37,12 @@
 </template>
 
 <script>
+import VideoScrubber from './VideoScrubber.vue';
+
 /**
  * @typedef {Object} props
  * @property {number} [longitudeOffset=0] - A positive or negative offset value to be applied to the map's longitude for scrolly layouts. Positive values move the map to the east, while negative values move it to the west.
  */
-
 export default {
   name: 'Map',
   props: {
@@ -50,6 +59,9 @@ export default {
       default: 0,
     },
   },
+  components: {
+    VideoScrubber,
+  },
   data() {
     return {
       minProgress: 0,
@@ -59,6 +71,7 @@ export default {
       lastTime: '',
       loaded: false,
       image: null,
+      scrub: null,
       config: {
         zoom:   0.0,
         center: [],
@@ -230,7 +243,13 @@ export default {
         // Image
         switch (seg.type) {
           case 'image':
-            this.image = seg.image
+            this.image = seg.image;
+            this.scrub = null;
+            break
+
+          case 'scrub':
+            this.scrub = seg.scrub;
+            this.image = null;
             break
 
           default:

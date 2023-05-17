@@ -5,7 +5,7 @@
       {{ progress }}
     </div> -->
     <v-fade-transition>
-      <div v-show="progress >= 0 && progress <= 100" style="display: none">
+      <div v-show="progress >= 0 && progress <= 100">
         <video
           v-if="baseUrl.includes('.mp4')"
           ref="scrubVideo"
@@ -76,14 +76,12 @@ export default {
           );
         } else {
           const video = this.$refs.scrubVideo;
-          video.onloadedmetadata = () => {
-            video.currentTime = video.duration * (this.progress / 100);
-          };
+          video.currentTime = video.duration * (this.progress / 100);
         }
       }
     },
   },
-  mounted() {
+  ready() {
     if (this.shouldRenderToCanvas) {
       this.setupCanvasRendering();
     } else {
@@ -102,16 +100,6 @@ export default {
     },
     parseMarkdown(input) {
       return marked.parse(input).replace("<a", '<a target="_blank" ');
-    },
-    setupVideoRendering() {
-      document
-        .getElementById("scroll-target")
-        .addEventListener("scroll", () => {
-          if (this.progress > 0.0 && this.progress < 100.0) {
-            this.$refs.scrubVideo.currentTime =
-              (this.$refs.scrubVideo.duration * this.progress) / 100;
-          }
-        });
     },
     setupCanvasRendering() {
       fetch(`${this.baseUrl}/scrub.json`).then((response) => {

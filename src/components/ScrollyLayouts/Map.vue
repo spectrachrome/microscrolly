@@ -5,7 +5,7 @@
     style="position: relative; pointer-events: none;"
   >
       <iframe
-        v-show="image === null && scrub === null"
+        v-show="image === null && scrub === null && autoplay == null"
         :src="iframeURL"
         ref="mapframe"
         scroll="no"
@@ -15,12 +15,12 @@
 
       <v-fade-transition>
         <div
-          v-show="image !== null || scrub !== null"
+          v-show="image !== null || scrub !== null || autoplay !== null"
           class="fill-width fill-height"
           style="position: absolute; inset: -20px; width: calc(100vw + 20px); height: calc(100vh + 20px); z-index: 43"
         >
           <img
-          v-if="image"
+            v-if="image"
             :src="image"
             style="object-fit: cover; width: 100%;"
           />
@@ -31,6 +31,17 @@
             :base-url="scrub"
             small
           />
+
+          <video
+            v-else-if="autoplay"
+            ref="autoplayVideo"
+            muted
+            playsinline
+            autoplay
+            loop
+          >
+            <source :src="autoplay" type="video/mp4" />
+          </video>
         </div>
       </v-fade-transition>
     </div>
@@ -72,6 +83,7 @@ export default {
       loaded: false,
       image: null,
       scrub: null,
+      autoplay: null,
       config: {
         zoom:   0.0,
         center: [],
@@ -85,6 +97,33 @@ export default {
       this.loaded = true;
 
       this.enableLayer(this.mapInfo.baseLayer);
+
+      const seg = this.mapInfo.timeline[0];
+      if (seg && seg.type) {
+        // Image
+        switch (seg.type) {
+          case 'image':
+            this.image = seg.image;
+            this.autoplay = null;
+            this.scrub = null;
+            break
+
+          case 'scrub':
+            this.scrub = seg.scrub;
+            this.autoplay = null;
+            this.image = null;
+            break
+
+          case 'autoplay':
+            this.autoplay = seg.video;
+            this.scrub = null;
+            this.image = null;
+            break
+
+          default:
+            console.warn(`Unknown segment type: ${seg.type}`);
+        }
+      }
     },
 
     requestUpdateMap() {
@@ -214,6 +253,19 @@ export default {
 
     const seg = this.mapInfo.timeline[0];
     if (seg.type && seg.type === 'image') {
+      switch (seg.type) {
+        case 'image':
+          this.image = seg.image
+          break
+
+        case 'autoplay':
+          this.autoplay = seg.video
+          break
+
+        case 'image':
+          this.image = seg.image
+          break
+      }
       // Make sure not to render a map if starting with image
       this.image = seg.image
     }
@@ -244,11 +296,19 @@ export default {
         switch (seg.type) {
           case 'image':
             this.image = seg.image;
+            this.autoplay = null;
             this.scrub = null;
             break
 
           case 'scrub':
             this.scrub = seg.scrub;
+            this.autoplay = null;
+            this.image = null;
+            break
+
+          case 'autoplay':
+            this.autoplay = seg.video;
+            this.scrub = null;
             this.image = null;
             break
 

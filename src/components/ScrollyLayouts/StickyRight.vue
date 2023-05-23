@@ -2,7 +2,7 @@
   <div class="sticky-right">
     <v-row v-if="$vuetify.breakpoint.mdAndUp" justify="center">
       <v-col
-        :cols="$vuetify.breakpoint.lgAndUp ? 6 : 12"
+        :cols="$vuetify.breakpoint.mdAndUp ? 6 : 12"
         :class="{'align-center': $vuetify.breakpoint.mdAndDown}"
         class="d-flex"
         style="z-index: 0"

@@ -257,7 +257,7 @@ figure iframe,
 figure img,
 figure video,
 figure .v-image {
-  border-radius: 16px;
+  border-radius: 0px;
   position: absolute;
 }
 

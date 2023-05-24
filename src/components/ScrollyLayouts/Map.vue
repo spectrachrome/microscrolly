@@ -39,6 +39,7 @@
             playsinline
             autoplay
             loop
+            width="100%"
           >
             <source :src="autoplay" type="video/mp4" />
           </video>

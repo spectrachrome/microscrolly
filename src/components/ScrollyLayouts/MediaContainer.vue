@@ -94,9 +94,6 @@ export default {
       default: false,
     },
   },
-  mounted () {
-    console.log(`shouldOverlayText? ${this.shouldOverlayText}`);
-  },
   mixins: [autoplayVideo],
   components: {
     ImageCompare,

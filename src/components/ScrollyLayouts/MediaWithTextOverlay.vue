@@ -55,8 +55,6 @@ export default {
       this.paragraphSides = timeline
         .map(e => e.textSide ? e.textSide : 'left');
 
-      console.log(this.$refs.paragraphContainer.querySelectorAll('p'));
-
       this.$refs.paragraphContainer.querySelectorAll('p')
         .forEach((p, i) => p.classList.add(this.paragraphSides[i]));
     }

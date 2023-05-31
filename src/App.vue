@@ -110,12 +110,8 @@ export default {
     window.addEventListener("message", (message) => {
       // Look also for message.data.type here since there are also Webpack messages
       if (message && message.data.type) {
-        console.info(`✉️ MESSAGE [${message.data.type}]`);
-
         if (message.data.type.includes("hook")) {
           let hookName = message.data.type.split(":")[1];
-
-          console.log(message.data);
 
           // Populate our prop fields.
           this.componentProps[hookName] = message.data.props;

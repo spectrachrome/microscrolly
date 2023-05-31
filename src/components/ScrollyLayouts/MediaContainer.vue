@@ -2,6 +2,7 @@
   <v-fade-transition>
     <figure
       v-show="progress >= -15 && progress <= 115"
+      style="height: 0;"
       :class="{'overlay': shouldOverlayText}"
     >
       <VideoScrubber
@@ -152,6 +153,7 @@ figure.overlay video {
       top: 0;
       width: 100%;
       border-radius: 0;
+      transform: translate3d(0,0,0);
     }
   }
 
